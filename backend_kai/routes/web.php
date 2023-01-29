@@ -12,7 +12,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// DASHBOARD
 Route::get('/', function () {
-    return view('welcome');
+    return view('index', [
+        "title" => "KAI Dashboard"
+    ]);
+});
+
+// TRAINS
+Route::get('/trains', function () {
+    return view('train.index', [
+        "title" => "KAI Trains"
+    ]);
 });
