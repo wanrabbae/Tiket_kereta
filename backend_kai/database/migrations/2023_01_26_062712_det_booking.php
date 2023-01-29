@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('det_booking', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements("id");
             $table->integer("travel_no");
             $table->string("status");
             $table->unsignedBigInteger("fare_id");
-            $table->foreign("fare_id")->references("id")->on("train_fare");
+            $table->foreign("fare_id")->references("id")->on("train_fare")->onDelete("cascade");
             $table->string("booking_code");
             $table->timestamps();
         });

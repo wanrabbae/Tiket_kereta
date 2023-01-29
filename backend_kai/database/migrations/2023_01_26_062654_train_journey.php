@@ -14,14 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('train_journeys', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements("id");
             $table->string("depart_station");
             $table->string("arrival_station");
             $table->string("train_no");
             $table->date("depart_time");
             $table->date("arrival_time");
             $table->unsignedBigInteger("train_id");
-            $table->foreign("train_id")->references("id")->on("trains");
+            $table->foreign("train_id")->references("id")->on("trains")->onDelete("cascade");
             $table->timestamps();
         });
     }
