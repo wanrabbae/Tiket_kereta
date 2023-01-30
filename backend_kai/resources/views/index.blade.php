@@ -16,11 +16,6 @@
                     </nav>
                     <h1 class="mb-0 fw-bold">{{ $title ?? '' }}</h1>
                 </div>
-                <div class="col-6">
-                    <div class="text-end upgrade-btn">
-                        <a href="https://www.wrappixel.com/templates/flexy-bootstrap-admin-template/" class="btn btn-primary text-white" target="_blank">Upgrade to Pro</a>
-                    </div>
-                </div>
             </div>
         </div>
         <!-- ============================================================== -->

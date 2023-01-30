@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords"
-        content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Flexy lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Flexy admin lite design, Flexy admin lite dashboard bootstrap 5 dashboard template">
+    <meta name="keywords" content="KAI, KAI INDONESIA, KAI ALWAN">
     <meta name="description" content="Flexy Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>{{ $title ?? 'KAI Admin System' }}</title>
@@ -19,6 +18,10 @@
     <link href="{{ url('/template/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css" rel="stylesheet') }}">
     <!-- Custom CSS -->
     <link href="{{ url('/template/dist/css/style.min.css') }}" rel="stylesheet">
+    {{-- JQUERY --}}
+    <script src="{{ url('/template/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -50,23 +53,14 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="/" class="row justify-content-center">
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="{{ url('/template/assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo" />
-                            <!-- Light Logo icon -->
-                            <img src="{{ url('/template/assets/images/logo-light-icon.png') }}" alt="homepage" class="light-logo" />
+                            <img src="{{ url('/kai.png') }}" alt="homepage" class="dark-logo" width="100" />
+
                         </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
-                        <span class="logo-text">
-                            <!-- dark Logo text -->
-                            <img src="{{ url('/template/assets/images/logo-text.png') }}" alt="homepage" class="dark-logo" />
-                            <!-- Light Logo text -->
-                            <img src="{{ url('/template//assets/images/logo-light-text.png') }}" class="light-logo" alt="homepage" />
-                        </span>
                     </a>
                     <!-- ============================================================== -->
                     <!-- End Logo -->
@@ -132,18 +126,32 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
                                     class="hide-menu">Dashboard</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-profile.html" aria-expanded="false"><i
-                                    class="mdi mdi-account-network"></i><span class="hide-menu">Profile</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-basic.html" aria-expanded="false"><i
-                                    class="mdi mdi-border-all"></i><span class="hide-menu">Table</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="icon-material.html" aria-expanded="false"><i class="mdi mdi-face"></i><span
-                                    class="hide-menu">Icon</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="starter-kit.html" aria-expanded="false"><i class="mdi mdi-file"></i><span
-                                    class="hide-menu">Blank</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="error-404.html" aria-expanded="false"><i
-                                    class="mdi mdi-alert-outline"></i><span class="hide-menu">404</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/customers" aria-expanded="false"><i
+                                    class="mdi mdi-account-multiple"></i><span class="hide-menu">Customer</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/train_station" aria-expanded="false"><i class="mdi mdi-subway"></i><span
+                                    class="hide-menu">Train Stations</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/trains" aria-expanded="false"><i class="mdi mdi-train"></i><span
+                                    class="hide-menu">Trains</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/trains/journey" aria-expanded="false"><i
+                                    class="mdi mdi-map-marker-multiple"></i><span class="hide-menu">Trains Journey</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/trains/route" aria-expanded="false"><i class="mdi mdi-routes"></i><span
+                                    class="hide-menu">Trains Route</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/trains/fare" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span
+                                    class="hide-menu">Trains Fare</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/booking" aria-expanded="false"><i class="mdi mdi-file"></i><span
+                                    class="hide-menu">Booking Data</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/users" aria-expanded="false"><i class="mdi mdi-account-settings"></i><span
+                                    class="hide-menu">Users</span></a></li>
                     </ul>
 
                 </nav>
@@ -154,7 +162,6 @@
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-
         @yield('content')
 
     </div>
@@ -164,7 +171,7 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="{{ url('/template/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{ url('/template/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url('/template/dist/js/app-style-switcher.js') }}"></script>

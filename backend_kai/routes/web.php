@@ -25,3 +25,51 @@ Route::get('/trains', function () {
         "title" => "KAI Trains"
     ]);
 });
+
+// TRAIN STATIONS
+Route::get('/train_station', function () {
+    return view('train_station.index', [
+        "title" => "KAI Train Stations"
+    ]);
+});
+
+// TRAINS JOURNEY
+Route::get('/trains/journey', function () {
+    return view('train.index', [
+        "title" => "KAI Journey"
+    ]);
+});
+// TRAINS ROUTE
+Route::get('/trains/route', function () {
+    return view('train.index', [
+        "title" => "KAI Route"
+    ]);
+});
+// TRAINS FARE
+Route::get('/trains/fare', function () {
+    return view('train.index', [
+        "title" => "KAI Fare"
+    ]);
+});
+
+// CUSTOMER
+Route::get('/customers', function () {
+    return view('customer.index', [
+        "title" => "KAI Customer"
+    ]);
+});
+
+// BOOKING DATA
+Route::get('/booking', function () {
+    return view('booking.index', [
+        "title" => "KAI booking"
+    ]);
+});
+
+
+// BOOKING DATA
+Route::get('/users', function () {
+    return view('users.index', [
+        "title" => "KAI Pengguna Sistem"
+    ]);
+});
