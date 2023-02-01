@@ -29,15 +29,9 @@
             <!-- Start Page Content -->
             <!-- ============================================================== -->
             <div class="container mb-2">
-                @if (request()->has('success'))
-                    <div class="alert alert-success p-2" role="alert">
-                        {{ request('success') }}
-                    </div>
-                @endif
-
-                @if (request()->has('error'))
+                @if ($errors->any())
                     <div class="alert alert-danger p-2" role="alert">
-                        {{ request('error') }}
+                        {{ $errors->first() }}
                     </div>
                 @endif
             </div>
@@ -59,28 +53,72 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="body-customer">
                                     @foreach ($customers as $item)
                                         <tr>
-                                            <td>
+                                            <td id="itemid">
                                                 {{ $item->id }}
                                             </td>
-                                            <td>
+                                            <td id="item->name">
                                                 {{ $item->name }}
                                             </td>
-                                            <td>
+                                            <td id="item->email">
                                                 {{ $item->email }}
                                             </td>
-                                            <td>
+                                            <td id="item->city">
                                                 {{ $item->city }}
                                             </td>
-                                            <td>
+                                            <td id="item->country">
                                                 {{ $item->country }}
                                             </td>
                                             <td>
-                                                <a class="btn btn-sm btn-success" href="">Edit</a>
+                                                <button type="button" class="btn btn-sm btn-success" class="btn btn-primary btn-lg" data-bs-toggle="modal"
+                                                    data-bs-target="#staticBackdrop2{{ $item->id }}" id="editCustomer">Edit</button>
+
+                                                {{-- MODAL EDIT --}}
+                                                <div class="modal fade" id="staticBackdrop2{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-2" id="staticBackdropLabel">Edit Customer</h1>
+                                                                <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <form action="/customers/update/{{ $item->id }}" method="post">
+                                                                @csrf
+                                                                <div class="modal-body">
+                                                                    <div class="mb-3">
+                                                                        <label for="id">Nik</label>
+                                                                        <input type="number" name="id" id="idEdit" class="form-control" placeholder="Enter nik" value="{{ $item->id }}">
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="name">Name</label>
+                                                                        <input type="text" name="name" id="nameEdit" class="form-control" placeholder="Enter name" value="{{ $item->name }}">
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="email">Email</label>
+                                                                        <input type="email" name="email" id="emailEdit" class="form-control" placeholder="Enter email" value="{{ $item->email }}">
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="city">City</label>
+                                                                        <input type="text" name="city" id="cityEdit" class="form-control" placeholder="Enter city" value="{{ $item->city }}">
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="country">Country</label>
+                                                                        <input type="text" name="country" id="countryEdit" class="form-control" placeholder="Enter country"
+                                                                            value="{{ $item->country }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" id="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 |
-                                                <a class="btn btn-sm btn-danger" href="/customers/delete/{{ $item->id }}">Delete</a>
+                                                <a class="btn btn-sm btn-danger" href="/customers/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -114,24 +152,24 @@
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="nik">Nik</label>
-                                <input type="number" name="nik" id="nik" class="form-control" placeholder="Enter nik">
+                                <label for="id">Nik</label>
+                                <input required type="number" name="id" id="id" class="form-control" placeholder="Enter nik" value="{{ old('id') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="name">Name</label>
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Enter name">
+                                <input required type="text" name="name" id="name" class="form-control" placeholder="Enter name" value="{{ old('name') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="email">Email</label>
-                                <input type="email" name="email" id="email" class="form-control" placeholder="Enter email">
+                                <input required type="email" name="email" id="email" class="form-control" placeholder="Enter email" value="{{ old('email') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="city">City</label>
-                                <input type="text" name="city" id="city" class="form-control" placeholder="Enter city">
+                                <input required type="text" name="city" id="city" class="form-control" placeholder="Enter city" value="{{ old('city') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="country">Country</label>
-                                <input type="text" name="country" id="country" class="form-control" placeholder="Enter country">
+                                <input required type="text" name="country" id="country" class="form-control" placeholder="Enter country" value="{{ old('country') }}">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -147,16 +185,16 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer text-center">
-                All Rights Reserved by Flexy Admin. Designed and Developed by <a href="https://www.wrappixel.com">WrapPixel</a>.
-            </footer>
-            <script>
-                $(document).ready(function() {
-                    $('#customer-table').DataTable();
-                });
-            </script>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->
         </div>
-    @endsection
+
+        <footer class="footer text-center">
+            All Rights Reserved by Flexy Admin. Designed and Developed by <a href="https://www.wrappixel.com">WrapPixel</a>.
+        </footer>
+        <script>
+            $('#customer-table').DataTable();
+        </script>
+    </div>
+@endsection
