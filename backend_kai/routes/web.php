@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CustomerCtrl;
 use App\Http\Controllers\UserCtrl;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,11 +66,17 @@ Route::get('/trains/fare', function () {
 })->middleware('auth');;
 
 // CUSTOMER
-Route::get('/customers', function () {
-    return view('customer.index', [
-        "title" => "KAI Customer"
-    ]);
-})->name("customers")->middleware('auth');;
+Route::prefix("/customers")->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('customer.index', [
+            "title" => "KAI Customer",
+            "customers" => Customer::all()
+        ]);
+    })->name("customers");
+    Route::post("/add", [CustomerCtrl::class, 'addCustomer']);
+    Route::post("/update/{id}", [CustomerCtrl::class, 'updateCustomer']);
+    Route::get("/delete/{id}", [CustomerCtrl::class, 'deleteCustomer']);
+});
 
 // BOOKING DATA
 Route::get('/booking', function () {
