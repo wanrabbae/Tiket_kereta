@@ -26,12 +26,10 @@ class CustomerCtrl extends Controller
 
     public function updateCustomer(Request $request, $id)
     {
-        $customer = Customer::find($id);
-
         $validate = $request->validate([
             "id" => "required|int|unique:customers",
             "name" => "required|max:255",
-            "email" => "required|email:dns|max:100|unique:customers",
+            "email" => "required|email:dns|max:100",
             "city" => "required",
             "country" => "required"
         ]);

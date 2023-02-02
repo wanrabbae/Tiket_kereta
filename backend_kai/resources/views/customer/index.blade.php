@@ -34,6 +34,12 @@
                         {{ $errors->first() }}
                     </div>
                 @endif
+
+                @if (session()->has('success'))
+                    <div class="alert alert-success p-2" role="alert">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
             </div>
             <div class="row">
                 <div class="col-12">

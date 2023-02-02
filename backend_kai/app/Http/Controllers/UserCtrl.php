@@ -33,4 +33,47 @@ class UserCtrl extends Controller
 
         return redirect()->route('login')->with('success', 'You are now logged out!');
     }
+
+    public function addUser(Request $request)
+    {
+        $validate = $request->validate([
+            "name" => "required|max:255",
+            "email" => "required|email:dns|max:100|unique:users",
+            "password" => "required|min:6",
+            "password_confirmed" => "required|min:6",
+        ]);
+
+        $validate["password"] = bcrypt($validate["password"]);
+
+        if (User::create($validate)) {
+            return redirect()->back()->with("success", "Success create new User!");
+        }
+
+        return redirect()->back()->withErrors(["msg" => "Error cant delete the User"]);
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $validate = $request->validate([
+            "name" => "required|max:255",
+            "email" => "required|email:dns|max:100",
+        ]);
+
+        if (User::where('id', $id)->update($validate)) {
+            return redirect()->back()->with("success", "Success update User!");
+        }
+
+        return redirect()->back()->withErrors(["msg", "Error cant update User"]);
+    }
+
+    public function deleteUser($id)
+    {
+        $User = User::find($id);
+
+        if ($User->delete()) {
+            return redirect()->back()->with("success", "Success delete the User");
+        }
+
+        return redirect()->back()->withErrors(["msg" => "Error cant delete the User"]);
+    }
 }

@@ -10,4 +10,5 @@ class TrainStation extends Model
     use HasFactory;
 
     protected $table = 'train_station';
+    protected $guarded = [];
 }
