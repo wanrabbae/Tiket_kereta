@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Train;
 use App\Models\TrainFare;
+use App\Models\TrainJourney;
 use App\Models\TrainStation;
 use Illuminate\Http\Request;
 
@@ -135,5 +136,53 @@ class TrainCtrl extends Controller
         }
 
         return redirect()->back()->withErrors(["msg" => "Error cant delete the trains"]);
+    }
+
+    // CRUD ADMIN TRAIN JOURNEY
+    public function addTrainJourney(Request $request)
+    {
+        $validate = $request->validate([
+            "depart_station" => "required|int",
+            "arrival_station" => "required|int",
+            "train_no" => "required|max:100",
+            "depart_time" => "required|date",
+            "arrival_time" => "required|date",
+            "train_id" => "required|int",
+        ]);
+
+        if (TrainJourney::create($validate)) {
+            return redirect()->back()->with("success", "Success create new train journey!");
+        }
+
+        return redirect()->back()->withErrors(["msg" => "Error cant delete the train journey"]);
+    }
+
+    public function updateTrainJourney(Request $request, $id)
+    {
+        $validate = $request->validate([
+            "depart_station" => "required|int",
+            "arrival_station" => "required|int",
+            "train_no" => "required|max:100",
+            "depart_time" => "required|date",
+            "arrival_time" => "required|date",
+            "train_id" => "required|int",
+        ]);
+
+        if (TrainJourney::where('id', $id)->update($validate)) {
+            return redirect()->back()->with("success", "Success update train journey!");
+        }
+
+        return redirect()->back()->withErrors(["msg", "Error cant update train journey"]);
+    }
+
+    public function deleteTrainJourney($id)
+    {
+        $customer = TrainJourney::find($id);
+
+        if ($customer->delete()) {
+            return redirect()->back()->with("success", "Success delete the train journey");
+        }
+
+        return redirect()->back()->withErrors(["msg" => "Error cant delete the train journey"]);
     }
 }

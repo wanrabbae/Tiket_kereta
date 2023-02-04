@@ -11,4 +11,17 @@ class TrainJourney extends Model
 
     protected $table = 'train_journeys';
     protected $guarded = [];
+
+    public function train()
+    {
+        return $this->belongsTo(Train::class, 'train_id');
+    }
+    public function train_station_depart()
+    {
+        return $this->belongsTo(TrainStation::class, 'depart_station');
+    }
+    public function train_station_arrival()
+    {
+        return $this->belongsTo(TrainStation::class, 'arrival_station');
+    }
 }
