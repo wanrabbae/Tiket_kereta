@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Train;
 use App\Models\TrainFare;
 use App\Models\TrainJourney;
+use App\Models\TrainRoute;
 use App\Models\TrainStation;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -93,11 +94,17 @@ Route::prefix("/trains/journey")->middleware('auth')->group(function () {
 });
 
 // TRAINS ROUTE
-Route::get('/trains/route', function () {
-    return view('train_route.index', [
-        "title" => "KAI Route"
-    ]);
-})->name("trains_route")->middleware('auth');
+Route::prefix("/trains/route")->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('train_route.index', [
+            "title" => "KAI Train Journey",
+            "train_routes" => TrainRoute::all(),
+        ]);
+    })->name("trains_route");
+    Route::post("/add", [TrainCtrl::class, 'addTrainRoute']);
+    Route::post("/update/{id}", [TrainCtrl::class, 'updateTrainRoute']);
+    Route::get("/delete/{id}", [TrainCtrl::class, 'deleteTrainRoute']);
+});
 
 // TRAIN FARE
 Route::prefix("/trains/fare")->middleware('auth')->group(function () {

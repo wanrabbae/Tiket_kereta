@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Train;
 use App\Models\TrainFare;
 use App\Models\TrainJourney;
+use App\Models\TrainRoute;
 use App\Models\TrainStation;
 use Illuminate\Http\Request;
 
@@ -184,5 +185,53 @@ class TrainCtrl extends Controller
         }
 
         return redirect()->back()->withErrors(["msg" => "Error cant delete the train journey"]);
+    }
+
+    // CRUD ADMIN TRAIN ROUTE
+    public function addTrainRoute(Request $request)
+    {
+        $validate = $request->validate([
+            "train_no" => "required|max:100",
+            "start_route" => "required|max:100",
+            "end_route" => "required|max:100",
+            "route_seq" => "required|max:100|int",
+            "depart_time" => "required|date",
+            "arrival_time" => "required|date",
+        ]);
+
+        if (TrainRoute::create($validate)) {
+            return redirect()->back()->with("success", "Success create new train route!");
+        }
+
+        return redirect()->back()->withErrors(["msg" => "Error cant delete the train route"]);
+    }
+
+    public function updateTrainRoute(Request $request, $id)
+    {
+        $validate = $request->validate([
+            "train_no" => "required|max:100",
+            "start_route" => "required|max:100",
+            "end_route" => "required|max:100",
+            "route_seq" => "required|max:100|int",
+            "depart_time" => "required|date",
+            "arrival_time" => "required|date",
+        ]);
+
+        if (TrainRoute::where('id', $id)->update($validate)) {
+            return redirect()->back()->with("success", "Success update train route!");
+        }
+
+        return redirect()->back()->withErrors(["msg", "Error cant update train route"]);
+    }
+
+    public function deleteTrainRoute($id)
+    {
+        $customer = TrainRoute::find($id);
+
+        if ($customer->delete()) {
+            return redirect()->back()->with("success", "Success delete the train route");
+        }
+
+        return redirect()->back()->withErrors(["msg" => "Error cant delete the train route"]);
     }
 }
