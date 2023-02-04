@@ -11,7 +11,6 @@ class UserCtrl extends Controller
 {
     public function auth(Request $request)
     {
-        // return dd($request);
         $request->password = bcrypt($request->password);
         $credentials = $request->only('email', 'password');
 

@@ -10,4 +10,5 @@ class TrainJourney extends Model
     use HasFactory;
 
     protected $table = 'train_journeys';
+    protected $guarded = [];
 }

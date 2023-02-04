@@ -84,7 +84,7 @@
                                                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h1 class="modal-title fs-2" id="staticBackdropLabel">Edit Customer</h1>
+                                                                <h1 class="modal-title fs-2" id="staticBackdropLabel">Edit Station</h1>
                                                                 <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <form action="/train_station/update/{{ $item->id }}" method="post">
@@ -142,7 +142,7 @@
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-2" id="staticBackdropLabel">Create New Customer</h1>
+                        <h1 class="modal-title fs-2" id="staticBackdropLabel">Create New Station</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="/train_station/add" method="post">

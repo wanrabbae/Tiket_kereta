@@ -10,4 +10,5 @@ class TrainFare extends Model
     use HasFactory;
 
     protected $table = 'train_fare';
+    protected $guarded = [];
 }

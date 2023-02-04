@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerCtrl;
 use App\Http\Controllers\TrainCtrl;
 use App\Http\Controllers\UserCtrl;
 use App\Models\Customer;
+use App\Models\TrainFare;
 use App\Models\TrainStation;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -70,22 +71,30 @@ Route::prefix("/train_station")->middleware('auth')->group(function () {
 
 // TRAINS JOURNEY
 Route::get('/trains/journey', function () {
-    return view('train.index', [
+    return view('train_journey.index', [
         "title" => "KAI Journey"
     ]);
-})->name("trains_journey")->middleware('auth');;
+})->name("trains_journey")->middleware('auth');
+
 // TRAINS ROUTE
 Route::get('/trains/route', function () {
-    return view('train.index', [
+    return view('train_route.index', [
         "title" => "KAI Route"
     ]);
-})->name("trains_route")->middleware('auth');;
-// TRAINS FARE
-Route::get('/trains/fare', function () {
-    return view('train.index', [
-        "title" => "KAI Fare"
-    ]);
-})->middleware('auth');;
+})->name("trains_route")->middleware('auth');
+
+// TRAIN FARE
+Route::prefix("/trains/fare")->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('train_fare.index', [
+            "title" => "KAI Train Fare",
+            "train_fares" => TrainFare::all()
+        ]);
+    })->name("trains_fare");
+    Route::post("/add", [TrainCtrl::class, 'addTrainFare']);
+    Route::post("/update/{id}", [TrainCtrl::class, 'updateTrainFare']);
+    Route::get("/delete/{id}", [TrainCtrl::class, 'deleteTrainFare']);
+});
 
 // CUSTOMER
 Route::prefix("/customers")->middleware('auth')->group(function () {

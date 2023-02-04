@@ -10,4 +10,5 @@ class TrainRoute extends Model
     use HasFactory;
 
     protected $table = 'train_route';
+    protected $guarded = [];
 }
