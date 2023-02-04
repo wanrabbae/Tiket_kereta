@@ -112,7 +112,7 @@
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="fare">Fare</label>
-                                                                        <input required type="text" name="fare" id="fare" class="form-control" placeholder="Enter fare"
+                                                                        <input required type="number" name="fare" id="fare" class="form-control" placeholder="Enter fare"
                                                                             value="{{ $item->fare }}">
                                                                     </div>
                                                                 </div>

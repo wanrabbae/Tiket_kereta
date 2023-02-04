@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Train;
 use App\Models\TrainFare;
 use App\Models\TrainStation;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class TrainCtrl extends Controller
         return redirect()->back()->withErrors(["msg" => "Error cant delete the station"]);
     }
 
-    // CRUD ADMIN STATION
+    // CRUD ADMIN TRAIN FARE
     public function addTrainFare(Request $request)
     {
         $validate = $request->validate([
@@ -90,5 +91,49 @@ class TrainCtrl extends Controller
         }
 
         return redirect()->back()->withErrors(["msg" => "Error cant delete the train fare"]);
+    }
+
+    // CRUD ADMIN TRAINS
+    public function addTrain(Request $request)
+    {
+        $validate = $request->validate([
+            "train_name" => "required|max:255|unique:trains",
+            "eco_seat_num" => "required|int",
+            "busines_seat_num" => "required|int",
+            "exec_seat_num" => "required|int",
+        ]);
+
+        if (Train::create($validate)) {
+            return redirect()->back()->with("success", "Success create new trains!");
+        }
+
+        return redirect()->back()->withErrors(["msg" => "Error cant delete the trains"]);
+    }
+
+    public function updateTrain(Request $request, $id)
+    {
+        $validate = $request->validate([
+            "train_name" => "required|max:255|unique:trains",
+            "eco_seat_num" => "required|int",
+            "busines_seat_num" => "required|int",
+            "exec_seat_num" => "required|int",
+        ]);
+
+        if (Train::where('id', $id)->update($validate)) {
+            return redirect()->back()->with("success", "Success update trains!");
+        }
+
+        return redirect()->back()->withErrors(["msg", "Error cant update trains"]);
+    }
+
+    public function deleteTrain($id)
+    {
+        $customer = Train::find($id);
+
+        if ($customer->delete()) {
+            return redirect()->back()->with("success", "Success delete the trains");
+        }
+
+        return redirect()->back()->withErrors(["msg" => "Error cant delete the trains"]);
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerCtrl;
 use App\Http\Controllers\TrainCtrl;
 use App\Http\Controllers\UserCtrl;
 use App\Models\Customer;
+use App\Models\Train;
 use App\Models\TrainFare;
 use App\Models\TrainStation;
 use App\Models\User;
@@ -50,11 +51,17 @@ Route::get('/', function () {
 })->name("dashboard")->middleware('auth');
 
 // TRAINS
-Route::get('/trains', function () {
-    return view('train.index', [
-        "title" => "KAI Trains"
-    ]);
-})->name("trains")->middleware('auth');;
+Route::prefix("/trains")->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('train.index', [
+            "title" => "KAI Trains",
+            "trains" => Train::all()
+        ]);
+    })->name("trains");
+    Route::post("/add", [TrainCtrl::class, 'addTrain']);
+    Route::post("/update/{id}", [TrainCtrl::class, 'updateTrain']);
+    Route::get("/delete/{id}", [TrainCtrl::class, 'deleteTrain']);
+});
 
 // TRAIN STATIONS
 Route::prefix("/train_station")->middleware('auth')->group(function () {
