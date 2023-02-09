@@ -18,9 +18,11 @@ return new class extends Migration
             $table->string("booking_code");
             $table->unsignedBigInteger("customer_id");
             $table->foreign("customer_id")->references("id")->on("customers")->onDelete("cascade");
-            $table->date("booking_date");
-            $table->string("status");
-            $table->string("payment_status");
+            $table->dateTime("booking_date")->default(date(now()));
+            $table->integer("booking_count")->nullable();
+            $table->string("status")->nullable();
+            $table->integer("payment_total")->nullable();
+            $table->string("payment_status")->default("pending");
             $table->timestamps();
         });
     }

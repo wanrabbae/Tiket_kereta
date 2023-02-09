@@ -167,15 +167,8 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleDataList" class="form-label">Choose Train No</label>
-                                <input required class="form-control" list="datalistOptions" id="exampleDataList" name="train_no" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                    <option value="TRAIN001">
-                                    <option value="TRAIN002">
-                                    <option value="TRAIN003">
-                                    <option value="TRAIN004">
-                                    <option value="TRAIN005">
-                                </datalist>
+                                <label for="exampleDataList" class="form-label">Train No</label>
+                                <input required class="form-control" id="exampleDataList" name="train_no" placeholder="Train No">
                             </div>
                             <div class="mb-3">
                                 <label for="fare">Fare</label>

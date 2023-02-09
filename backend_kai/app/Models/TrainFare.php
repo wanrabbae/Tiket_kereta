@@ -11,4 +11,9 @@ class TrainFare extends Model
 
     protected $table = 'train_fare';
     protected $guarded = [];
+
+    public function train_journey()
+    {
+        return $this->hasMany(TrainJourney::class, 'train_no');
+    }
 }

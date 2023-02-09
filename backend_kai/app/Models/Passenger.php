@@ -10,4 +10,9 @@ class Passenger extends Model
     use HasFactory;
 
     protected $table = 'passenger';
+
+    public function detail_booking()
+    {
+        return $this->belongsTo(DetailBooking::class, 'book_det');
+    }
 }

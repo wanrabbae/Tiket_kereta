@@ -16,6 +16,10 @@ class TrainJourney extends Model
     {
         return $this->belongsTo(Train::class, 'train_id');
     }
+    public function train_fare()
+    {
+        return $this->belongsTo(TrainFare::class, 'train_no');
+    }
     public function train_station_depart()
     {
         return $this->belongsTo(TrainStation::class, 'depart_station');

@@ -87,6 +87,7 @@ Route::prefix("/trains/journey")->middleware('auth')->group(function () {
             "train_journeys" => TrainJourney::with(['train', 'train_station_depart', 'train_station_arrival'])->get(),
             "train_station" => TrainStation::all(),
             "trains" => Train::all(),
+            "train_fares" => TrainFare::all(),
         ]);
     })->name("trains_journey");
     Route::post("/add", [TrainCtrl::class, 'addTrainJourney']);
@@ -100,6 +101,7 @@ Route::prefix("/trains/route")->middleware('auth')->group(function () {
         return view('train_route.index', [
             "title" => "KAI Train Routes",
             "train_routes" => TrainRoute::all(),
+            "train_fares" => TrainFare::all(),
         ]);
     })->name("trains_route");
     Route::post("/add", [TrainCtrl::class, 'addTrainRoute']);

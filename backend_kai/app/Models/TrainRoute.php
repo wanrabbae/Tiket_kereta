@@ -11,4 +11,14 @@ class TrainRoute extends Model
 
     protected $table = 'train_route';
     protected $guarded = [];
+
+    public function train_journey()
+    {
+        return $this->belongsTo(TrainJourney::class, 'train_no');
+    }
+
+    public function get_passenger()
+    {
+        return $this->hasMany(DetailBooking::class, 'travel_no');
+    }
 }

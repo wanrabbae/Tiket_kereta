@@ -13,6 +13,10 @@ class Booking extends Model
 
     public function detail_booking()
     {
-        return $this;
+        return $this->belongsTo(DetailBooking::class, 'booking_code');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }

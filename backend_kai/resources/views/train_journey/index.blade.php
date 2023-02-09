@@ -128,8 +128,13 @@
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="train_no">Train No</label>
-                                                                        <input required type="text" name="train_no" value="{{ $item->train_no }}" id="train_no" class="form-control"
-                                                                            placeholder="Enter train_no" value="{{ old('train_no') }}">
+                                                                        <input required class="form-control" list="datalistOptions" value="{{ $item->train_no }}" id="exampleDataList" name="train_no"
+                                                                            placeholder="Type to search...">
+                                                                        <datalist id="datalistOptions">
+                                                                            @foreach ($train_fares as $fare)
+                                                                                <option value="{{ $fare->train_no }}">
+                                                                            @endforeach
+                                                                        </datalist>
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="depart_time">Depart Time</label>
@@ -214,7 +219,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="train_no">Train No</label>
-                                <input required type="text" name="train_no" id="train_no" class="form-control" placeholder="Enter train_no" value="{{ old('train_no') }}">
+                                <input required class="form-control" list="datalistOptions2" value="{{ old('train_no') }}" id="exampleDataList" name="train_no" placeholder="Type to search...">
+                                <datalist id="datalistOptions2">
+                                    @foreach ($train_fares as $fare)
+                                        <option value="{{ $fare->train_no }}">
+                                    @endforeach
+                                </datalist>
                             </div>
                             <div class="mb-3">
                                 <label for="depart_time">Depart Time</label>

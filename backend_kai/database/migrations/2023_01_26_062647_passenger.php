@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger("book_det");
             // $table->foreign("book_det")->references("id")->on("det_booking");
             $table->string("name");
+            $table->enum("status", ["dewasa", "remaja", "anak"]);
             $table->string("id_no");
             $table->timestamps();
         });
