@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingCtrl;
 use App\Http\Controllers\CustomerCtrl;
 use App\Http\Controllers\TrainCtrl;
 use App\Http\Controllers\UserCtrl;
@@ -97,7 +98,7 @@ Route::prefix("/trains/journey")->middleware('auth')->group(function () {
 Route::prefix("/trains/route")->middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('train_route.index', [
-            "title" => "KAI Train Journey",
+            "title" => "KAI Train Routes",
             "train_routes" => TrainRoute::all(),
         ]);
     })->name("trains_route");
@@ -133,8 +134,4 @@ Route::prefix("/customers")->middleware('auth')->group(function () {
 });
 
 // BOOKING DATA
-Route::get('/booking', function () {
-    return view('booking.index', [
-        "title" => "KAI booking"
-    ]);
-})->name("booking")->middleware('auth');;
+Route::get('/booking', [BookingCtrl::class, 'getData'])->name("booking")->middleware('auth');;

@@ -10,4 +10,9 @@ class Booking extends Model
     use HasFactory;
 
     protected $table = 'booking';
+
+    public function detail_booking()
+    {
+        return $this;
+    }
 }
