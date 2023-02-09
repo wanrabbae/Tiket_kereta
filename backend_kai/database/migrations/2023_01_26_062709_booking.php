@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string("status")->nullable();
             $table->integer("payment_total")->nullable();
             $table->string("payment_status")->default("pending");
+            $table->string("train_no");
             $table->timestamps();
         });
     }

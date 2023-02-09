@@ -42,25 +42,34 @@
                                         <th>Booking Code</th>
                                         <th>Customer Name</th>
                                         <th>Class Type</th>
-                                        <th>Fare</th>
+                                        <th>Booking Seat Count</th>
+                                        <th>Payment Total</th>
                                         <th>Payment Status</th>
-                                        <th>Bookin Date</th>
-                                        <th>Status</th>
+                                        <th>Booking Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td>1</td>
-                                    <td>TRX-001</td>
-                                    <td>Alwan</td>
-                                    <td>ECONOMY</td>
-                                    <td>Rp. 245.000,00</td>
-                                    <td><span class="text-success fw-bold">Paid</span></td>
-                                    <td>2020-10-10</td>
-                                    <td>Dewasa</td>
-                                    <td>
-                                        <a href="/booking/detail/:id" class="btn btn-info text-white">Detail</a>
-                                    </td>
+                                    <?php $no = 1; ?>
+                                    @foreach ($bookings as $booking)
+                                        <?php
+                                        // $pay_status = if($booking->payment_status == 'paid') {return 'success'}else if($booking->payment_status == 'pending') {return 'warning'} else {return 'danger'};
+                                        ?>
+                                        <tr>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $booking->booking_code }}</td>
+                                            <td>{{ $booking->customer->name }}</td>
+                                            <td>{{ $booking->train_fare[0]->class }}</td>
+                                            <td>{{ $booking->booking_count }}</td>
+                                            <td>Rp. {{ number_format($booking->payment_total, 2, ',', '.') }}</td>
+                                            <td><span class="text-success fw-bold">{{ $booking->payment_status }}</span>
+                                            </td>
+                                            <td>{{ $booking->booking_date }}</td>
+                                            <td>
+                                                <a href="/booking/detail/:id" class="btn btn-info text-white">Detail</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
