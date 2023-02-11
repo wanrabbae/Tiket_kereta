@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Train extends Model
+class WagonSeat extends Model
 {
     use HasFactory;
-
-    protected $table = 'trains';
+    protected $table = 'train_wagon_seat';
     protected $guarded = [];
+    public $timestamps = false;
 
     public function wagon()
     {
-        return $this->hasMany(Wagon::class, 'train_id');
+        return $this->belongsTo(Wagon::class, 'wagon_id');
     }
 }

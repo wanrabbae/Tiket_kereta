@@ -13,6 +13,7 @@ use App\Models\TrainJourney;
 use App\Models\TrainRoute;
 use App\Models\TrainStation;
 use App\Models\User;
+use App\Models\Wagon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,7 @@ Route::get('/login', function () {
 Route::get('/logout', [UserCtrl::class, 'logout'])->name("logout");
 Route::post("/login", [UserCtrl::class, 'auth']);
 
+// NEWS
 Route::get('/news', function () {
     return view('news.index', [
         "title" => "KAI News",
@@ -73,6 +75,12 @@ Route::prefix("/trains")->middleware('auth')->group(function () {
         return view('train.index', [
             "title" => "KAI Trains",
             "trains" => Train::all()
+        ]);
+    })->name("trains");
+    Route::get('/{id}/wagon', function ($id) {
+        return view('train.wagon', [
+            "title" => Train::find($id)->train_name,
+            "wagons" => Wagon::with('wagon_seat')->where('train_id', $id)->get()
         ]);
     })->name("trains");
     Route::post("/add", [TrainCtrl::class, 'addTrain']);

@@ -15,4 +15,9 @@ class Passenger extends Model
     {
         return $this->belongsTo(DetailBooking::class, 'book_det');
     }
+
+    public function wagon_seat()
+    {
+        return $this->belongsTo(WagonSeat::class, 'passenger_id');
+    }
 }

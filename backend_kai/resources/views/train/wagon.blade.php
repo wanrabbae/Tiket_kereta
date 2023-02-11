@@ -52,39 +52,27 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Train No</th>
-                                        <th>Start Route</th>
-                                        <th>End Route</th>
-                                        <th>Route Seq</th>
-                                        <th>Depart Time</th>
-                                        <th>Arrival Time</th>
+                                        <th>Wagon Name</th>
+                                        <th>Wagon Type</th>
+                                        <th>Seat Num</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="body-customer">
                                     <?php $i = 1; ?>
-                                    @foreach ($train_routes as $item)
+                                    @foreach ($wagons as $item)
                                         <tr>
                                             <td id="itemid">
                                                 {{ $i++ }}
                                             </td>
                                             <td id="item->name">
-                                                {{ $item->train_no }}
+                                                {{ $item->name }}
                                             </td>
                                             <td id="item->email">
-                                                {{ $item->start_route }}
+                                                {{ $item->type }}
                                             </td>
                                             <td id="item->email">
-                                                {{ $item->end_route }}
-                                            </td>
-                                            <td id="item->email">
-                                                {{ $item->route_seq }}
-                                            </td>
-                                            <td id="item->email">
-                                                {{ $item->depart_time }}
-                                            </td>
-                                            <td id="item->email">
-                                                {{ $item->arrival_time }}
+                                                {{ $item->wagon_seat->count() }}
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-sm btn-success" class="btn btn-primary btn-lg" data-bs-toggle="modal"
@@ -99,57 +87,40 @@
                                                                 <h1 class="modal-title fs-2" id="staticBackdropLabel">Edit Station</h1>
                                                                 <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            <form action="/trains/route/update/{{ $item->id }}" method="post">
-                                                                @csrf
-                                                                <div class="modal-body">
+                                                            <div class="modal-body">
+                                                                <form action="/trains/update/{{ $item->id }}" method="post">
+                                                                    @csrf
                                                                     <div class="mb-3">
-                                                                        <label for="train_no">Train No</label>
-                                                                        <input required class="form-control" list="datalistOptions" value="{{ $item->train_no }}" id="exampleDataList" name="train_no"
-                                                                            placeholder="Type to search...">
-                                                                        <datalist id="datalistOptions">
-                                                                            @foreach ($train_fares as $fare)
-                                                                                <option value="{{ $fare->train_no }}">
-                                                                            @endforeach
-                                                                        </datalist>
+                                                                        <label for="train_name">Train Name</label>
+                                                                        <input required type="text" value="{{ $item->train_name }}" name="train_name" id="train_name" class="form-control"
+                                                                            placeholder="Enter station name" value="{{ old('train_name') }}">
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label for="start_route">Start Route</label>
-                                                                        <input value="{{ $item->start_route }}" required type="text" name="start_route" id="start_route" class="form-control"
-                                                                            placeholder="Enter start_route" value="{{ old('start_route') }}">
+                                                                        <label for="eco_seat_num">Economy Seat Num</label>
+                                                                        <input required type="number" value="{{ $item->eco_seat_num }}" name="eco_seat_num" id="eco_seat_num" class="form-control"
+                                                                            placeholder="Enter eco_seat_num" value="{{ old('eco_seat_num') }}">
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label for="end_route">End Route</label>
-                                                                        <input value="{{ $item->end_route }}" required type="text" name="end_route" id="end_route" class="form-control"
-                                                                            placeholder="Enter end_route" value="{{ old('end_route') }}">
+                                                                        <label for="exec_seat_num">Executive Seat Num</label>
+                                                                        <input required type="number" value="{{ $item->exec_seat_num }}" name="exec_seat_num" id="exec_seat_num" class="form-control"
+                                                                            placeholder="Enter exec_seat_num" value="{{ old('exec_seat_num') }}">
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label for="route_seq">Route Seq</label>
-                                                                        <input value="{{ $item->route_seq }}" required type="text" name="route_seq" id="route_seq" class="form-control"
-                                                                            placeholder="Enter route_seq" value="{{ old('route_seq') }}">
+                                                                        <label for="busines_seat_num">Business Seat Num</label>
+                                                                        <input required type="number" value="{{ $item->busines_seat_num }}" name="busines_seat_num" id="busines_seat_num"
+                                                                            class="form-control" placeholder="Enter busines_seat_num" value="{{ old('busines_seat_num') }}">
                                                                     </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="depart_time">Depart Time</label>
-                                                                        <input value="{{ $item->depart_time }}" required type="date" name="depart_time" id="depart_time" class="form-control"
-                                                                            placeholder="Enter depart_time" value="{{ old('depart_time') }}">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="arrival_time">Arrival Time</label>
-                                                                        <input value="{{ $item->arrival_time }}" required type="date" name="arrival_time" id="arrival_time" class="form-control"
-                                                                            placeholder="Enter arrival_time" value="{{ old('arrival_time') }}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" id="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-primary">Save</button>
-                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" id="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                            </div>
                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 |
-                                                <a href="/route/{{ $item->id }}/passengers" class="btn btn-sm btn-info">Passengers</a>
-                                                |
-                                                <a class="btn btn-sm btn-danger" href="/trains/route/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
+                                                <a class="btn btn-sm btn-danger" href="/trains/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -176,40 +147,28 @@
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-2" id="staticBackdropLabel">Create New Station</h1>
+                        <h1 class="modal-title fs-2" id="staticBackdropLabel">Create New Train</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="/trains/route/add" method="post">
+                    <form action="/trains/add" method="post">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="train_no">Train No</label>
-                                <input required class="form-control" list="datalistOptions" value="{{ old('train_no') }}" id="exampleDataList" name="train_no" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                    @foreach ($train_fares as $fare)
-                                        <option value="{{ $fare->train_no }}">
-                                    @endforeach
-                                </datalist>
+                                <label for="train_name">Train Name</label>
+                                <input required type="text" name="train_name" id="train_name" class="form-control" placeholder="Enter station name" value="{{ old('train_name') }}">
                             </div>
                             <div class="mb-3">
-                                <label for="start_route">Start Route</label>
-                                <input required type="text" name="start_route" id="start_route" class="form-control" placeholder="Enter start_route" value="{{ old('start_route') }}">
+                                <label for="eco_seat_num">Economy Seat Num</label>
+                                <input required type="number" name="eco_seat_num" id="eco_seat_num" class="form-control" placeholder="Enter eco_seat_num" value="{{ old('eco_seat_num') }}">
                             </div>
                             <div class="mb-3">
-                                <label for="end_route">End Route</label>
-                                <input required type="text" name="end_route" id="end_route" class="form-control" placeholder="Enter end_route" value="{{ old('end_route') }}">
+                                <label for="exec_seat_num">Executive Seat Num</label>
+                                <input required type="number" name="exec_seat_num" id="exec_seat_num" class="form-control" placeholder="Enter exec_seat_num" value="{{ old('exec_seat_num') }}">
                             </div>
                             <div class="mb-3">
-                                <label for="route_seq">Route Seq</label>
-                                <input required type="text" name="route_seq" id="route_seq" class="form-control" placeholder="Enter route_seq" value="{{ old('route_seq') }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="depart_time">Depart Time</label>
-                                <input required type="date" name="depart_time" id="depart_time" class="form-control" placeholder="Enter depart_time" value="{{ old('depart_time') }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="arrival_time">Arrival Time</label>
-                                <input required type="date" name="arrival_time" id="arrival_time" class="form-control" placeholder="Enter arrival_time" value="{{ old('arrival_time') }}">
+                                <label for="busines_seat_num">Business Seat Num</label>
+                                <input required type="number" name="busines_seat_num" id="busines_seat_num" class="form-control" placeholder="Enter busines_seat_num"
+                                    value="{{ old('busines_seat_num') }}">
                             </div>
                         </div>
                         <div class="modal-footer">
