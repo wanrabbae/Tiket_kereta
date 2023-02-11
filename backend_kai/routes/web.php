@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\BookingCtrl;
 use App\Http\Controllers\CustomerCtrl;
+use App\Http\Controllers\NewsCtrl;
 use App\Http\Controllers\TrainCtrl;
 use App\Http\Controllers\UserCtrl;
 use App\Models\Customer;
+use App\Models\News;
 use App\Models\Train;
 use App\Models\TrainFare;
 use App\Models\TrainJourney;
@@ -33,11 +35,12 @@ Route::get('/logout', [UserCtrl::class, 'logout'])->name("logout");
 Route::post("/login", [UserCtrl::class, 'auth']);
 
 Route::get('/news', function () {
-    return view('train.index', [
-        "title" => "KAI Trains",
-        "trains" => Train::all()
+    return view('news.index', [
+        "title" => "KAI News",
+        "news" => News::all()
     ]);
-})->name("trains");
+})->name("news");
+Route::post('/news/add', [NewsCtrl::class, 'store']);
 
 // USERS
 Route::prefix("/users")->middleware('auth')->group(function () {
