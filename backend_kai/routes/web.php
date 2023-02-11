@@ -32,6 +32,13 @@ Route::get('/login', function () {
 Route::get('/logout', [UserCtrl::class, 'logout'])->name("logout");
 Route::post("/login", [UserCtrl::class, 'auth']);
 
+Route::get('/news', function () {
+    return view('train.index', [
+        "title" => "KAI Trains",
+        "trains" => Train::all()
+    ]);
+})->name("trains");
+
 // USERS
 Route::prefix("/users")->middleware('auth')->group(function () {
     Route::get('/', function () {

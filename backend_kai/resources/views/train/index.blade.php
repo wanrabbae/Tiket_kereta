@@ -124,6 +124,8 @@
                                                     </div>
                                                 </div>
                                                 |
+                                                <a href="/wagon/{{ $item->id }}" class="btn btn-sm btn-info">Wagon</a>
+                                                |
                                                 <a class="btn btn-sm btn-danger" href="/trains/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
                                             </td>
                                         </tr>

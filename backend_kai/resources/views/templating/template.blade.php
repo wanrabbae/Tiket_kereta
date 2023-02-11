@@ -55,7 +55,7 @@
                     <!-- ============================================================== -->
                     <a class="navbar-brand" href="/" class="row justify-content-center">
                         <!-- Logo icon -->
-                        <b class="logo-icon">
+                        <b class="logo-icon d-flex align-items-center justify-content-center w-100">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
                             <img src="{{ url('/kai.png') }}" alt="homepage" class="dark-logo" width="100" />
@@ -126,6 +126,9 @@
                     <ul id="sidebarnav">
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
                                     class="hide-menu">Dashboard</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/news" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span
+                                    class="hide-menu">News</span></a></li>
 
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/customers" aria-expanded="false"><i
                                     class="mdi mdi-account-multiple"></i><span class="hide-menu">Customer</span></a></li>
