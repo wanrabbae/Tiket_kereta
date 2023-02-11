@@ -82,7 +82,13 @@ Route::prefix("/trains")->middleware('auth')->group(function () {
             "title" => Train::find($id)->train_name,
             "wagons" => Wagon::with('wagon_seat')->where('train_id', $id)->get()
         ]);
-    })->name("trains");
+    })->name("trains_wagon");
+    Route::get('/wagon/{id}/passengers', function ($id) {
+        return view('train.wagon_detail', [
+            "title" => "Train Passenger",
+            "wagons" => Wagon::with(['wagon_seat', 'wagon_seat.passenger'])->where('id', $id)->get()
+        ]);
+    })->name("trains_wagon_detail");
     Route::post("/add", [TrainCtrl::class, 'addTrain']);
     Route::post("/update/{id}", [TrainCtrl::class, 'updateTrain']);
     Route::get("/delete/{id}", [TrainCtrl::class, 'deleteTrain']);

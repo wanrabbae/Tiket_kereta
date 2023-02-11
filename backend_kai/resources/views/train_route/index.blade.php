@@ -147,8 +147,7 @@
                                                     </div>
                                                 </div>
                                                 |
-                                                <a href="/route/{{ $item->id }}/passengers" class="btn btn-sm btn-info">Passengers</a>
-                                                |
+
                                                 <a class="btn btn-sm btn-danger" href="/trains/route/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
                                             </td>
                                         </tr>

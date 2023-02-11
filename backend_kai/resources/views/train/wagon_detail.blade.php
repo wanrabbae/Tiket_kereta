@@ -52,77 +52,22 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Wagon Name</th>
-                                        <th>Wagon Type</th>
-                                        <th>Seat Num</th>
-                                        <th>Action</th>
+                                        <th>Wagon Seat</th>
+                                        <th>Passenger Name</th>
                                     </tr>
                                 </thead>
                                 <tbody id="body-customer">
                                     <?php $i = 1; ?>
-                                    @foreach ($wagons as $item)
+                                    @foreach ($wagons[0]->wagon_seat as $item)
                                         <tr>
                                             <td id="itemid">
                                                 {{ $i++ }}
                                             </td>
                                             <td id="item->name">
-                                                {{ $item->name }}
+                                                {{ $item->seat }}
                                             </td>
                                             <td id="item->email">
-                                                {{ $item->type }}
-                                            </td>
-                                            <td id="item->email">
-                                                {{ $item->wagon_seat->count() }}
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-success" class="btn btn-primary btn-lg" data-bs-toggle="modal"
-                                                    data-bs-target="#staticBackdrop2{{ $item->id }}" id="editCustomer">Edit</button>
-
-                                                {{-- MODAL EDIT --}}
-                                                <div class="modal fade" id="staticBackdrop2{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-2" id="staticBackdropLabel">Edit Station</h1>
-                                                                <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <form action="/trains/update/{{ $item->id }}" method="post">
-                                                                    @csrf
-                                                                    <div class="mb-3">
-                                                                        <label for="train_name">Train Name</label>
-                                                                        <input required type="text" value="{{ $item->train_name }}" name="train_name" id="train_name" class="form-control"
-                                                                            placeholder="Enter station name" value="{{ old('train_name') }}">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="eco_seat_num">Economy Seat Num</label>
-                                                                        <input required type="number" value="{{ $item->eco_seat_num }}" name="eco_seat_num" id="eco_seat_num" class="form-control"
-                                                                            placeholder="Enter eco_seat_num" value="{{ old('eco_seat_num') }}">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="exec_seat_num">Executive Seat Num</label>
-                                                                        <input required type="number" value="{{ $item->exec_seat_num }}" name="exec_seat_num" id="exec_seat_num" class="form-control"
-                                                                            placeholder="Enter exec_seat_num" value="{{ old('exec_seat_num') }}">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="busines_seat_num">Business Seat Num</label>
-                                                                        <input required type="number" value="{{ $item->busines_seat_num }}" name="busines_seat_num" id="busines_seat_num"
-                                                                            class="form-control" placeholder="Enter busines_seat_num" value="{{ old('busines_seat_num') }}">
-                                                                    </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" id="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Save</button>
-                                                            </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                |
-                                                <a href="/trains/wagon/{{ $item->id }}/passengers" class="btn btn-sm btn-info">Passengers</a>
-                                                |
-                                                <a class="btn btn-sm btn-danger" href="/trains/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
+                                                <span class="text-success">{{ $item->passenger->name ?? '' }}</span>
                                             </td>
                                         </tr>
                                     @endforeach
