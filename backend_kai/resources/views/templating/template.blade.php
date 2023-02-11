@@ -13,6 +13,8 @@
     <link rel="canonical" href="https://www.wrappixel.com/templates/Flexy-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url('/template/assets/images/favicon.png') }}">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
     <!-- Custom CSS -->
     <link href="{{ url('/template/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
     <link href="{{ url('/template/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css" rel="stylesheet') }}">
@@ -28,6 +30,11 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+    <style>
+        trix-toolbar [data-trix-button-group='file-uploads'] {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>

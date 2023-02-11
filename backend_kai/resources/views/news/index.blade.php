@@ -122,17 +122,21 @@
                                                 {{ $item->title }}
                                             </td>
                                             <td id="item->email">
-                                                {{ $item->description }}
+                                                {{ \Illuminate\Support\Str::limit($item->description, 50, $end = '...') }}
                                             </td>
                                             <td id="item->email">
-                                                {{ $item->publish }}
+                                                @if ($item->publish == 0)
+                                                    <a href="/news/{{ $item->id }}/publish" class="btn btn-sm btn-success">Y</a>
+                                                @else
+                                                    <a href="/news/{{ $item->id }}/unpublish" class="btn btn-sm btn-danger">N</a>
+                                                @endif
                                             </td>
                                             <td id="item->email">
                                                 {{ $item->published_at }}
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-success" class="btn btn-primary btn-lg" data-bs-toggle="modal"
-                                                    data-bs-target="#staticBackdrop2{{ $item->id }}" id="editCustomer">Edit</button>
+                                                {{-- <button type="button" class="btn btn-sm btn-success" class="btn btn-primary btn-lg" data-bs-toggle="modal"
+                                                    data-bs-target="#staticBackdrop2{{ $item->id }}" id="editCustomer">Edit</button> --}}
 
                                                 {{-- MODAL EDIT --}}
                                                 <div class="modal fade" id="staticBackdrop2{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -175,9 +179,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                |
+                                                {{-- | --}}
 
-                                                <a class="btn btn-sm btn-danger" href="/trains/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
+                                                <a class="btn btn-sm btn-danger" href="/news/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -201,17 +205,17 @@
 
         {{-- MODAL CREATE --}}
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-2" id="staticBackdropLabel">Create News</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="createNews" method="post">
-                        @csrf
-                        <div class="modal-body">
+                    <div class="modal-body">
+                        <form id="createNews" method="post">
+                            @csrf
                             <div class="mb-3">
-                                <input required type="file" name="image" id="image" class="form-control">
+                                <input type="file" name="image" id="image" class="form-control">
 
                                 <!-- Drag and Drop container-->
                                 <div class="upload-area" id="uploadfile">
@@ -224,14 +228,15 @@
                             </div>
                             <div class="mb-3">
                                 <label for="description">Description</label>
-                                <textarea required name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+                                <input id="description" type="hidden" name="content">
+                                <trix-editor input="description"></trix-editor>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" form="createNews">Save</button>
+                    </div>
                 </div>
             </div>
             <!-- ============================================================== -->
@@ -318,7 +323,6 @@
                     reader.readAsDataURL(image);
                 }
                 image2 = image;
-                // uploadData(fd);
             });
 
             $('#createNews').submit(function(e) {
@@ -327,10 +331,9 @@
                 desc = $('#description').val()
                 const formData = new FormData();
                 formData.append('title', title)
-                formData.append('description', description)
+                formData.append('description', desc)
                 formData.append('image', image2)
                 formData.append('_token', '{{ csrf_token() }}')
-
                 $.ajax({
                     url: '/news/add',
                     type: 'post',
@@ -339,7 +342,7 @@
                     processData: false,
                     dataType: 'json',
                     success: function(response) {
-                        window.location.reload()
+                        window.location.href = ''
                     },
                     error: function(request, status, error) {
                         $('#createNews').append(`<p class='text-sm text-danger'>${request.responseText}</p>`)

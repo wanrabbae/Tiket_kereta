@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class NewsCtrl extends Controller
 {
@@ -40,7 +42,7 @@ class NewsCtrl extends Controller
             return redirect()->back()->with("success", "Success create new news!");
         }
 
-        return redirect()->back()->withErrors(["msg" => "Error cant delete the news"]);
+        return redirect()->back()->withErrors(["msg" => "Error cant create the news"]);
     }
 
     /**
@@ -74,6 +76,32 @@ class NewsCtrl extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = News::find($id);
+        if ($data) {
+            if (News::destroy($id)) {
+                File::delete(public_path('uploadedimages/' . $data->image));
+                return redirect()->back()->with("success", "Success delete new news!");
+            } else {
+                return redirect()->back()->withErrors(["msg" => "Error cant delete the news"]);
+            }
+        }
+        return redirect()->back()->withErrors(["msg" => "Error cant delete the news"]);
+    }
+
+    public function publish($id)
+    {
+        if (News::where('id', $id)->update(['publish' => 1])) {
+            return redirect()->back()->with("success", "Success published news!");
+        }
+
+        return redirect()->back()->withErrors(["msg", "Error cant published news"]);
+    }
+    public function unpublish($id)
+    {
+        if (News::where('id', $id)->update(['publish' => 0])) {
+            return redirect()->back()->with("success", "Success unpublished news!");
+        }
+
+        return redirect()->back()->withErrors(["msg", "Error cant unpublished news"]);
     }
 }

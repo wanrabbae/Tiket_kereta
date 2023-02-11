@@ -41,6 +41,10 @@ Route::get('/news', function () {
     ]);
 })->name("news");
 Route::post('/news/add', [NewsCtrl::class, 'store']);
+Route::post('/news/update/{id}', [NewsCtrl::class, 'update']);
+Route::get('/news/delete/{id}', [NewsCtrl::class, 'destroy']);
+Route::get('/news/{id}/publish', [NewsCtrl::class, 'publish']);
+Route::get('/news/{id}/unpublish', [NewsCtrl::class, 'unpublish']);
 
 // USERS
 Route::prefix("/users")->middleware('auth')->group(function () {
