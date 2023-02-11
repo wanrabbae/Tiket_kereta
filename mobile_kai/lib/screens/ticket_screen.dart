@@ -1,10 +1,10 @@
-import 'package:carni/screens/ticket_view.dart';
-import 'package:carni/utils/app_info_list.dart';
-import 'package:carni/utils/app_layout.dart';
-import 'package:carni/utils/app_styles.dart';
-import 'package:carni/widgets/layout_builder_widget.dart';
-import 'package:carni/widgets/paired_column_widget.dart';
-import 'package:carni/widgets/ticket_tabs.dart';
+import 'package:kai_mobile/screens/ticket_view.dart';
+import 'package:kai_mobile/utils/app_info_list.dart';
+import 'package:kai_mobile/utils/app_layout.dart';
+import 'package:kai_mobile/utils/app_styles.dart';
+import 'package:kai_mobile/widgets/layout_builder_widget.dart';
+import 'package:kai_mobile/widgets/paired_column_widget.dart';
+import 'package:kai_mobile/widgets/ticket_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:barcode_widget/barcode_widget.dart';

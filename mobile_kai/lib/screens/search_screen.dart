@@ -1,8 +1,8 @@
-import 'package:carni/utils/app_layout.dart';
-import 'package:carni/utils/app_styles.dart';
-import 'package:carni/widgets/icon_text_widget.dart';
-import 'package:carni/widgets/ticket_tabs.dart';
-import 'package:carni/widgets/view_all_widget.dart';
+import 'package:kai_mobile/utils/app_layout.dart';
+import 'package:kai_mobile/utils/app_styles.dart';
+import 'package:kai_mobile/widgets/icon_text_widget.dart';
+import 'package:kai_mobile/widgets/ticket_tabs.dart';
+import 'package:kai_mobile/widgets/view_all_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

@@ -1,7 +1,7 @@
-import 'package:carni/screens/home_screen.dart';
-import 'package:carni/screens/search_screen.dart';
-import 'package:carni/screens/ticket_screen.dart';
-import 'package:carni/screens/profile_screen.dart';
+import 'package:kai_mobile/screens/home_screen.dart';
+import 'package:kai_mobile/screens/search_screen.dart';
+import 'package:kai_mobile/screens/ticket_screen.dart';
+import 'package:kai_mobile/screens/profile_screen.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 

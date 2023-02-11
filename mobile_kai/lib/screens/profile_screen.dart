@@ -1,7 +1,7 @@
-import 'package:carni/utils/app_layout.dart';
-import 'package:carni/utils/app_styles.dart';
-import 'package:carni/widgets/layout_builder_widget.dart';
-import 'package:carni/widgets/paired_column_widget.dart';
+import 'package:kai_mobile/utils/app_layout.dart';
+import 'package:kai_mobile/utils/app_styles.dart';
+import 'package:kai_mobile/widgets/layout_builder_widget.dart';
+import 'package:kai_mobile/widgets/paired_column_widget.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

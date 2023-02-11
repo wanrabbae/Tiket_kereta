@@ -1,8 +1,8 @@
-import 'package:carni/screens/hotel_screen.dart';
-import 'package:carni/screens/ticket_view.dart';
-import 'package:carni/utils/app_info_list.dart';
-import 'package:carni/utils/app_styles.dart';
-import 'package:carni/widgets/view_all_widget.dart';
+import 'package:kai_mobile/screens/hotel_screen.dart';
+import 'package:kai_mobile/screens/ticket_view.dart';
+import 'package:kai_mobile/utils/app_info_list.dart';
+import 'package:kai_mobile/utils/app_styles.dart';
+import 'package:kai_mobile/widgets/view_all_widget.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -69,7 +69,6 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const Gap(40),
-              const ViewAllWidget(title: "Pemberangkatan Mendatang")
             ]),
           ),
           const Gap(15),
@@ -83,14 +82,17 @@ class HomeScreen extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: const ViewAllWidget(title: "Daftar Kereta"),
+            child: Text(
+              'Berita Terbaru',
+              style: Styles.headLineStyle2,
+            ),
           ),
           const Gap(5),
           SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
+              scrollDirection: Axis.vertical,
               padding: const EdgeInsets.only(left: 20),
-              child: Row(
-                  children: hotelList
+              child: Column(
+                  children: newsList
                       .map((hotelInfo) => HotelScreen(hotel: hotelInfo))
                       .toList()))
         ],
