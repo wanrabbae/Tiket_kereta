@@ -14,43 +14,64 @@ class HotelScreen extends StatelessWidget {
     return Container(
       width: size.width * 20,
       height: AppLayout.getHeight(150),
-      padding: EdgeInsets.symmetric(
-          horizontal: AppLayout.getWidth(15),
-          vertical: AppLayout.getHeight(17)),
       margin: EdgeInsets.only(
-          right: AppLayout.getWidth(17), top: AppLayout.getHeight(5)),
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [
-        BoxShadow(color: Colors.grey.shade200, blurRadius: 30, spreadRadius: 5)
-      ]),
+          right: AppLayout.getWidth(17), top: AppLayout.getHeight(15)),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(7),
+            topRight: Radius.circular(7),
+            bottomLeft: Radius.circular(7),
+            bottomRight: Radius.circular(7)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 4,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            height: AppLayout.getHeight(50),
-            decoration: BoxDecoration(
-                color: Styles.primaryColor,
-                borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("assets/images/${hotel['image']}"))),
+            height: double.infinity,
+            width: 100,
+            child: Image.network(
+              hotel['image'],
+              fit: BoxFit.cover,
+            ),
           ),
           const Gap(10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                hotel['title'],
-                style: Styles.headLineStyle2.copyWith(color: Styles.kakiColor),
-              ),
-              const Gap(5),
-              Text(
-                hotel['description'],
-                style: Styles.headLineStyle4.copyWith(
-                  color: Colors.black,
+          Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: AppLayout.getWidth(10),
+                vertical: AppLayout.getHeight(10)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  hotel['title'],
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
+                  style:
+                      Styles.headLineStyle2.copyWith(color: Styles.orangeColor),
                 ),
-              ),
-            ],
+                const Gap(5),
+                SizedBox(
+                  width: 170.0,
+                  child: Text(
+                    hotel['description'],
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(color: Colors.black87, fontSize: 13),
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),

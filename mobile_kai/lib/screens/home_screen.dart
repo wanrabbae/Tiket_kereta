@@ -14,10 +14,16 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Styles.bgColor,
+      extendBody: true,
       body: ListView(
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              color: Styles.primaryBold,
+            ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
             child: Column(children: [
               const Gap(40),
               Row(
@@ -28,12 +34,14 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Text(
                         "Good Morning",
-                        style: Styles.headLineStyle3,
+                        style:
+                            Styles.headLineStyle3.copyWith(color: Colors.white),
                       ),
                       const Gap(5),
                       Text(
                         "Alwan",
-                        style: Styles.headLineStyle1,
+                        style:
+                            Styles.headLineStyle1.copyWith(color: Colors.white),
                       )
                     ],
                   ),
@@ -48,38 +56,23 @@ class HomeScreen extends StatelessWidget {
                   )
                 ],
               ),
-              const Gap(25),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xFFF4F6FD)),
-                child: Row(
-                  children: [
-                    const Icon(
-                      FluentSystemIcons.ic_fluent_search_regular,
-                      color: Color(0xFFBFC205),
-                    ),
-                    Text(
-                      "Search",
-                      style: Styles.headLineStyle4,
-                    )
-                  ],
-                ),
-              ),
-              const Gap(40),
+              const Gap(60),
             ]),
           ),
-          const Gap(15),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(left: 20),
-            child: Row(
-                children: ticketList
-                    .map((ticket) => TicketView(ticket: ticket))
-                    .toList()),
+          Positioned(
+            top: 100.0,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              // margin: EdgeInsets.only(top: -100),
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ),
+          const Gap(25),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(

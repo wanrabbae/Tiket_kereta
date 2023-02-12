@@ -54,14 +54,11 @@ class TicketView extends StatelessWidget {
                           child: const LayoutBuilderWidget(sections: 6),
                         ),
                         Center(
-                          child: Transform.rotate(
-                            angle: 1.5,
-                            child: Icon(
-                              Icons.local_airport_rounded,
-                              color: isColor == null
-                                  ? Colors.white
-                                  : const Color(0xFF8ACCF7),
-                            ),
+                          child: Icon(
+                            Icons.train_rounded,
+                            color: isColor == null
+                                ? Colors.white
+                                : const Color(0xFF8ACCF7),
                           ),
                         ),
                       ])),
@@ -91,14 +88,6 @@ class TicketView extends StatelessWidget {
                                     .copyWith(color: Colors.white)
                                 : Styles.headLineStyle4,
                           )),
-                      Text(
-                        ticket['flying_time'],
-                        style: isColor == null
-                            ? Styles.headLineStyle4
-                                .copyWith(color: Colors.white)
-                            : Styles.headLineStyle4
-                                .copyWith(color: Colors.black),
-                      ),
                       SizedBox(
                           width: AppLayout.getWidth(100),
                           child: Text(
