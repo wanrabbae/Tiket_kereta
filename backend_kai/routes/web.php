@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerCtrl;
 use App\Http\Controllers\NewsCtrl;
 use App\Http\Controllers\TrainCtrl;
 use App\Http\Controllers\UserCtrl;
+use App\Http\Controllers\WagonCtrl;
 use App\Models\Customer;
 use App\Models\News;
 use App\Models\Train;
@@ -74,24 +75,34 @@ Route::prefix("/trains")->middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('train.index', [
             "title" => "KAI Trains",
-            "trains" => Train::all()
+            "trains" => Train::all(),
+            "train_fares" => TrainFare::all()
         ]);
     })->name("trains");
+
+    Route::post("/add", [TrainCtrl::class, 'addTrain']);
+    Route::post("/update/{id}", [TrainCtrl::class, 'updateTrain']);
+    Route::get("/delete/{id}", [TrainCtrl::class, 'deleteTrain']);
+
     Route::get('/{id}/wagon', function ($id) {
+        $train = Train::find($id);
         return view('train.wagon', [
-            "title" => Train::find($id)->train_name,
+            "title" => $train->train_name,
+            "id_train" => $train->id,
             "wagons" => Wagon::with('wagon_seat')->where('train_id', $id)->get()
         ]);
     })->name("trains_wagon");
+
+    Route::post("/wagon/add", [WagonCtrl::class, 'addWagon']);
+    Route::post("/wagon/update/{id}", [WagonCtrl::class, 'updateWagon']);
+    Route::get("/wagon/delete/{id}", [WagonCtrl::class, 'deleteWagon']);
+
     Route::get('/wagon/{id}/passengers', function ($id) {
         return view('train.wagon_detail', [
             "title" => "Train Passenger",
             "wagons" => Wagon::with(['wagon_seat', 'wagon_seat.passenger'])->where('id', $id)->get()
         ]);
     })->name("trains_wagon_detail");
-    Route::post("/add", [TrainCtrl::class, 'addTrain']);
-    Route::post("/update/{id}", [TrainCtrl::class, 'updateTrain']);
-    Route::get("/delete/{id}", [TrainCtrl::class, 'deleteTrain']);
 });
 
 // TRAIN STATIONS

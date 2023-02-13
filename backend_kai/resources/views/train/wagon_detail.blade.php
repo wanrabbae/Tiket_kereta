@@ -43,16 +43,12 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="container pb-2 d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add</button>
-                    </div>
                     <div class="card">
                         <div class="card-body">
                             <table id="customer-table" class="display" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Wagon Seat</th>
+                                        <th>Train Car Seat</th>
                                         <th>Passenger Name</th>
                                     </tr>
                                 </thead>
@@ -60,9 +56,6 @@
                                     <?php $i = 1; ?>
                                     @foreach ($wagons[0]->wagon_seat as $item)
                                         <tr>
-                                            <td id="itemid">
-                                                {{ $i++ }}
-                                            </td>
                                             <td id="item->name">
                                                 {{ $item->seat }}
                                             </td>

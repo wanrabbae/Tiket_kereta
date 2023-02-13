@@ -55,7 +55,6 @@
                                         <th>Train No</th>
                                         <th>Start Route</th>
                                         <th>End Route</th>
-                                        <th>Route Seq</th>
                                         <th>Depart Time</th>
                                         <th>Arrival Time</th>
                                         <th>Action</th>
@@ -76,9 +75,6 @@
                                             </td>
                                             <td id="item->email">
                                                 {{ $item->end_route }}
-                                            </td>
-                                            <td id="item->email">
-                                                {{ $item->route_seq }}
                                             </td>
                                             <td id="item->email">
                                                 {{ $item->depart_time }}
@@ -121,11 +117,6 @@
                                                                         <label for="end_route">End Route</label>
                                                                         <input value="{{ $item->end_route }}" required type="text" name="end_route" id="end_route" class="form-control"
                                                                             placeholder="Enter end_route" value="{{ old('end_route') }}">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="route_seq">Route Seq</label>
-                                                                        <input value="{{ $item->route_seq }}" required type="text" name="route_seq" id="route_seq" class="form-control"
-                                                                            placeholder="Enter route_seq" value="{{ old('route_seq') }}">
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="depart_time">Depart Time</label>
@@ -197,10 +188,6 @@
                             <div class="mb-3">
                                 <label for="end_route">End Route</label>
                                 <input required type="text" name="end_route" id="end_route" class="form-control" placeholder="Enter end_route" value="{{ old('end_route') }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="route_seq">Route Seq</label>
-                                <input required type="text" name="route_seq" id="route_seq" class="form-control" placeholder="Enter route_seq" value="{{ old('route_seq') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="depart_time">Depart Time</label>

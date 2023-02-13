@@ -20,4 +20,14 @@ class Wagon extends Model
     {
         return $this->hasMany(WagonSeat::class, 'wagon_id');
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($wagon) { // before delete() method call this
+            $wagon->wagon_seat()->delete();
+            // do the rest of the cleanup...
+        });
+    }
 }

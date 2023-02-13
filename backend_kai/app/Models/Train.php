@@ -16,4 +16,14 @@ class Train extends Model
     {
         return $this->hasMany(Wagon::class, 'train_id');
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($train) { // before delete() method call this
+            $train->wagon()->delete();
+            // do the rest of the cleanup...
+        });
+    }
 }

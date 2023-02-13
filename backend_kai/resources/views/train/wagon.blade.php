@@ -52,8 +52,8 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Wagon Name</th>
-                                        <th>Wagon Type</th>
+                                        <th>Train Car Name</th>
+                                        <th>Train Car Type</th>
                                         <th>Seat Num</th>
                                         <th>Action</th>
                                     </tr>
@@ -84,45 +84,46 @@
                                                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h1 class="modal-title fs-2" id="staticBackdropLabel">Edit Station</h1>
+                                                                <h1 class="modal-title fs-2" id="staticBackdropLabel">Edit New Train Car</h1>
                                                                 <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form action="/trains/update/{{ $item->id }}" method="post">
+                                                                <form action="/trains/wagon/update/{{ $item->id }}" method="post">
                                                                     @csrf
-                                                                    <div class="mb-3">
-                                                                        <label for="train_name">Train Name</label>
-                                                                        <input required type="text" value="{{ $item->train_name }}" name="train_name" id="train_name" class="form-control"
-                                                                            placeholder="Enter station name" value="{{ old('train_name') }}">
+                                                                    <input type="hidden" name="train_id" value="{{ $id_train }}">
+                                                                    <div class="modal-body">
+                                                                        <div class="mb-3">
+                                                                            <label for="name">Train Car Name</label>
+                                                                            <input required type="text" name="name" value="{{ $item->name }}" id="name" class="form-control"
+                                                                                placeholder="Enter train car name">
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="type">Train Car Type</label>
+                                                                            <select name="type" id="type" class="form-select">
+                                                                                <option class="form-option" value="ECONOMY" {{ $item->class == 'ECONOMY' ? 'selected' : '' }}>ECONOMY</option>
+                                                                                <option class="form-option" value="BUSINESS" {{ $item->class == 'BUSINESS' ? 'selected' : '' }}>BUSINESS</option>
+                                                                                <option class="form-option" value="EXECUTIVE" {{ $item->class == 'EXECUTIVE' ? 'selected' : '' }}>EXECUTIVE</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="seat_num">Seat Num</label>
+                                                                            <input required type="number" value="{{ $item->wagon_seat->count() }}" name="seat_num" id="seat_num" class="form-control"
+                                                                                placeholder="Enter seat num">
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="eco_seat_num">Economy Seat Num</label>
-                                                                        <input required type="number" value="{{ $item->eco_seat_num }}" name="eco_seat_num" id="eco_seat_num" class="form-control"
-                                                                            placeholder="Enter eco_seat_num" value="{{ old('eco_seat_num') }}">
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary">Save</button>
                                                                     </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="exec_seat_num">Executive Seat Num</label>
-                                                                        <input required type="number" value="{{ $item->exec_seat_num }}" name="exec_seat_num" id="exec_seat_num" class="form-control"
-                                                                            placeholder="Enter exec_seat_num" value="{{ old('exec_seat_num') }}">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="busines_seat_num">Business Seat Num</label>
-                                                                        <input required type="number" value="{{ $item->busines_seat_num }}" name="busines_seat_num" id="busines_seat_num"
-                                                                            class="form-control" placeholder="Enter busines_seat_num" value="{{ old('busines_seat_num') }}">
-                                                                    </div>
+                                                                </form>
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" id="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Save</button>
-                                                            </div>
-                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 |
                                                 <a href="/trains/wagon/{{ $item->id }}/passengers" class="btn btn-sm btn-info">Passengers</a>
                                                 |
-                                                <a class="btn btn-sm btn-danger" href="/trains/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
+                                                <a class="btn btn-sm btn-danger" href="/trains/wagon/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -149,28 +150,28 @@
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-2" id="staticBackdropLabel">Create New Train</h1>
+                        <h1 class="modal-title fs-2" id="staticBackdropLabel">Create New Train Car</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="/trains/add" method="post">
+                    <form action="/trains/wagon/add" method="post">
                         @csrf
+                        <input type="hidden" name="train_id" value="{{ $id_train }}">
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="train_name">Train Name</label>
-                                <input required type="text" name="train_name" id="train_name" class="form-control" placeholder="Enter station name" value="{{ old('train_name') }}">
+                                <label for="name">Train Car Name</label>
+                                <input required type="text" name="name" id="name" class="form-control" placeholder="Enter train car name" value="{{ old('name') }}">
                             </div>
                             <div class="mb-3">
-                                <label for="eco_seat_num">Economy Seat Num</label>
-                                <input required type="number" name="eco_seat_num" id="eco_seat_num" class="form-control" placeholder="Enter eco_seat_num" value="{{ old('eco_seat_num') }}">
+                                <label for="type">Train Car Type</label>
+                                <select required name="type" id="type" class="form-select">
+                                    <option class="form-option" value="ECONOMY">ECONOMY</option>
+                                    <option class="form-option" value="BUSINESS">BUSINESS</option>
+                                    <option class="form-option" value="EXECUTIVE">EXECUTIVE</option>
+                                </select>
                             </div>
                             <div class="mb-3">
-                                <label for="exec_seat_num">Executive Seat Num</label>
-                                <input required type="number" name="exec_seat_num" id="exec_seat_num" class="form-control" placeholder="Enter exec_seat_num" value="{{ old('exec_seat_num') }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="busines_seat_num">Business Seat Num</label>
-                                <input required type="number" name="busines_seat_num" id="busines_seat_num" class="form-control" placeholder="Enter busines_seat_num"
-                                    value="{{ old('busines_seat_num') }}">
+                                <label for="seat_num">Seat Num</label>
+                                <input required type="number" name="seat_num" id="seat_num" class="form-control" placeholder="Enter seat num" value="{{ old('seat_num') }}">
                             </div>
                         </div>
                         <div class="modal-footer">

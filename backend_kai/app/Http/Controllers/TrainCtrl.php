@@ -100,9 +100,7 @@ class TrainCtrl extends Controller
     {
         $validate = $request->validate([
             "train_name" => "required|max:255|unique:trains",
-            "eco_seat_num" => "required|int",
-            "busines_seat_num" => "required|int",
-            "exec_seat_num" => "required|int",
+            "train_no" => "required|max:255|unique:trains",
         ]);
 
         if (Train::create($validate)) {
@@ -116,9 +114,7 @@ class TrainCtrl extends Controller
     {
         $validate = $request->validate([
             "train_name" => "required|max:255|unique:trains",
-            "eco_seat_num" => "required|int",
-            "busines_seat_num" => "required|int",
-            "exec_seat_num" => "required|int",
+            "train_no" => "required|max:255|unique:trains",
         ]);
 
         if (Train::where('id', $id)->update($validate)) {
@@ -194,7 +190,6 @@ class TrainCtrl extends Controller
             "train_no" => "required|max:100",
             "start_route" => "required|max:100",
             "end_route" => "required|max:100",
-            "route_seq" => "required|max:100|int",
             "depart_time" => "required|date",
             "arrival_time" => "required|date",
         ]);
@@ -212,7 +207,6 @@ class TrainCtrl extends Controller
             "train_no" => "required|max:100",
             "start_route" => "required|max:100",
             "end_route" => "required|max:100",
-            "route_seq" => "required|max:100|int",
             "depart_time" => "required|date",
             "arrival_time" => "required|date",
         ]);

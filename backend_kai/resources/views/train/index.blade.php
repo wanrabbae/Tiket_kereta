@@ -53,9 +53,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Train Name</th>
-                                        <th>Economy Seat Num</th>
-                                        <th>Executive Seat Num</th>
-                                        <th>Business Seat Num</th>
+                                        <th>Train No</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -69,14 +67,8 @@
                                             <td id="item->name">
                                                 {{ $item->train_name }}
                                             </td>
-                                            <td id="item->email">
-                                                {{ $item->eco_seat_num }}
-                                            </td>
-                                            <td id="item->email">
-                                                {{ $item->exec_seat_num }}
-                                            </td>
-                                            <td id="item->email">
-                                                {{ $item->busines_seat_num }}
+                                            <td>
+                                                {{ $item->train_no }}
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-sm btn-success" class="btn btn-primary btn-lg" data-bs-toggle="modal"
@@ -100,19 +92,14 @@
                                                                             placeholder="Enter station name" value="{{ old('train_name') }}">
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label for="eco_seat_num">Economy Seat Num</label>
-                                                                        <input required type="number" value="{{ $item->eco_seat_num }}" name="eco_seat_num" id="eco_seat_num" class="form-control"
-                                                                            placeholder="Enter eco_seat_num" value="{{ old('eco_seat_num') }}">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="exec_seat_num">Executive Seat Num</label>
-                                                                        <input required type="number" value="{{ $item->exec_seat_num }}" name="exec_seat_num" id="exec_seat_num" class="form-control"
-                                                                            placeholder="Enter exec_seat_num" value="{{ old('exec_seat_num') }}">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="busines_seat_num">Business Seat Num</label>
-                                                                        <input required type="number" value="{{ $item->busines_seat_num }}" name="busines_seat_num" id="busines_seat_num"
-                                                                            class="form-control" placeholder="Enter busines_seat_num" value="{{ old('busines_seat_num') }}">
+                                                                        <label for="train_no">Train No</label>
+                                                                        <input required class="form-control" list="datalistOptions" value="{{ $item->train_no }}" id="exampleDataList" name="train_no"
+                                                                            placeholder="Type to search...">
+                                                                        <datalist id="datalistOptions">
+                                                                            @foreach ($train_fares as $fare)
+                                                                                <option value="{{ $fare->train_no }}">
+                                                                            @endforeach
+                                                                        </datalist>
                                                                     </div>
                                                             </div>
                                                             <div class="modal-footer">
@@ -124,7 +111,7 @@
                                                     </div>
                                                 </div>
                                                 |
-                                                <a href="/trains/{{ $item->id }}/wagon" class="btn btn-sm btn-info">Wagon</a>
+                                                <a href="/trains/{{ $item->id }}/wagon" class="btn btn-sm btn-info">Train Car</a>
                                                 |
                                                 <a class="btn btn-sm btn-danger" href="/trains/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
                                             </td>
@@ -164,17 +151,13 @@
                                 <input required type="text" name="train_name" id="train_name" class="form-control" placeholder="Enter station name" value="{{ old('train_name') }}">
                             </div>
                             <div class="mb-3">
-                                <label for="eco_seat_num">Economy Seat Num</label>
-                                <input required type="number" name="eco_seat_num" id="eco_seat_num" class="form-control" placeholder="Enter eco_seat_num" value="{{ old('eco_seat_num') }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exec_seat_num">Executive Seat Num</label>
-                                <input required type="number" name="exec_seat_num" id="exec_seat_num" class="form-control" placeholder="Enter exec_seat_num" value="{{ old('exec_seat_num') }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="busines_seat_num">Business Seat Num</label>
-                                <input required type="number" name="busines_seat_num" id="busines_seat_num" class="form-control" placeholder="Enter busines_seat_num"
-                                    value="{{ old('busines_seat_num') }}">
+                                <label for="train_no">Train No</label>
+                                <input required class="form-control" list="datalistOptions2" value="{{ old('train_no') }}" id="exampleDataList" name="train_no" placeholder="Type to search...">
+                                <datalist id="datalistOptions2">
+                                    @foreach ($train_fares as $fare)
+                                        <option value="{{ $fare->train_no }}">
+                                    @endforeach
+                                </datalist>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -199,7 +182,9 @@
             All Rights Reserved by Flexy Admin. Designed and Developed by <a href="https://www.wrappixel.com">WrapPixel</a>.
         </footer>
         <script>
-            $('#customer-table').DataTable();
+            $('#customer-table').DataTable({
+                scrollX: true
+            });
         </script>
     </div>
 @endsection
