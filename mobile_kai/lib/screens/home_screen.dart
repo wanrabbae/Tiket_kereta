@@ -17,60 +17,65 @@ class HomeScreen extends StatelessWidget {
       extendBody: true,
       body: ListView(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Styles.primaryBold,
-            ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
-            child: Column(children: [
-              const Gap(40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Styles.primaryBold,
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: Column(children: [
+                  const Gap(40),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Good Morning",
-                        style:
-                            Styles.headLineStyle3.copyWith(color: Colors.white),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Good Morning",
+                            style: Styles.headLineStyle3
+                                .copyWith(color: Colors.white),
+                          ),
+                          const Gap(5),
+                          Text(
+                            "Alwan",
+                            style: Styles.headLineStyle1
+                                .copyWith(color: Colors.white),
+                          )
+                        ],
                       ),
-                      const Gap(5),
-                      Text(
-                        "Alwan",
-                        style:
-                            Styles.headLineStyle1.copyWith(color: Colors.white),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage("assets/images/img_1.png"))),
                       )
                     ],
                   ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage("assets/images/img_1.png"))),
-                  )
-                ],
+                  const Gap(60),
+                ]),
               ),
-              const Gap(60),
-            ]),
-          ),
-          Positioned(
-            top: 100.0,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              // margin: EdgeInsets.only(top: -100),
-              child: Container(
-                height: 100,
-                decoration: BoxDecoration(
-                  color: Colors.white,
+              Padding(
+                padding: EdgeInsets.only(top: 120),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  // margin: EdgeInsets.only(top: -100),
+                  child: Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
           const Gap(25),
           Container(

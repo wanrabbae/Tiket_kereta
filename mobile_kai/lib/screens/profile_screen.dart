@@ -6,6 +6,74 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+// class ProfileScreen extends StatelessWidget {
+
+//   final String? fullName;
+//   final String? email;
+//   final String? identity;
+
+//   ProfileScreen({this.fullName, this.email, this.identity});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Container(
+//         padding: EdgeInsets.all(20),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Container(
+//               width: 140,
+//               height: 140,
+//               decoration: BoxDecoration(
+//                 shape: BoxShape.circle,
+//                 image: DecorationImage(
+//                   image: NetworkImage("https://picsum.photos/200"),
+//                   fit: BoxFit.cover,
+//                 ),
+//               ),
+//             ),
+//             SizedBox(height: 20),
+//             Text(
+//               fullName!,
+//               style: TextStyle(
+//                 fontWeight: FontWeight.bold,
+//                 fontSize: 20,
+//               ),
+//             ),
+//             SizedBox(height: 10),
+//             Text(
+//               email!,
+//               style: TextStyle(
+//                 fontSize: 16,
+//               ),
+//             ),
+//             SizedBox(height: 10),
+//             Text(
+//               identity!,
+//               style: TextStyle(
+//                 fontSize: 16,
+//               ),
+//             ),
+//             SizedBox(height: 20),
+//             TextButton(
+//               onPressed: () {},
+//               child: Text(
+//                 "Edit Profile",
+//                 style: TextStyle(
+//                   color: Colors.blue,
+//                   fontSize: 16,
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -18,8 +86,8 @@ class ProfileScreen extends StatelessWidget {
                 horizontal: AppLayout.getWidth(20),
                 vertical: AppLayout.getHeight(20)),
             children: [
-              Gap(AppLayout.getHeight(40)),
-              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Gap(AppLayout.getHeight(60)),
+              Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                 Container(
                     width: AppLayout.getWidth(86),
                     height: AppLayout.getHeight(86),
@@ -55,33 +123,15 @@ class ProfileScreen extends StatelessWidget {
                               BorderRadius.circular(AppLayout.getWidth(100)),
                           color: const Color(0xFFFEF4F3)),
                       child: Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(3),
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFF526799)),
-                            child: const Icon(
-                              FluentSystemIcons.ic_fluent_shield_filled,
-                              color: Colors.white,
-                              size: 15,
-                            ),
-                          ),
-                          Gap(AppLayout.getHeight(5)),
-                          const Text(
-                            "Premium Status",
-                            style: TextStyle(
-                                color: Color(0xFF566799),
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Gap(AppLayout.getHeight(5)),
-                        ],
+                        children: [],
                       ),
                     )
                   ],
                 ),
                 const Spacer(),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     InkWell(
                       onTap: () => print("tapped"),
@@ -97,79 +147,7 @@ class ProfileScreen extends StatelessWidget {
               Divider(
                 color: Colors.grey.shade300,
               ),
-              Gap(AppLayout.getHeight(8)),
-              Stack(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: AppLayout.getHeight(90),
-                    decoration: BoxDecoration(
-                        color: Styles.primaryColor,
-                        borderRadius:
-                            BorderRadius.circular(AppLayout.getHeight(18))),
-                  ),
-                  Positioned(
-                    right: -45,
-                    top: -40,
-                    child: Container(
-                      padding: EdgeInsets.all(AppLayout.getHeight(30)),
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              width: AppLayout.getWidth(18),
-                              color: Color(0xFF264CD2))),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppLayout.getWidth(25),
-                        vertical: AppLayout.getHeight(20)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          maxRadius: 25,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            FluentSystemIcons
-                                .ic_fluent_lightbulb_filament_filled,
-                            color: Styles.primaryColor,
-                            size: 27,
-                          ),
-                        ),
-                        Gap(AppLayout.getHeight(8)),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "You've got a new reward.",
-                              style: Styles.headLineStyle2.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            Text(
-                              "You have 95 flights in a year.",
-                              style: Styles.headLineStyle2.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white.withOpacity(0.9),
-                                  fontSize: 16),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
               Gap(AppLayout.getHeight(25)),
-              Text(
-                "Accumulated Miles",
-                style: Styles.headLineStyle2,
-              ),
-              Gap(AppLayout.getHeight(20)),
               Container(
                 padding:
                     EdgeInsets.symmetric(horizontal: AppLayout.getWidth(10)),
@@ -183,14 +161,6 @@ class ProfileScreen extends StatelessWidget {
                           spreadRadius: 2)
                     ]),
                 child: Column(children: [
-                  Gap(AppLayout.getHeight(15)),
-                  Text(
-                    "19280",
-                    style: TextStyle(
-                        fontSize: 45,
-                        color: Styles.textColor,
-                        fontWeight: FontWeight.w600),
-                  ),
                   Gap(AppLayout.getHeight(20)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
