@@ -70,6 +70,13 @@ class HotelScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.black87, fontSize: 13),
                   ),
                 ),
+                SizedBox(
+                  child: Text(
+                    "2022-10-10:08.00",
+                    style: Styles.headLineStyle4
+                        .copyWith(color: Colors.grey[400], fontSize: 12),
+                  ),
+                )
               ],
             ),
           )

@@ -1,6 +1,7 @@
 import 'package:kai_mobile/screens/hotel_screen.dart';
 import 'package:kai_mobile/screens/ticket_view.dart';
 import 'package:kai_mobile/utils/app_info_list.dart';
+import 'package:kai_mobile/utils/app_layout.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
 import 'package:kai_mobile/widgets/view_all_widget.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
@@ -14,7 +15,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Styles.bgColor,
-      extendBody: true,
       body: ListView(
         children: [
           Stack(
@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Good Morning",
+                            "Selamat Pagi,",
                             style: Styles.headLineStyle3
                                 .copyWith(color: Colors.white),
                           ),
@@ -67,10 +67,69 @@ class HomeScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   // margin: EdgeInsets.only(top: -100),
                   child: Container(
-                    height: 100,
+                    width: double.infinity,
+                    padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          decoration: InputDecoration(
+                              hintText: "Dari",
+                              prefixIcon: Icon(
+                                Icons.departure_board,
+                                color: Styles.primaryBold,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                              hintText: "Ke",
+                              prefixIcon: Icon(
+                                Icons.train_sharp,
+                                color: Styles.primaryBold,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                              hintText: "Penumpang",
+                              prefixIcon: Icon(
+                                Icons.person_add_alt_rounded,
+                                color: Styles.primaryBold,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            print("CARI TIKET");
+                          },
+                          child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: AppLayout.getHeight(18),
+                                  horizontal: AppLayout.getWidth(15)),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      AppLayout.getWidth(10)),
+                                  color: Styles.primaryBold),
+                              child: Center(
+                                child: Text(
+                                  "Cari Tiket",
+                                  style: Styles.textStyle
+                                      .copyWith(color: Colors.white),
+                                ),
+                              )),
+                        ),
+                      ],
                     ),
                   ),
                 ),
