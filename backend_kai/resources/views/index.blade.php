@@ -39,9 +39,9 @@
                                 </div>
                                 <div class="ms-auto d-flex no-block align-items-center">
                                     <ul class="list-inline dl d-flex align-items-center m-r-15 m-b-0">
-                                        <li class="list-inline-item d-flex align-items-center text-info"><i class="fa fa-circle font-10 me-1"></i> Ample
+                                        <li class="list-inline-item d-flex align-items-center text-warning"><i class="fa fa-circle font-10 me-1"></i> Pending
                                         </li>
-                                        <li class="list-inline-item d-flex align-items-center text-primary"><i class="fa fa-circle font-10 me-1"></i> Pixel
+                                        <li class="list-inline-item d-flex align-items-center text-success"><i class="fa fa-circle font-10 me-1"></i> Pixel
                                         </li>
                                     </ul>
                                 </div>
@@ -55,67 +55,50 @@
                 <div class="col-lg-4">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Weekly Stats</h4>
-                            <h6 class="card-subtitle">Average sales</h6>
-                            <div class="mt-5 pb-3 d-flex align-items-center">
+                            <div class="pb-3 d-flex align-items-center">
                                 <span class="btn btn-primary btn-circle d-flex align-items-center">
                                     <i class="mdi mdi-cart-outline fs-4"></i>
                                 </span>
                                 <div class="ms-3">
-                                    <h5 class="mb-0 fw-bold">Top Sales</h5>
-                                    <span class="text-muted fs-6">Johnathan Doe</span>
-                                </div>
-                                <div class="ms-auto">
-                                    <span class="badge bg-light text-muted">+68%</span>
+                                    <h5 class="mb-0 fw-bold">Income</h5>
+                                    <span class="badge bg-light text-success text-sm">Rp. {{ number_format($income, 2, ',', '.') }}</span>
                                 </div>
                             </div>
                             <div class="py-3 d-flex align-items-center">
                                 <span class="btn btn-warning btn-circle d-flex align-items-center">
-                                    <i class="mdi mdi-star-circle fs-4"></i>
+                                    <i class="mdi mdi-account-multiple fs-4"></i>
                                 </span>
                                 <div class="ms-3">
-                                    <h5 class="mb-0 fw-bold">Best Seller</h5>
-                                    <span class="text-muted fs-6">MaterialPro Admin</span>
-                                </div>
-                                <div class="ms-auto">
-                                    <span class="badge bg-light text-muted">+68%</span>
+                                    <h5 class="mb-0 fw-bold">Customers</h5>
+                                    <span class="badge bg-light text-success text-sm">{{ $customer }}</span>
                                 </div>
                             </div>
                             <div class="py-3 d-flex align-items-center">
                                 <span class="btn btn-success btn-circle d-flex align-items-center">
-                                    <i class="mdi mdi-comment-multiple-outline text-white fs-4"></i>
+                                    <i class="mdi mdi-subway text-white fs-4"></i>
                                 </span>
                                 <div class="ms-3">
-                                    <h5 class="mb-0 fw-bold">Most Commented</h5>
-                                    <span class="text-muted fs-6">Ample Admin</span>
-                                </div>
-                                <div class="ms-auto">
-                                    <span class="badge bg-light text-muted">+68%</span>
+                                    <h5 class="mb-0 fw-bold">Train Stations</h5>
+                                    <span class="badge bg-light text-success text-sm">{{ $station }}</span>
                                 </div>
                             </div>
                             <div class="py-3 d-flex align-items-center">
                                 <span class="btn btn-info btn-circle d-flex align-items-center">
-                                    <i class="mdi mdi-diamond fs-4 text-white"></i>
+                                    <i class="mdi mdi-train fs-4 text-white"></i>
                                 </span>
                                 <div class="ms-3">
-                                    <h5 class="mb-0 fw-bold">Top Budgets</h5>
-                                    <span class="text-muted fs-6">Sunil Joshi</span>
-                                </div>
-                                <div class="ms-auto">
-                                    <span class="badge bg-light text-muted">+15%</span>
+                                    <h5 class="mb-0 fw-bold">Trains</h5>
+                                    <span class="badge bg-light text-success text-sm">{{ $train }}</span>
                                 </div>
                             </div>
 
                             <div class="pt-3 d-flex align-items-center">
                                 <span class="btn btn-danger btn-circle d-flex align-items-center">
-                                    <i class="mdi mdi-content-duplicate fs-4 text-white"></i>
+                                    <i class="mdi mdi-account fs-4 text-white"></i>
                                 </span>
                                 <div class="ms-3">
-                                    <h5 class="mb-0 fw-bold">Best Designer</h5>
-                                    <span class="text-muted fs-6">Nirav Joshi</span>
-                                </div>
-                                <div class="ms-auto">
-                                    <span class="badge bg-light text-muted">+90%</span>
+                                    <h5 class="mb-0 fw-bold">Users</h5>
+                                    <span class="badge bg-light text-success text-sm">{{ $user }}</span>
                                 </div>
                             </div>
                         </div>

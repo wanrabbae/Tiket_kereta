@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookingCtrl;
 use App\Http\Controllers\CustomerCtrl;
+use App\Http\Controllers\DashboardCtrl;
 use App\Http\Controllers\NewsCtrl;
 use App\Http\Controllers\TrainCtrl;
 use App\Http\Controllers\UserCtrl;
@@ -64,11 +65,7 @@ Route::prefix("/users")->middleware('auth')->group(function () {
 
 
 // DASHBOARD
-Route::get('/', function () {
-    return view('index', [
-        "title" => "KAI Dashboard"
-    ]);
-})->name("dashboard")->middleware('auth');
+Route::get('/', [DashboardCtrl::class, 'index'])->name("dashboard")->middleware('auth');
 
 // TRAINS
 Route::prefix("/trains")->middleware('auth')->group(function () {

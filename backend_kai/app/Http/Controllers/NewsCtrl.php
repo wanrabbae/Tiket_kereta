@@ -104,4 +104,24 @@ class NewsCtrl extends Controller
 
         return redirect()->back()->withErrors(["msg", "Error cant unpublished news"]);
     }
+
+    // REST API
+    public function getNews(Request $request)
+    {
+        $data = News::orderBy('id', 'DESC')->get();
+        foreach ($data as $key) {
+            if ($key["image"] != null || $key["image"]) {
+                $key["image"] = $request->getSchemeAndHttpHost() . '/' . 'uploadedimages/' . $key["image"];
+            }
+        }
+        return response()->json($data);
+    }
+    public function getSingleNews(Request $request, $id)
+    {
+        $data = News::find($id);
+
+        $data["image"] = $request->getSchemeAndHttpHost() . '/' . 'uploadedimages/' . $data["image"];
+
+        return response()->json($data);
+    }
 }
