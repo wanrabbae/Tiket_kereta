@@ -146,14 +146,14 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/trains/fare" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span
                                     class="hide-menu">Trains Fare</span></a></li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/trains" aria-expanded="false"><i class="mdi mdi-train"></i><span
-                                    class="hide-menu">Trains</span></a></li>
-
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/trains/journey" aria-expanded="false"><i
                                     class="mdi mdi-map-marker-multiple"></i><span class="hide-menu">Trains Journey</span></a></li>
 
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/trains/route" aria-expanded="false"><i class="mdi mdi-routes"></i><span
                                     class="hide-menu">Trains Route</span></a></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/trains" aria-expanded="false"><i class="mdi mdi-train"></i><span
+                                    class="hide-menu">Trains</span></a></li>
 
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/booking" aria-expanded="false"><i class="mdi mdi-file"></i><span
                                     class="hide-menu">Booking Data</span></a></li>

@@ -42,9 +42,8 @@
                                 <button class="btn btn-success text-white btn-lg ms-2" type="sub
                             " name="filter">Filter</button>
                             </form>
-                            <button class="btn btn-success text-white btn-lg ms-4" onclick="printDiv()">Export</button>
                         </div>
-                        <button class="btn btn-primary btn-lg">Add</button>
+                        <button class="btn btn-success text-white btn-lg ms-4" onclick="printDiv()">Export</button>
                     </div>
                     <div class="card">
                         <div class="card-body" id="print-area">
