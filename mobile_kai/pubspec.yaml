@@ -45,6 +45,7 @@ dependencies:
   bottom_navy_bar: ^6.0.0
   image_picker: ^0.8.6
   fluentui_icons: ^1.0.0
+  book_my_seat: ^1.0.1
   gap: ^2.0.0
   get:
 
