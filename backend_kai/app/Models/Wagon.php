@@ -16,6 +16,10 @@ class Wagon extends Model
     {
         return $this->belongsTo(Train::class, 'train_id');
     }
+    public function train_fare()
+    {
+        return $this->belongsTo(TrainFare::class, 'fare_id');
+    }
     public function wagon_seat()
     {
         return $this->hasMany(WagonSeat::class, 'wagon_id');

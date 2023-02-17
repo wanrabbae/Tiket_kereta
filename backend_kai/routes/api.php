@@ -29,3 +29,5 @@ Route::get('/stations', [TrainApiCtrl::class, 'getStations']);
 
 // FIND TICKET
 Route::get('/findTicket', [TrainApiCtrl::class, 'findTicket']);
+// SEAT LIST
+Route::get('/listSeat', [TrainApiCtrl::class, 'getListSeat']);

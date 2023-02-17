@@ -14,7 +14,7 @@ class WagonCtrl extends Controller
     {
         $validate = $request->validate([
             "name" => "required|max:255",
-            "type" => "required|max:255",
+            "fare_id" => "required|max:255",
             "seat_num" => "required|max:100|int",
         ]);
 
@@ -32,7 +32,7 @@ class WagonCtrl extends Controller
     {
         $validate = $request->validate([
             "name" => "required|max:255",
-            "type" => "required|max:255",
+            "fare_id" => "required|max:255",
             "seat_num" => "required|max:100|int",
         ]);
 

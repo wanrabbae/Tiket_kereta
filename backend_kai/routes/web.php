@@ -83,10 +83,12 @@ Route::prefix("/trains")->middleware('auth')->group(function () {
 
     Route::get('/{id}/wagon', function ($id) {
         $train = Train::find($id);
+        $fares = TrainFare::where('train_no', $train->train_no)->get();
         return view('train.wagon', [
             "title" => $train->train_name,
             "id_train" => $train->id,
-            "wagons" => Wagon::with('wagon_seat')->where('train_id', $id)->get()
+            "fares" => $fares,
+            "wagons" => Wagon::with(['wagon_seat', 'train_fare'])->where('train_id', $id)->get()
         ]);
     })->name("trains_wagon");
 

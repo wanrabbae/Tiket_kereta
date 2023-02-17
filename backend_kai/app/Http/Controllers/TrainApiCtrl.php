@@ -7,6 +7,7 @@ use App\Models\TrainFare;
 use App\Models\TrainJourney;
 use App\Models\TrainRoute;
 use App\Models\TrainStation;
+use App\Models\Wagon;
 use Illuminate\Http\Request;
 
 class TrainApiCtrl extends Controller
@@ -25,7 +26,7 @@ class TrainApiCtrl extends Controller
 
             if ($data) {
                 foreach ($data as $key) {
-                    $fare = TrainFare::where('train_no', $key['train_no'])->first();
+                    $fare = TrainFare::where('train_no', $key['train_no'])->get(["id", "class", "fare"]);
                     if ($fare) {
                         $key["train_fare"] = $fare;
                     }
@@ -35,7 +36,7 @@ class TrainApiCtrl extends Controller
             $data = TrainJourney::with(['train', 'train_station_depart', 'train_station_arrival'])->get();
             if ($data) {
                 foreach ($data as $key) {
-                    $fare = TrainFare::where('train_no', $key['train_no'])->first();
+                    $fare = TrainFare::where('train_no', $key['train_no'])->get(["id", "class", "fare"]);
                     if ($fare) {
                         $key["train_fare"] = $fare;
                     }
@@ -43,5 +44,12 @@ class TrainApiCtrl extends Controller
             }
         }
         return response()->json($data);
+    }
+
+    public function getListSeat(Request $request)
+    {
+        return response()->json(
+            Wagon::with(['train_fare', 'wagon_seat'])->where('fare_id', $request->query('fare_id'))->get()
+        );
     }
 }

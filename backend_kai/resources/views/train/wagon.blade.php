@@ -53,7 +53,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Train Car Name</th>
-                                        <th>Train Car Type</th>
+                                        <th>Class Type</th>
                                         <th>Seat Num</th>
                                         <th>Action</th>
                                     </tr>
@@ -69,7 +69,7 @@
                                                 {{ $item->name }}
                                             </td>
                                             <td id="item->email">
-                                                {{ $item->type }}
+                                                {{ $item->train_fare->class }}
                                             </td>
                                             <td id="item->email">
                                                 {{ $item->wagon_seat->count() }}
@@ -98,11 +98,13 @@
                                                                                 placeholder="Enter train car name">
                                                                         </div>
                                                                         <div class="mb-3">
-                                                                            <label for="type">Train Car Type</label>
-                                                                            <select name="type" id="type" class="form-select">
-                                                                                <option class="form-option" value="ECONOMY" {{ $item->class == 'ECONOMY' ? 'selected' : '' }}>ECONOMY</option>
-                                                                                <option class="form-option" value="BUSINESS" {{ $item->class == 'BUSINESS' ? 'selected' : '' }}>BUSINESS</option>
-                                                                                <option class="form-option" value="EXECUTIVE" {{ $item->class == 'EXECUTIVE' ? 'selected' : '' }}>EXECUTIVE</option>
+                                                                            <label for="fare_id">Fare & Class Type</label>
+                                                                            <select name="fare_id" id="fare_id" class="form-select">
+                                                                                @foreach ($fares as $fare)
+                                                                                    <option class="form-option" value="{{ $fare->id }}" {{ $fare->id == $item->fare_id ? 'selected' : '' }}>
+                                                                                        {{ $fare->class }} |
+                                                                                        {{ $fare->fare }}</option>
+                                                                                @endforeach
                                                                             </select>
                                                                         </div>
                                                                         <div class="mb-3">
@@ -162,11 +164,11 @@
                                 <input required type="text" name="name" id="name" class="form-control" placeholder="Enter train car name" value="{{ old('name') }}">
                             </div>
                             <div class="mb-3">
-                                <label for="type">Train Car Type</label>
-                                <select required name="type" id="type" class="form-select">
-                                    <option class="form-option" value="ECONOMY">ECONOMY</option>
-                                    <option class="form-option" value="BUSINESS">BUSINESS</option>
-                                    <option class="form-option" value="EXECUTIVE">EXECUTIVE</option>
+                                <label for="fare_id">Fare & Class Type</label>
+                                <select required name="fare_id" id="fare_id" class="form-select">
+                                    @foreach ($fares as $item)
+                                        <option class="form-option" value="{{ $item->id }}">{{ $item->class }} | {{ $item->fare }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">

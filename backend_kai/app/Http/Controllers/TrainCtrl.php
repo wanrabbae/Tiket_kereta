@@ -58,7 +58,7 @@ class TrainCtrl extends Controller
     {
         $validate = $request->validate([
             "class" => "required|max:255",
-            "train_no" => "required|max:100|unique:train_fare",
+            "train_no" => "required|max:100",
             "fare" => "required|int",
         ]);
 
@@ -73,7 +73,7 @@ class TrainCtrl extends Controller
     {
         $validate = $request->validate([
             "class" => "required|max:255",
-            "train_no" => "required|max:100|unique:train_fare",
+            "train_no" => "required|max:100",
             "fare" => "required|int",
         ]);
 

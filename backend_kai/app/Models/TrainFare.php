@@ -16,4 +16,9 @@ class TrainFare extends Model
     {
         return $this->hasMany(TrainJourney::class, 'train_no');
     }
+
+    public function wagon()
+    {
+        return $this->hasMany(Wagon::class, 'fare_id');
+    }
 }
