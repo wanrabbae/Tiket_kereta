@@ -40,3 +40,4 @@ Route::get('/listSeat', [TrainApiCtrl::class, 'getListSeat']);
 
 // BOOKING
 Route::middleware('auth:sanctum')->get('/booking', [BookingApiCtrl::class, 'getBooking']);
+Route::middleware('auth:sanctum')->post('/booking', [BookingApiCtrl::class, 'booking']);

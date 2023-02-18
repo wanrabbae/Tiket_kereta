@@ -10,6 +10,7 @@ class DetailBooking extends Model
     use HasFactory;
 
     protected $table = 'det_booking';
+    protected $guarded = [];
 
     public function booking()
     {
