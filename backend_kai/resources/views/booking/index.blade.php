@@ -138,6 +138,22 @@
                                                                         <li class="list-group-item w-50 fw-bold">{{ $booking->train_fare[0]->train_no }}</li>
                                                                     </ul>
                                                                     <ul class="list-group list-group-horizontal">
+                                                                        <li class="list-group-item w-50">Station Depart</li>
+                                                                        <li class="list-group-item w-50 fw-bold">{{ $booking->train_journey->train_station_depart->station_name ?? 'N/A' }}</li>
+                                                                    </ul>
+                                                                    <ul class="list-group list-group-horizontal">
+                                                                        <li class="list-group-item w-50">Station Arrival</li>
+                                                                        <li class="list-group-item w-50 fw-bold">{{ $booking->train_journey->train_station_arrival->station_name ?? 'N/A' }}</li>
+                                                                    </ul>
+                                                                    <ul class="list-group list-group-horizontal">
+                                                                        <li class="list-group-item w-50">Station Depart Time</li>
+                                                                        <li class="list-group-item w-50 fw-bold">{{ $booking->train_journey->depart_time ?? 'N/A' }}</li>
+                                                                    </ul>
+                                                                    <ul class="list-group list-group-horizontal">
+                                                                        <li class="list-group-item w-50">Station Arrival Time</li>
+                                                                        <li class="list-group-item w-50 fw-bold">{{ $booking->train_journey->arrival_time ?? 'N/A' }}</li>
+                                                                    </ul>
+                                                                    <ul class="list-group list-group-horizontal">
                                                                         <li class="list-group-item w-50">Customer Idendity Card Number</li>
                                                                         <li class="list-group-item w-50 fw-bold">{{ $booking->customer->id }}</li>
                                                                     </ul>

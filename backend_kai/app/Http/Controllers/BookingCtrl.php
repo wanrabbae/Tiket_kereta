@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\TrainFare;
+use App\Models\TrainJourney;
 use Illuminate\Http\Request;
 
 class BookingCtrl extends Controller
@@ -14,6 +15,8 @@ class BookingCtrl extends Controller
             $data = Booking::with(['customer', 'detail_booking'])->whereBetween('booking_date', [$request->get('start'), $request->get('end')])->get();
             foreach ($data as $dt) {
                 $findFare = TrainFare::where('train_no', $dt->train_no)->get();
+                $findJourney = TrainJourney::with(['train_station_depart', 'train_station_arrival'])->where('train_no', $dt->train_no)->first();
+                $dt["train_journey"] = $findJourney;
                 $dt["train_fare"] = $findFare;
             }
             return view('booking.index', [
@@ -24,6 +27,8 @@ class BookingCtrl extends Controller
             $data = Booking::with(['customer', 'detail_booking'])->get();
             foreach ($data as $dt) {
                 $findFare = TrainFare::where('train_no', $dt->train_no)->get();
+                $findJourney = TrainJourney::with(['train_station_depart', 'train_station_arrival'])->where('train_no', $dt->train_no)->first();
+                $dt["train_journey"] = $findJourney;
                 $dt["train_fare"] = $findFare;
             }
             return view('booking.index', [
