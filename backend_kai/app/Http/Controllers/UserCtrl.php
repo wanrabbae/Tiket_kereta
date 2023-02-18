@@ -11,7 +11,7 @@ class UserCtrl extends Controller
 {
     public function auth(Request $request)
     {
-        $request->password = bcrypt($request->password);
+        $request["password"] = bcrypt($request["password"]);
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
@@ -42,13 +42,17 @@ class UserCtrl extends Controller
             "password_confirmed" => "required|min:6",
         ]);
 
+        if ($validate["password"] != $validate["password_confirmed"]) {
+            return redirect()->back()->withErrors(["msg" => "Password doesnt match!"]);
+        }
+
         $validate["password"] = bcrypt($validate["password"]);
 
         if (User::create($validate)) {
             return redirect()->back()->with("success", "Success create new User!");
         }
 
-        return redirect()->back()->withErrors(["msg" => "Error cant delete the User"]);
+        return redirect()->back()->withErrors(["msg" => "Error cant create the User"]);
     }
 
     public function updateUser(Request $request, $id)

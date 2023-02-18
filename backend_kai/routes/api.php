@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BookingApiCtrl;
+use App\Http\Controllers\CustomerCtrl;
 use App\Http\Controllers\NewsCtrl;
 use App\Http\Controllers\TrainApiCtrl;
 use App\Http\Controllers\TrainCtrl;
@@ -17,9 +19,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/customer', function (Request $request) {
     return $request->user();
 });
+// CUSTOMER
+Route::post('/login-customer', [CustomerCtrl::class, 'loginApi']);
+Route::post('/register-customer', [CustomerCtrl::class, 'registerApi']);
+
 // NEWS API
 Route::get('/news', [NewsCtrl::class, 'getNews']);
 Route::get('/news/{id}', [NewsCtrl::class, 'getSingleNews']);
@@ -31,3 +37,6 @@ Route::get('/stations', [TrainApiCtrl::class, 'getStations']);
 Route::get('/findTicket', [TrainApiCtrl::class, 'findTicket']);
 // SEAT LIST
 Route::get('/listSeat', [TrainApiCtrl::class, 'getListSeat']);
+
+// BOOKING
+Route::middleware('auth:sanctum')->get('/booking', [BookingApiCtrl::class, 'getBooking']);

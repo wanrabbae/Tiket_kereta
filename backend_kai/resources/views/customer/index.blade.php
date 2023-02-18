@@ -114,6 +114,10 @@
                                                                         <input type="text" name="country" id="countryEdit" class="form-control" placeholder="Enter country"
                                                                             value="{{ $item->country }}">
                                                                     </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="password">New Password</label>
+                                                                        <input required type="password" name="password" id="password" class="form-control" placeholder="Enter password">
+                                                                    </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" id="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -123,6 +127,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 |
                                                 <a class="btn btn-sm btn-danger" href="/customers/delete/{{ $item->id }}" onclick="return confirm('Are you sure ?')">Delete</a>
                                             </td>
@@ -176,6 +181,10 @@
                             <div class="mb-3">
                                 <label for="country">Country</label>
                                 <input required type="text" name="country" id="country" class="form-control" placeholder="Enter country" value="{{ old('country') }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password">Password</label>
+                                <input required type="password" name="password" id="password" class="form-control" placeholder="Enter password" value="{{ old('password') }}">
                             </div>
                         </div>
                         <div class="modal-footer">
