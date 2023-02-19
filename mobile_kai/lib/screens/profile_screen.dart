@@ -74,9 +74,15 @@ import 'package:gap/gap.dart';
 //   }
 // }
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool isEdit = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,12 +108,12 @@ class ProfileScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Alwan",
+                      "Akhmad Alwan Rabbani".split(" ")[0],
                       style: Styles.headLineStyle1,
                     ),
                     Gap(AppLayout.getHeight(2)),
                     Text(
-                      "Alwan",
+                      "Akhmad Alwan Rabbani",
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -134,7 +140,9 @@ class ProfileScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     InkWell(
-                      onTap: () => print("tapped"),
+                      onTap: () => setState(() {
+                        isEdit = !isEdit;
+                      }),
                       child: Text("Edit",
                           style: Styles.textStyle.copyWith(
                               color: Styles.primaryColor,
@@ -143,114 +151,185 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 )
               ]),
-              Gap(AppLayout.getHeight(8)),
               Divider(
                 color: Colors.grey.shade300,
               ),
-              Gap(AppLayout.getHeight(25)),
-              Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: AppLayout.getWidth(10)),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppLayout.getWidth(18)),
-                    color: Styles.bgColor,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey.shade200,
-                          blurRadius: 1,
-                          spreadRadius: 2)
-                    ]),
-                child: Column(children: [
-                  Gap(AppLayout.getHeight(20)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Miles accrued",
-                        style: Styles.headLineStyle4.copyWith(fontSize: 16),
-                      ),
-                      Text(
-                        "16 DEC 2022",
-                        style: Styles.headLineStyle4.copyWith(fontSize: 16),
-                      )
-                    ],
-                  ),
-                  Divider(
-                    color: Colors.grey.shade300,
-                  ),
-                  Gap(AppLayout.getHeight(4)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      PairedColumnWidget(
-                        firstText: "23 042",
-                        secondText: "Miles",
-                        alignment: CrossAxisAlignment.start,
-                        isColor: false,
-                      ),
-                      PairedColumnWidget(
-                        firstText: "Airline Co",
-                        secondText: "Received From",
-                        alignment: CrossAxisAlignment.end,
-                        isColor: false,
-                      )
-                    ],
-                  ),
-                  Gap(AppLayout.getHeight(12)),
-                  const LayoutBuilderWidget(
-                    sections: 6,
-                    isColor: false,
-                  ),
-                  Gap(AppLayout.getHeight(12)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      PairedColumnWidget(
-                        firstText: "24",
-                        secondText: "Miles",
-                        alignment: CrossAxisAlignment.start,
-                        isColor: false,
-                      ),
-                      PairedColumnWidget(
-                        firstText: "Mc Donald's",
-                        secondText: "Received From",
-                        alignment: CrossAxisAlignment.end,
-                        isColor: false,
-                      )
-                    ],
-                  ),
-                  Gap(AppLayout.getHeight(12)),
-                  const LayoutBuilderWidget(
-                    sections: 6,
-                    isColor: false,
-                  ),
-                  Gap(AppLayout.getHeight(12)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      PairedColumnWidget(
-                        firstText: "52 340",
-                        secondText: "Miles",
-                        alignment: CrossAxisAlignment.start,
-                        isColor: false,
-                      ),
-                      PairedColumnWidget(
-                        firstText: "NatraTek",
-                        secondText: "Received From",
-                        alignment: CrossAxisAlignment.end,
-                        isColor: false,
-                      )
-                    ],
-                  ),
-                ]),
-              ),
+              isEdit
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          decoration: InputDecoration(
+                              hintText: "Nama Lengkap",
+                              prefixIcon: Icon(
+                                FluentSystemIcons
+                                    .ic_fluent_person_accounts_regular,
+                                color: Styles.primaryBold,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                              hintText: "E-mail",
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: Styles.primaryBold,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                              hintText: "Negara",
+                              prefixIcon: Icon(
+                                FluentSystemIcons.ic_fluent_flag_filled,
+                                color: Styles.primaryBold,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                              hintText: "Kota / Kabupaten",
+                              prefixIcon: Icon(
+                                FluentSystemIcons.ic_fluent_city_regular,
+                                color: Styles.primaryBold,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            print("EDIT");
+                          },
+                          child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: AppLayout.getHeight(18),
+                                  horizontal: AppLayout.getWidth(15)),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      AppLayout.getWidth(10)),
+                                  color: Styles.primaryBold),
+                              child: Center(
+                                child: Text(
+                                  "Simpan",
+                                  style: Styles.textStyle
+                                      .copyWith(color: Colors.white),
+                                ),
+                              )),
+                        ),
+                      ],
+                    )
+                  : Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppLayout.getWidth(10)),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(AppLayout.getWidth(18)),
+                          color: Styles.bgColor,
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.shade200,
+                                blurRadius: 1,
+                                spreadRadius: 2)
+                          ]),
+                      child: Column(children: [
+                        Gap(AppLayout.getHeight(20)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Joined",
+                              style:
+                                  Styles.headLineStyle4.copyWith(fontSize: 16),
+                            ),
+                            Text(
+                              "16 JAN 2023",
+                              style:
+                                  Styles.headLineStyle4.copyWith(fontSize: 16),
+                            )
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.grey.shade300,
+                        ),
+                        Gap(AppLayout.getHeight(4)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            PairedColumnWidget(
+                              firstText: "Akhmad Alwan Rabbani",
+                              secondText: "Nama Lengkap",
+                              alignment: CrossAxisAlignment.start,
+                              isColor: false,
+                            ),
+                          ],
+                        ),
+                        Gap(AppLayout.getHeight(12)),
+                        const LayoutBuilderWidget(
+                          sections: 6,
+                          isColor: false,
+                        ),
+                        Gap(AppLayout.getHeight(12)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            PairedColumnWidget(
+                              firstText: "alwanrabbae@gmail.com",
+                              secondText: "E-mail",
+                              alignment: CrossAxisAlignment.start,
+                              isColor: false,
+                            ),
+                          ],
+                        ),
+                        Gap(AppLayout.getHeight(12)),
+                        const LayoutBuilderWidget(
+                          sections: 6,
+                          isColor: false,
+                        ),
+                        Gap(AppLayout.getHeight(12)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            PairedColumnWidget(
+                              firstText: "Indonesia",
+                              secondText: "Negara",
+                              alignment: CrossAxisAlignment.start,
+                              isColor: false,
+                            ),
+                          ],
+                        ),
+                        Gap(AppLayout.getHeight(12)),
+                        const LayoutBuilderWidget(
+                          sections: 6,
+                          isColor: false,
+                        ),
+                        Gap(AppLayout.getHeight(12)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            PairedColumnWidget(
+                              firstText: "Cirebon",
+                              secondText: "Kota / Kabupaten",
+                              alignment: CrossAxisAlignment.start,
+                              isColor: false,
+                            ),
+                          ],
+                        ),
+                      ]),
+                    ),
               Gap(AppLayout.getHeight(25)),
               InkWell(
                 onTap: () {
                   print("tapped");
                 },
                 child: Center(
-                  child: Text("How to get more miles?",
+                  child: Text("Logout",
                       style: Styles.textStyle.copyWith(
                         color: Styles.primaryColor,
                         fontWeight: FontWeight.w500,

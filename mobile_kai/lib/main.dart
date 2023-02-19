@@ -1,4 +1,5 @@
 import 'package:kai_mobile/screens/bottom_bar.dart';
+import 'package:kai_mobile/screens/splash_screen.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primary,
       ),
-      home: const BottomBar(),
+      home: const SplashScreen(),
     );
   }
 }
