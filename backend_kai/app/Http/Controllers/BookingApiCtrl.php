@@ -21,7 +21,7 @@ class BookingApiCtrl extends Controller
 {
     public function getBooking(Request $request)
     {
-        $data = Booking::where('customer_id', $request->user()->id)->get();
+        $data = Booking::where('customer_id', $request->user()->id)->orderBy('id', 'DESC')->get();
         foreach ($data as $dt) {
             $findJourney = TrainJourney::with(['train_station_depart', 'train_station_arrival'])->where('train_no', $dt->train_no)->first();
             $passenger = Passenger::where('id_no', $dt->booking_code)->get();

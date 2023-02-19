@@ -138,13 +138,13 @@
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="depart_time">Depart Time</label>
-                                                                        <input required type="date" name="depart_time" id="depart_time" value="{{ $item->depart_time }}" class="form-control"
+                                                                        <input required type="datetime-local" name="depart_time" id="depart_time" value="{{ $item->depart_time }}" class="form-control"
                                                                             placeholder="Enter depart_time" value="{{ old('depart_time') }}">
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="arrival_time">Arrival Time</label>
-                                                                        <input required type="date" name="arrival_time" id="arrival_time" value="{{ $item->arrival_time }}" class="form-control"
-                                                                            placeholder="Enter arrival_time" value="{{ old('arrival_time') }}">
+                                                                        <input required type="datetime-local" name="arrival_time" id="arrival_time" value="{{ $item->arrival_time }}"
+                                                                            class="form-control" placeholder="Enter arrival_time" value="{{ old('arrival_time') }}">
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="train_id">Select Train</label>
@@ -228,11 +228,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="depart_time">Depart Time</label>
-                                <input required type="date" name="depart_time" id="depart_time" class="form-control" placeholder="Enter depart_time" value="{{ old('depart_time') }}">
+                                <input required type="datetime-local" name="depart_time" id="depart_time" class="form-control" placeholder="Enter depart_time" value="{{ old('depart_time') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="arrival_time">Arrival Time</label>
-                                <input required type="date" name="arrival_time" id="arrival_time" class="form-control" placeholder="Enter arrival_time" value="{{ old('arrival_time') }}">
+                                <input required type="datetime-local" name="arrival_time" id="arrival_time" class="form-control" placeholder="Enter arrival_time" value="{{ old('arrival_time') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="train_id">Select Train</label>

@@ -4,7 +4,7 @@ List<Map<String, dynamic>> newsList = [
         'https://static.gatra.com/foldershared/images/2021/Mut/12-Dec/design_(76).png',
     'title': 'KAI Indonesia',
     'description':
-        'lorem ipsum dolor sit daily hard work yoyy i like that girl for allah',
+        'lorem ipsum dolor sit daily hard work yoyy i like that girl for allah lorem ipsum dolor sit daily hard work yoyy i like that girl for allah',
     'published_at': '2022-10-10:08.50'
   },
   {
@@ -12,7 +12,7 @@ List<Map<String, dynamic>> newsList = [
         'https://static.gatra.com/foldershared/images/2021/Mut/12-Dec/design_(76).png',
     'title': 'KAI Indonesia',
     'description':
-        'lorem ipsum dolor sit daily hard work yoyy i like that girl for allah',
+        'lorem ipsum dolor sit daily hard work yoyy i like that girl for allah lorem ipsum dolor sit daily hard work yoyy i like that girl for allah',
     'published_at': '2022-10-10:08.50'
   },
   {
@@ -20,7 +20,7 @@ List<Map<String, dynamic>> newsList = [
         'https://static.gatra.com/foldershared/images/2021/Mut/12-Dec/design_(76).png',
     'title': 'KAI Indonesia',
     'description':
-        'lorem ipsum dolor sit daily hard work yoyy i like that girl for allah',
+        'lorem ipsum dolor sit daily hard work yoyy i like that girl for allah lorem ipsum dolor sit daily hard work yoyy i like that girl for allah',
     'published_at': '2022-10-10:08.50'
   },
   {
@@ -28,7 +28,7 @@ List<Map<String, dynamic>> newsList = [
         'https://static.gatra.com/foldershared/images/2021/Mut/12-Dec/design_(76).png',
     'title': 'KAI Indonesia',
     'description':
-        'lorem ipsum dolor sit daily hard work yoyy i like that girl for allah',
+        'lorem ipsum dolor sit daily hard work yoyy i like that girl for allah lorem ipsum dolor sit daily hard work yoyy i like that girl for allah',
     'published_at': '2022-10-10:08.50'
   },
 ];

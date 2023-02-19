@@ -3,9 +3,9 @@ import 'package:kai_mobile/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class HotelScreen extends StatelessWidget {
+class NewsList extends StatelessWidget {
   Map<String, dynamic> hotel;
-  HotelScreen({super.key, required this.hotel});
+  NewsList({super.key, required this.hotel});
 
   @override
   Widget build(BuildContext context) {
@@ -51,28 +51,35 @@ class HotelScreen extends StatelessWidget {
                 vertical: AppLayout.getHeight(10)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  hotel['title'],
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style:
-                      Styles.headLineStyle2.copyWith(color: Styles.orangeColor),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      hotel['title'],
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Styles.headLineStyle2
+                          .copyWith(color: Styles.orangeColor),
+                    ),
+                    const Gap(5),
+                    SizedBox(
+                      width: 170.0,
+                      height: 50,
+                      child: Text(
+                        hotel['description'],
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        style: TextStyle(color: Colors.black87, fontSize: 13),
+                      ),
+                    ),
+                  ],
                 ),
-                const Gap(5),
-                SizedBox(
-                  width: 170.0,
-                  child: Text(
-                    hotel['description'],
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(color: Colors.black87, fontSize: 13),
-                  ),
-                ),
                 SizedBox(
                   child: Text(
-                    "2022-10-10:08.00",
+                    "Published At 2022-10-10:08.00",
                     style: Styles.headLineStyle4
                         .copyWith(color: Colors.grey[400], fontSize: 12),
                   ),

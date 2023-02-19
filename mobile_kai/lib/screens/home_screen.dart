@@ -1,4 +1,6 @@
-import 'package:kai_mobile/screens/hotel_screen.dart';
+import 'package:kai_mobile/core/utils/navigator_helper.dart';
+import 'package:kai_mobile/screens/news_screen.dart';
+import 'package:kai_mobile/screens/ticket_list.dart';
 import 'package:kai_mobile/screens/ticket_view.dart';
 import 'package:kai_mobile/utils/app_info_list.dart';
 import 'package:kai_mobile/utils/app_layout.dart';
@@ -8,9 +10,18 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final from = TextEditingController(text: null);
+  final to = TextEditingController(text: null);
+  final passengerCount = TextEditingController(text: null);
+  bool _validate = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,8 +88,10 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextFormField(
+                          controller: from,
                           decoration: InputDecoration(
-                              hintText: "Dari",
+                              hintText: "Penjemputan",
+                              errorText: _validate ? 'Wajib diisi!' : null,
                               prefixIcon: Icon(
                                 Icons.departure_board,
                                 color: Styles.primaryBold,
@@ -88,8 +101,10 @@ class HomeScreen extends StatelessWidget {
                           height: 20,
                         ),
                         TextFormField(
+                          controller: to,
                           decoration: InputDecoration(
-                              hintText: "Ke",
+                              hintText: "Destinasi",
+                              errorText: _validate ? 'Wajib diisi!' : null,
                               prefixIcon: Icon(
                                 Icons.train_sharp,
                                 color: Styles.primaryBold,
@@ -99,8 +114,10 @@ class HomeScreen extends StatelessWidget {
                           height: 20,
                         ),
                         TextFormField(
+                          controller: passengerCount,
                           decoration: InputDecoration(
-                              hintText: "Penumpang",
+                              hintText: "Jumlah Penumpang",
+                              errorText: _validate ? 'Wajib diisi!' : null,
                               prefixIcon: Icon(
                                 Icons.person_add_alt_rounded,
                                 color: Styles.primaryBold,
@@ -111,7 +128,30 @@ class HomeScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            print("CARI TIKET");
+                            setState(() {
+                              from.text.isEmpty
+                                  ? _validate = true
+                                  : _validate = false;
+                              to.text.isEmpty
+                                  ? _validate = true
+                                  : _validate = false;
+                              passengerCount.text.isEmpty
+                                  ? _validate = true
+                                  : _validate = false;
+                            });
+
+                            if (_validate == false) {
+                              var data = {
+                                "from": from.text,
+                                "to": to.text,
+                                "passengerCount": passengerCount.text,
+                              };
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TicketList(data)),
+                              );
+                            }
                           },
                           child: Container(
                               padding: EdgeInsets.symmetric(
@@ -150,7 +190,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20),
               child: Column(
                   children: newsList
-                      .map((hotelInfo) => HotelScreen(hotel: hotelInfo))
+                      .map((hotelInfo) => NewsList(hotel: hotelInfo))
                       .toList()))
         ],
       ),
