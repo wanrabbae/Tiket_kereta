@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:kai_mobile/core/utils/navigator_helper.dart';
+import 'package:kai_mobile/screens/ticket_order_screen.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
 
 class TicketList extends StatefulWidget {
@@ -132,8 +134,22 @@ class _TicketListState extends State<TicketList> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: getClass(),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: getClass(),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      "tersisa 2 kursi",
+                                      style: Styles.headLineStyle4.copyWith(
+                                          color: Colors.red.shade600,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -150,10 +166,12 @@ class _TicketListState extends State<TicketList> {
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStatePropertyAll(
-                                                  Styles.orangeColor),
+                                                  Styles.primaryBold),
                                         ),
                                         onPressed: () {
-                                          print(index);
+                                          goPush(
+                                              TicketOrder(widget.dataJourney),
+                                              context);
                                         },
                                         child: Text(
                                           'Pilih',

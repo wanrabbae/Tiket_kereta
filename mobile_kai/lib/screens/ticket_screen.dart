@@ -14,12 +14,11 @@ class TicketScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final size = AppLayout.getSize(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Riwayat Tiket'),
         backgroundColor: Styles.primaryBold,
+        automaticallyImplyLeading: false,
       ),
       backgroundColor: Styles.bgColor,
       body: ListView.builder(

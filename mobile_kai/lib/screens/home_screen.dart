@@ -146,11 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 "to": to.text,
                                 "passengerCount": passengerCount.text,
                               };
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => TicketList(data)),
-                              );
+                              goPush(TicketList(data), context);
                             }
                           },
                           child: Container(
