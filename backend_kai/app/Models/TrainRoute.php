@@ -21,4 +21,13 @@ class TrainRoute extends Model
     {
         return $this->hasMany(DetailBooking::class, 'travel_no');
     }
+
+    public function train_station_start()
+    {
+        return $this->belongsTo(TrainStation::class, 'start_route');
+    }
+    public function train_station_end()
+    {
+        return $this->belongsTo(TrainStation::class, 'end_route');
+    }
 }

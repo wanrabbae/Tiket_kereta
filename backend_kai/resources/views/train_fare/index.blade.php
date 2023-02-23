@@ -99,16 +99,14 @@
                                                                         </select>
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label for="exampleDataList" class="form-label">Choose Train No</label>
-                                                                        <input required class="form-control" list="datalistOptions" value="{{ $item->train_no }}" id="exampleDataList" name="train_no"
-                                                                            placeholder="Type to search...">
-                                                                        <datalist id="datalistOptions">
-                                                                            <option value="TRAIN001">
-                                                                            <option value="TRAIN002">
-                                                                            <option value="TRAIN003">
-                                                                            <option value="TRAIN004">
-                                                                            <option value="TRAIN005">
-                                                                        </datalist>
+                                                                        <label for="train_no">Select Train No</label>
+                                                                        <select required class="form-select" name="train_no" id="train_no">
+                                                                            <option value="">Choose Train No</option>
+                                                                            @foreach ($trains as $train)
+                                                                                <option class="form-option" value="{{ $train->train_no }}" {{ $item->train_no == $train->train_no ? 'selected' : '' }}>
+                                                                                    {{ $train->train_no . ' | ' . $train->train_name }}</option>
+                                                                            @endforeach
+                                                                        </select>
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="fare">Fare</label>
@@ -167,8 +165,13 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleDataList" class="form-label">Train No</label>
-                                <input required class="form-control" id="exampleDataList" name="train_no" placeholder="Train No">
+                                <label for="train_no">Select Train No</label>
+                                <select required class="form-select" name="train_no" id="train_no">
+                                    <option value="">Choose Train No</option>
+                                    @foreach ($trains as $item)
+                                        <option class="form-option" value="{{ $item->train_no }}">{{ $item->train_no . ' | ' . $item->train_name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="fare">Fare</label>

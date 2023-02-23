@@ -127,14 +127,15 @@
                                                                         </select>
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label for="train_no">Train No</label>
-                                                                        <input required class="form-control" list="datalistOptions" value="{{ $item->train_no }}" id="exampleDataList" name="train_no"
-                                                                            placeholder="Type to search...">
-                                                                        <datalist id="datalistOptions">
-                                                                            @foreach ($train_fares as $fare)
-                                                                                <option value="{{ $fare->train_no }}">
+                                                                        <label for="train_no">Select Train No</label>
+                                                                        <select required class="form-select" name="train_no" id="train_no">
+                                                                            <option value="">Choose Train No</option>
+                                                                            @foreach ($trains as $train)
+                                                                                <option class="form-option" value="{{ $train->train_no }}"
+                                                                                    {{ $item->train->train_no == $train->train_no ? 'selected' : '' }}>
+                                                                                    {{ $train->train_no . ' | ' . $train->train_name }}</option>
                                                                             @endforeach
-                                                                        </datalist>
+                                                                        </select>
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="depart_time">Depart Time</label>
@@ -218,13 +219,13 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="train_no">Train No</label>
-                                <input required class="form-control" list="datalistOptions2" value="{{ old('train_no') }}" id="exampleDataList" name="train_no" placeholder="Type to search...">
-                                <datalist id="datalistOptions2">
-                                    @foreach ($train_fares as $fare)
-                                        <option value="{{ $fare->train_no }}">
+                                <label for="train_no">Select Train No</label>
+                                <select required class="form-select" name="train_no" id="train_no">
+                                    <option value="">Choose Train No</option>
+                                    @foreach ($trains as $item)
+                                        <option class="form-option" value="{{ $item->train_no }}">{{ $item->train_no . ' | ' . $item->train_name }}</option>
                                     @endforeach
-                                </datalist>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="depart_time">Depart Time</label>

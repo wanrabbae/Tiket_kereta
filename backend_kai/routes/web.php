@@ -138,8 +138,10 @@ Route::prefix("/trains/route")->middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('train_route.index', [
             "title" => "KAI Train Routes",
-            "train_routes" => TrainRoute::all(),
+            "train_routes" => TrainRoute::with(['train_station_start', 'train_station_end'])->get(),
             "train_fares" => TrainFare::all(),
+            "trains" => Train::all(),
+            "train_station" => TrainStation::all(),
         ]);
     })->name("trains_route");
     Route::post("/add", [TrainCtrl::class, 'addTrainRoute']);
@@ -152,6 +154,7 @@ Route::prefix("/trains/fare")->middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('train_fare.index', [
             "title" => "KAI Train Fare",
+            "trains" => Train::all(),
             "train_fares" => TrainFare::all()
         ]);
     })->name("trains_fare");

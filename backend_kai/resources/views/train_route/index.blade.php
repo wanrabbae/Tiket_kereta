@@ -70,11 +70,11 @@
                                             <td id="item->name">
                                                 {{ $item->train_no }}
                                             </td>
-                                            <td id="item->email">
-                                                {{ $item->start_route }}
+                                            <td id="item->name">
+                                                {{ $item->train_station_start->station_code }} | {{ $item->train_station_start->station_name }}
                                             </td>
                                             <td id="item->email">
-                                                {{ $item->end_route }}
+                                                {{ $item->train_station_end->station_code }} | {{ $item->train_station_end->station_name }}
                                             </td>
                                             <td id="item->email">
                                                 {{ $item->depart_time }}
@@ -99,34 +99,48 @@
                                                                 @csrf
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
-                                                                        <label for="train_no">Train No</label>
-                                                                        <input required class="form-control" list="datalistOptions" value="{{ $item->train_no }}" id="exampleDataList" name="train_no"
-                                                                            placeholder="Type to search...">
-                                                                        <datalist id="datalistOptions">
-                                                                            @foreach ($train_fares as $fare)
-                                                                                <option value="{{ $fare->train_no }}">
+                                                                        <label for="train_no">Select Train No</label>
+                                                                        <select required class="form-select" name="train_no" id="train_no">
+                                                                            <option value="">Choose Train No</option>
+                                                                            @foreach ($trains as $train)
+                                                                                <option class="form-option" value="{{ $train->train_no }}" {{ $item->train_no == $train->train_no ? 'selected' : '' }}>
+                                                                                    {{ $train->train_no . ' | ' . $train->train_name }}</option>
                                                                             @endforeach
-                                                                        </datalist>
+                                                                        </select>
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label for="start_route">Start Route</label>
-                                                                        <input value="{{ $item->start_route }}" required type="text" name="start_route" id="start_route" class="form-control"
-                                                                            placeholder="Enter start_route" value="{{ old('start_route') }}">
+                                                                        <label for="depart_station">Start Route</label>
+                                                                        <select class="form-select" required name="start_route" id="depart_station">
+                                                                            <option value="">Choose Station</option>
+                                                                            @foreach ($train_station as $station)
+                                                                                <option class="form-option" value="{{ $station->id }}"
+                                                                                    {{ $item->train_station_start->id == $station->id ? 'selected' : '' }}>{{ $station->station_code }} |
+                                                                                    {{ $station->station_name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label for="end_route">End Route</label>
-                                                                        <input value="{{ $item->end_route }}" required type="text" name="end_route" id="end_route" class="form-control"
-                                                                            placeholder="Enter end_route" value="{{ old('end_route') }}">
+                                                                        <label for="arrival_station">End Route</label>
+                                                                        <select class="form-select" required name="end_route" id="arrival_station">
+                                                                            <option value="">Choose Station</option>
+                                                                            @foreach ($train_station as $station)
+                                                                                <option class="form-option" value="{{ $station->id }}"
+                                                                                    {{ $item->train_station_end->id == $station->id ? 'selected' : '' }}>{{ $station->station_code }} |
+                                                                                    {{ $station->station_name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="depart_time">Depart Time</label>
-                                                                        <input value="{{ $item->depart_time }}" required type="date" name="depart_time" id="depart_time" class="form-control"
+                                                                        <input value="{{ $item->depart_time }}" required type="datetime-local" name="depart_time" id="depart_time" class="form-control"
                                                                             placeholder="Enter depart_time" value="{{ old('depart_time') }}">
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <label for="arrival_time">Arrival Time</label>
-                                                                        <input value="{{ $item->arrival_time }}" required type="date" name="arrival_time" id="arrival_time" class="form-control"
-                                                                            placeholder="Enter arrival_time" value="{{ old('arrival_time') }}">
+                                                                        <input value="{{ $item->arrival_time }}" required type="datetime-local" name="arrival_time" id="arrival_time"
+                                                                            class="form-control" placeholder="Enter arrival_time" value="{{ old('arrival_time') }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -173,29 +187,39 @@
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="train_no">Train No</label>
-                                <input required class="form-control" list="datalistOptions" value="{{ old('train_no') }}" id="exampleDataList" name="train_no" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                    @foreach ($train_fares as $fare)
-                                        <option value="{{ $fare->train_no }}">
+                                <label for="train_no">Select Train No</label>
+                                <select required class="form-select" name="train_no" id="train_no">
+                                    <option value="">Choose Train No</option>
+                                    @foreach ($trains as $item)
+                                        <option class="form-option" value="{{ $item->train_no }}">{{ $item->train_no . ' | ' . $item->train_name }}</option>
                                     @endforeach
-                                </datalist>
+                                </select>
                             </div>
                             <div class="mb-3">
-                                <label for="start_route">Start Route</label>
-                                <input required type="text" name="start_route" id="start_route" class="form-control" placeholder="Enter start_route" value="{{ old('start_route') }}">
+                                <label for="depart_station">Start Route</label>
+                                <select class="form-select" required name="start_route" id="depart_station">
+                                    <option value="">Choose Station</option>
+                                    @foreach ($train_station as $item)
+                                        <option class="form-option" value="{{ $item->id }}">{{ $item->station_code }} | {{ $item->station_name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="mb-3">
-                                <label for="end_route">End Route</label>
-                                <input required type="text" name="end_route" id="end_route" class="form-control" placeholder="Enter end_route" value="{{ old('end_route') }}">
+                                <label for="arrival_station">End Route</label>
+                                <select class="form-select" required name="end_route" id="arrival_station">
+                                    <option value="">Choose Station</option>
+                                    @foreach ($train_station as $item)
+                                        <option class="form-option" value="{{ $item->id }}">{{ $item->station_code }} | {{ $item->station_name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="depart_time">Depart Time</label>
-                                <input required type="date" name="depart_time" id="depart_time" class="form-control" placeholder="Enter depart_time" value="{{ old('depart_time') }}">
+                                <input required type="datetime-local" name="depart_time" id="depart_time" class="form-control" placeholder="Enter depart_time" value="{{ old('depart_time') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="arrival_time">Arrival Time</label>
-                                <input required type="date" name="arrival_time" id="arrival_time" class="form-control" placeholder="Enter arrival_time" value="{{ old('arrival_time') }}">
+                                <input required type="datetime-local" name="arrival_time" id="arrival_time" class="form-control" placeholder="Enter arrival_time" value="{{ old('arrival_time') }}">
                             </div>
                         </div>
                         <div class="modal-footer">
