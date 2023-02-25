@@ -46,6 +46,7 @@ dependencies:
   image_picker: ^0.8.6
   fluentui_icons: ^1.0.0
   google_fonts: ^4.0.3
+  intl: ^0.18.0
   book_my_seat: ^1.0.1
   lottie: ^2.2.0
   gap: ^2.0.0

@@ -6,14 +6,14 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+  int selectedIndex = 0;
+  BottomBar(@required this.selectedIndex);
 
   @override
   State<BottomBar> createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
     // const SearchScreen(),
@@ -23,17 +23,17 @@ class _BottomBarState extends State<BottomBar> {
   // fun to change index
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      widget.selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: _widgetOptions[_selectedIndex]),
+      body: Center(child: _widgetOptions[widget.selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
-        currentIndex: _selectedIndex,
+        currentIndex: widget.selectedIndex,
         elevation: 10,
         showSelectedLabels: false,
         showUnselectedLabels: false,

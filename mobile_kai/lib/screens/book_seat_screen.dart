@@ -2,10 +2,15 @@ import 'package:book_my_seat/book_my_seat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:kai_mobile/core/utils/navigator_helper.dart';
+import 'package:kai_mobile/screens/bottom_bar.dart';
+import 'package:kai_mobile/screens/ticket_screen.dart';
+import 'package:kai_mobile/utils/app_layout.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
 
 class BookSeat extends StatefulWidget {
-  const BookSeat({super.key});
+  final Map? dataJourney;
+  const BookSeat(@required this.dataJourney);
 
   @override
   State<BookSeat> createState() => _BookSeatState();
@@ -15,6 +20,7 @@ class _BookSeatState extends State<BookSeat> {
   Set<SeatNumber> selectedSeats = Set();
   @override
   Widget build(BuildContext context) {
+    print(widget.dataJourney);
     return Scaffold(
       backgroundColor: Styles.bgColor,
       appBar: AppBar(
@@ -869,14 +875,29 @@ class _BookSeatState extends State<BookSeat> {
             const SizedBox(
               height: 12,
             ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {});
-              },
-              child: const Text('Show my selected seat numbers'),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith(
-                    (states) => const Color(0xFFfc4c4e)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: GestureDetector(
+                onTap: () {
+                  print(widget.dataJourney);
+                  goRemove(BottomBar(1), context);
+                },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Styles.primaryBold,
+                    borderRadius:
+                        BorderRadius.circular(AppLayout.getHeight(15)),
+                  ),
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(
+                      "Pesan Tiket",
+                      style: Styles.headLineStyle3
+                          .copyWith(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 12),

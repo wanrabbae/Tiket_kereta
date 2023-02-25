@@ -169,6 +169,8 @@ class _TicketListState extends State<TicketList> {
                                                   Styles.primaryBold),
                                         ),
                                         onPressed: () {
+                                          widget.dataJourney?["price"] =
+                                              "280000";
                                           goPush(
                                               TicketOrder(widget.dataJourney),
                                               context);

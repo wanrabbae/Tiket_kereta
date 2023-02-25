@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/book_seat_screen.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
+import 'package:intl/intl.dart';
 
 class TicketOrder extends StatefulWidget {
   final Map? dataJourney;
@@ -15,6 +16,15 @@ class TicketOrder extends StatefulWidget {
 }
 
 class _TicketOrderState extends State<TicketOrder> {
+  List<TextEditingController> controllers = [];
+  var _currencies = [
+    "Tuan",
+    "Tuan Muda",
+    "Nyonya",
+    "Nona",
+  ];
+  var _titelSelected = null;
+  final oCcy = new NumberFormat("#.##", "id_IDR");
   List<Widget> getInputPsg() {
     List<Widget> childs = [];
     for (var i = 1;
@@ -32,6 +42,7 @@ class _TicketOrderState extends State<TicketOrder> {
             height: 20,
           ),
           TextFormField(
+            // controller: controllers[i],
             decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                     borderSide:
@@ -48,20 +59,59 @@ class _TicketOrderState extends State<TicketOrder> {
           SizedBox(
             height: 20,
           ),
-          TextFormField(
-            decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Styles.primaryBold, width: 1.5)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Styles.primaryBold, width: 1.5)),
-                hintText: "Title",
-                prefixIcon: Icon(
-                  FluentSystemIcons.ic_fluent_app_title_regular,
-                  color: Styles.primaryBold,
-                )),
+          FormField<String>(
+            builder: (FormFieldState<String> state) {
+              return InputDecorator(
+                decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Styles.primaryBold, width: 1.5)),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Styles.primaryBold, width: 1.5)),
+                    hintText: "Titel",
+                    prefixIcon: Icon(
+                      FluentSystemIcons.ic_fluent_app_title_filled,
+                      color: Styles.primaryBold,
+                    )),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    isDense: true,
+                    hint: Text("Title"),
+                    onChanged: (newValue) {
+                      print(newValue);
+                    },
+                    items: _currencies.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              );
+            },
           ),
+          // TextFormField(
+          //   onChanged: (value) {
+          //     setState(() {
+          //       passengers[i] = {"status": value};
+          //     });
+          //   },
+          //   decoration: InputDecoration(
+          //       focusedBorder: OutlineInputBorder(
+          //           borderSide:
+          //               BorderSide(color: Styles.primaryBold, width: 1.5)),
+          //       enabledBorder: OutlineInputBorder(
+          //           borderSide:
+          //               BorderSide(color: Styles.primaryBold, width: 1.5)),
+          //       hintText: "Title",
+          //       prefixIcon: Icon(
+          //         FluentSystemIcons.ic_fluent_app_title_regular,
+          //         color: Styles.primaryBold,
+          //       )),
+          // ),
+
           Divider(
             color: Colors.grey.shade600,
             height: 50,
@@ -155,7 +205,10 @@ class _TicketOrderState extends State<TicketOrder> {
                   children: [
                     Text("Penumpang x" +
                         widget.dataJourney!["passengerCount"].toString()),
-                    Text("IDR. 500.000")
+                    Text("IDR. " +
+                        oCcy.format(
+                            (int.parse(widget.dataJourney?["passengerCount"]) *
+                                int.parse(widget.dataJourney?["price"]))))
                   ],
                 ),
                 Divider(
@@ -171,7 +224,10 @@ class _TicketOrderState extends State<TicketOrder> {
                           .copyWith(color: Colors.black, fontSize: 15),
                     ),
                     Text(
-                      "IDR. 500.000",
+                      "IDR. " +
+                          oCcy.format((int.parse(
+                                  widget.dataJourney?["passengerCount"]) *
+                              int.parse(widget.dataJourney?["price"]))),
                       style: Styles.headLineStyle1
                           .copyWith(color: Styles.primaryBold, fontSize: 18),
                     )
@@ -185,7 +241,15 @@ class _TicketOrderState extends State<TicketOrder> {
           ),
           GestureDetector(
             onTap: () {
-              goPush(BookSeat(), context);
+              print(controllers);
+              widget.dataJourney?["totalPay"] =
+                  (int.parse(widget.dataJourney?["passengerCount"]) *
+                          int.parse(widget.dataJourney?["price"]))
+                      .toString();
+              widget.dataJourney?["train_no"] = "TRAIN001";
+              widget.dataJourney?["fare_id"] = "1";
+
+              goPush(BookSeat(widget.dataJourney), context);
             },
             child: Container(
               width: double.infinity,
