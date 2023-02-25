@@ -13,3 +13,5 @@ GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 double width = MediaQuery.of(navigatorKey.currentContext!).size.width;
 
 double height = MediaQuery.of(navigatorKey.currentContext!).size.height;
+
+var newsDetail = {};

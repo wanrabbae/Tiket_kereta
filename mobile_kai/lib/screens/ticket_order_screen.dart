@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -59,59 +60,35 @@ class _TicketOrderState extends State<TicketOrder> {
           SizedBox(
             height: 20,
           ),
-          FormField<String>(
-            builder: (FormFieldState<String> state) {
-              return InputDecorator(
-                decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Styles.primaryBold, width: 1.5)),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Styles.primaryBold, width: 1.5)),
-                    hintText: "Titel",
-                    prefixIcon: Icon(
-                      FluentSystemIcons.ic_fluent_app_title_filled,
-                      color: Styles.primaryBold,
-                    )),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    isDense: true,
-                    hint: Text("Title"),
-                    onChanged: (newValue) {
-                      print(newValue);
-                    },
-                    items: _currencies.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              );
+          DropdownSearch<String>(
+            popupProps: PopupProps.menu(
+              showSelectedItems: true,
+              disabledItemFn: (String s) => s.startsWith('I'),
+            ),
+            items: [
+              "Tuan",
+              "Tuan Muda",
+              "Nyonya",
+              "Nona",
+            ],
+            dropdownDecoratorProps: DropDownDecoratorProps(
+              dropdownSearchDecoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Styles.primaryBold, width: 1.5)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Styles.primaryBold, width: 1.5)),
+                  hintText: "Title",
+                  prefixIcon: Icon(
+                    FluentSystemIcons.ic_fluent_app_title_filled,
+                    color: Styles.primaryBold,
+                  )),
+            ),
+            onChanged: (value) {
+              print(value);
             },
           ),
-          // TextFormField(
-          //   onChanged: (value) {
-          //     setState(() {
-          //       passengers[i] = {"status": value};
-          //     });
-          //   },
-          //   decoration: InputDecoration(
-          //       focusedBorder: OutlineInputBorder(
-          //           borderSide:
-          //               BorderSide(color: Styles.primaryBold, width: 1.5)),
-          //       enabledBorder: OutlineInputBorder(
-          //           borderSide:
-          //               BorderSide(color: Styles.primaryBold, width: 1.5)),
-          //       hintText: "Title",
-          //       prefixIcon: Icon(
-          //         FluentSystemIcons.ic_fluent_app_title_regular,
-          //         color: Styles.primaryBold,
-          //       )),
-          // ),
-
           Divider(
             color: Colors.grey.shade600,
             height: 50,

@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/news_screen.dart';
 import 'package:kai_mobile/screens/ticket_list.dart';
@@ -18,8 +19,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final from = TextEditingController(text: null);
-  final to = TextEditingController(text: null);
+  var from = null;
+  var to = null;
   final passengerCount = TextEditingController(text: null);
   bool _validate = false;
   @override
@@ -87,33 +88,74 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextFormField(
-                          controller: from,
-                          decoration: InputDecoration(
-                              hintText: "Penjemputan",
-                              errorText: _validate ? 'Wajib diisi!' : null,
-                              prefixIcon: Icon(
-                                Icons.departure_board,
-                                color: Styles.primaryBold,
-                              )),
+                        DropdownSearch<String>(
+                          popupProps: PopupProps.menu(
+                            showSelectedItems: true,
+                            disabledItemFn: (String s) => s.startsWith('I'),
+                          ),
+                          items: [
+                            "Brazil",
+                            "Tunisia",
+                            'Canada',
+                            'Canada',
+                          ],
+                          dropdownDecoratorProps: DropDownDecoratorProps(
+                            dropdownSearchDecoration: InputDecoration(
+                                hintText: "Penjemputan",
+                                errorText: _validate ? 'Wajib diisi!' : null,
+                                prefixIcon: Icon(
+                                  Icons.departure_board,
+                                  color: Styles.primaryBold,
+                                )),
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              from = value;
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        DropdownSearch<String>(
+                          popupProps: PopupProps.menu(
+                            showSelectedItems: true,
+                            disabledItemFn: (String s) => s.startsWith('I'),
+                          ),
+                          items: [
+                            "Brazil",
+                            "Italia (Disabled)",
+                            "Tunisia",
+                            'Canada',
+                            'Canada',
+                            'Canada',
+                            'Canada',
+                            'Canada',
+                            'Canada',
+                            'Canada',
+                            'Canada',
+                            'Canada',
+                          ],
+                          dropdownDecoratorProps: DropDownDecoratorProps(
+                            dropdownSearchDecoration: InputDecoration(
+                                hintText: "Destinasi",
+                                errorText: _validate ? 'Wajib diisi!' : null,
+                                prefixIcon: Icon(
+                                  Icons.train_sharp,
+                                  color: Styles.primaryBold,
+                                )),
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              to = value;
+                            });
+                          },
                         ),
                         SizedBox(
                           height: 20,
                         ),
                         TextFormField(
-                          controller: to,
-                          decoration: InputDecoration(
-                              hintText: "Destinasi",
-                              errorText: _validate ? 'Wajib diisi!' : null,
-                              prefixIcon: Icon(
-                                Icons.train_sharp,
-                                color: Styles.primaryBold,
-                              )),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
+                          keyboardType: TextInputType.number,
                           controller: passengerCount,
                           decoration: InputDecoration(
                               hintText: "Jumlah Penumpang",
@@ -129,12 +171,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              from.text.isEmpty
+                              from == null
                                   ? _validate = true
                                   : _validate = false;
-                              to.text.isEmpty
-                                  ? _validate = true
-                                  : _validate = false;
+                              to == null ? _validate = true : _validate = false;
                               passengerCount.text.isEmpty
                                   ? _validate = true
                                   : _validate = false;
@@ -142,8 +182,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             if (_validate == false) {
                               var data = {
-                                "from": from.text,
-                                "to": to.text,
+                                "from": from,
+                                "to": to,
                                 "passengerCount": passengerCount.text,
                               };
                               goPush(TicketList(data), context);
