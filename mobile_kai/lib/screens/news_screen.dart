@@ -1,3 +1,4 @@
+import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/news_detail_screen.dart';
 import 'package:kai_mobile/utils/app_layout.dart';
@@ -15,6 +16,7 @@ class NewsList extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+        newsDetail = hotel;
         goPush(NewsDetail(), context);
       },
       child: Container(
@@ -63,24 +65,18 @@ class NewsList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        hotel['title'],
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Styles.headLineStyle2
-                            .copyWith(color: Styles.orangeColor),
-                      ),
-                      const Gap(5),
                       SizedBox(
-                        width: 170.0,
-                        height: 50,
+                        width: 170,
+                        height: 100,
                         child: Text(
-                          hotel['description'],
+                          hotel['title'],
+                          maxLines: 5,
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 3,
-                          style: TextStyle(color: Colors.black87, fontSize: 13),
+                          style: Styles.headLineStyle2
+                              .copyWith(color: Styles.orangeColor),
                         ),
                       ),
+                      const Gap(5),
                     ],
                   ),
                   SizedBox(

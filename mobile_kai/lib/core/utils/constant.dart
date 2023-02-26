@@ -5,8 +5,8 @@ Dio dio = Dio();
 
 String? token;
 
-String endpoint = "https://caleg2024.online/api";
-String endpointIP = "http://192.168.1.42:8000/api";
+String endpoint = "";
+String endpointIP = "http://192.168.100.119:8000/api";
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -15,3 +15,9 @@ double width = MediaQuery.of(navigatorKey.currentContext!).size.width;
 double height = MediaQuery.of(navigatorKey.currentContext!).size.height;
 
 var newsDetail = {};
+
+const kElevation = 1.0;
+const kTiny = 2.0;
+const kSmall = 4.0;
+const kMedium = 8.0;
+const kLarge = 16.0;
