@@ -12,4 +12,13 @@ class HomeRepository {
       return res.data;
     }
   }
+
+  static Future getStation() async {
+    var res = await dio.get("$endpointIP/stations");
+
+    log(res.realUri.toString());
+    if (res.statusCode == 200) {
+      return res.data;
+    }
+  }
 }

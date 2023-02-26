@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/bottom_bar.dart';
+import 'package:kai_mobile/screens/load_ticket.dart';
 import 'package:kai_mobile/screens/ticket_screen.dart';
 import 'package:kai_mobile/utils/app_layout.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
@@ -880,7 +881,7 @@ class _BookSeatState extends State<BookSeat> {
               child: GestureDetector(
                 onTap: () {
                   print(widget.dataJourney);
-                  goRemove(BottomBar(1), context);
+                  goRemove(LoadTicket(), context);
                 },
                 child: Container(
                   height: 50,

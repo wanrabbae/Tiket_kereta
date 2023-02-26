@@ -9,6 +9,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   List newsData = [];
+  List stationData = [];
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -19,6 +20,7 @@ class HomeProvider extends ChangeNotifier {
 
   void init() async {
     await getNewsData();
+    await getStationData();
   }
 
   Future getNewsData() async {
@@ -30,7 +32,24 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print(e);
-      CustomSnackBar("Error fetching news!");
+      CustomSnackBar("Error fetching news!", false);
+    }
+  }
+
+  Future getStationData() async {
+    try {
+      _isLoading = true;
+      var res = await HomeRepository.getStation();
+      for (var i = 0; i < res.length; i++) {
+        var data = res[i];
+        stationData
+            .add(data["station_name"] + " (" + data["station_code"] + ")");
+      }
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      CustomSnackBar("Error fetching news!", false);
     }
   }
 }
