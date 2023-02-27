@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:intl/intl.dart';
+import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/ticket_order_screen.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
+import 'package:lottie/lottie.dart';
 
 class TicketList extends StatefulWidget {
   final Map? dataJourney;
@@ -14,14 +17,32 @@ class TicketList extends StatefulWidget {
 }
 
 class _TicketListState extends State<TicketList> {
+  final oCcy = new NumberFormat("#.##", "id_IDR");
   List<Widget> getClass(data) {
     List<Widget> childs = [];
     for (var i = 0; i < data.length; i++) {
       var data2 = data[i];
-      childs.add(new Text(
-        "${data2['class']} / ".toUpperCase(),
-        style: Styles.headLineStyle4
-            .copyWith(color: Colors.grey.shade500, fontSize: 13),
+      childs.add(Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "${data2['class']}".toUpperCase(),
+              style: Styles.headLineStyle4
+                  .copyWith(color: Colors.grey.shade500, fontSize: 15),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              NumberFormat.currency(
+                      locale: "id", symbol: "Rp. ", decimalDigits: 0)
+                  .format(data2["fare"])
+                  .toString(),
+              style: TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
       ));
     }
     return childs;
@@ -59,148 +80,158 @@ class _TicketListState extends State<TicketList> {
         ),
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
-            child: ListView.builder(
-              itemCount: widget.dataJourney?["response"].length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                var ticket = widget.dataJourney?["response"][index];
-                return GestureDetector(
-                  onTap: () {
-                    print("TEST ${index}");
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      bottom: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: Offset(0, 1), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                        padding: EdgeInsets.all(7.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              ticket["train"]["train_name"].toString(),
-                              style: Styles.headLineStyle3,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Center(
-                              child: Icon(
-                                Icons.train_rounded,
-                                color: Styles.primaryBold,
+            child: widget.dataJourney?["response"].length > 0
+                ? ListView.builder(
+                    itemCount: widget.dataJourney?["response"].length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      var ticket = widget.dataJourney?["response"][index];
+                      return GestureDetector(
+                        onTap: () {
+                          print("TEST ${index}");
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            bottom: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset:
+                                    Offset(0, 1), // changes position of shadow
                               ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text("12:00",
-                                        style: TextStyle(fontSize: 16)),
-                                    Text(
-                                      "${widget.dataJourney?["data"]['from']}",
-                                      style: TextStyle(
-                                          color: Colors.grey.shade400,
-                                          fontSize: 12),
-                                    )
-                                  ],
-                                ),
-                                Icon(
-                                  Icons.arrow_right_alt,
-                                  color: Colors.black,
-                                  size: 20,
-                                ),
-                                Column(
-                                  children: [
-                                    Text("14:00",
-                                        style: TextStyle(fontSize: 16)),
-                                    Text(
-                                      "${widget.dataJourney?["data"]['to']}",
-                                      style: TextStyle(
-                                          color: Colors.grey.shade400,
-                                          fontSize: 12),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: getClass(ticket["train_fare"]),
+                            ],
+                          ),
+                          child: Padding(
+                              padding: EdgeInsets.all(7.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    ticket["train"]["train_name"].toString(),
+                                    style: Styles.headLineStyle3,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: Icon(
+                                      Icons.train_rounded,
+                                      color: Styles.primaryBold,
                                     ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "tersisa 2 kursi",
-                                      style: Styles.headLineStyle4.copyWith(
-                                          color: Colors.red.shade600,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "Rp. 280.000",
-                                      style: Styles.headLineStyle3
-                                          .copyWith(color: Colors.black),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextButton(
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStatePropertyAll(
-                                                  Styles.primaryBold),
-                                        ),
-                                        onPressed: () {
-                                          widget.dataJourney?["data"]["price"] =
-                                              "280000";
-                                          goPush(
-                                              TicketOrder({
-                                                "data":
-                                                    widget.dataJourney?["data"],
-                                                "detail": ticket
-                                              }),
-                                              context);
-                                        },
-                                        child: Text(
-                                          'Pilih',
-                                          style: Styles.headLineStyle3.copyWith(
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        )),
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        )),
-                  ),
-                );
-              },
-            )));
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Text("12:00",
+                                              style: TextStyle(fontSize: 16)),
+                                          Text(
+                                            "${widget.dataJourney?["data"]['from']}",
+                                            style: TextStyle(
+                                                color: Colors.grey.shade400,
+                                                fontSize: 12),
+                                          )
+                                        ],
+                                      ),
+                                      Icon(
+                                        Icons.arrow_right_alt,
+                                        color: Colors.black,
+                                        size: 20,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text("14:00",
+                                              style: TextStyle(fontSize: 16)),
+                                          Text(
+                                            "${widget.dataJourney?["data"]['to']}",
+                                            style: TextStyle(
+                                                color: Colors.grey.shade400,
+                                                fontSize: 12),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Column(
+                                    children: getClass(ticket["train_fare"]),
+                                  ),
+                                  // Row(
+                                  //   mainAxisAlignment:
+                                  //       MainAxisAlignment.spaceBetween,
+                                  //   children: [
+                                  //     Column(
+                                  //       crossAxisAlignment:
+                                  //           CrossAxisAlignment.start,
+                                  //       children: [
+                                  //         // SizedBox(
+                                  //         //   height: 50,
+                                  //         // ),
+                                  //         // Text(
+                                  //         //   "tersisa 2 kursi",
+                                  //         //   style: Styles.headLineStyle4
+                                  //         //       .copyWith(
+                                  //         //           color: Colors.red.shade600,
+                                  //         //           fontWeight:
+                                  //         //               FontWeight.bold),
+                                  //         // )
+                                  //       ],
+                                  //     ),
+                                  //   ],
+                                  // ),
+
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      TextButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStatePropertyAll(
+                                                    Styles.primaryBold),
+                                          ),
+                                          onPressed: () {
+                                            widget.dataJourney?["data"]
+                                                ["price"] = "280000";
+                                            goPush(
+                                                TicketOrder({
+                                                  "data": widget
+                                                      .dataJourney?["data"],
+                                                  "detail": ticket
+                                                }),
+                                                context);
+                                          },
+                                          child: Text(
+                                            'Pilih',
+                                            style: Styles.headLineStyle3
+                                                .copyWith(
+                                                    color: Colors.white,
+                                                    fontSize: 16),
+                                          )),
+                                    ],
+                                  )
+                                ],
+                              )),
+                        ),
+                      );
+                    },
+                  )
+                : Center(
+                    child: Lottie.network(
+                        "https://assets5.lottiefiles.com/packages/lf20_mkcnkz8c.json",
+                        width: 300,
+                        height: 300),
+                  )));
   }
 }
