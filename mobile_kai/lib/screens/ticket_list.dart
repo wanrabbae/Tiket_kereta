@@ -34,9 +34,8 @@ class _TicketListState extends State<TicketList> {
           title: RichText(
             text: TextSpan(
               text: '${widget.dataJourney?['from']} ',
-              style: Styles.headLineStyle2.copyWith(
-                color: Colors.white,
-              ),
+              style: Styles.headLineStyle2
+                  .copyWith(color: Colors.white, fontSize: 15),
               children: [
                 WidgetSpan(
                   child: Icon(
@@ -93,6 +92,12 @@ class _TicketListState extends State<TicketList> {
                             ),
                             SizedBox(
                               height: 10,
+                            ),
+                            Center(
+                              child: Icon(
+                                Icons.train_rounded,
+                                color: Styles.primaryBold,
+                              ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

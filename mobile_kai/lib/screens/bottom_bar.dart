@@ -4,6 +4,7 @@ import 'package:kai_mobile/screens/ticket_screen.dart';
 import 'package:kai_mobile/screens/profile_screen.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:kai_mobile/utils/app_styles.dart';
 
 class BottomBar extends StatefulWidget {
   int selectedIndex = 0;
@@ -37,7 +38,7 @@ class _BottomBarState extends State<BottomBar> {
         elevation: 10,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        selectedItemColor: Color.fromARGB(255, 35, 108, 243),
+        selectedItemColor: Color.fromARGB(255, 16, 194, 197),
         unselectedItemColor: const Color(0xFF546480),
         type: BottomNavigationBarType.fixed,
         items: const [

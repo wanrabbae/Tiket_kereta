@@ -50,6 +50,7 @@ dependencies:
   intl: ^0.18.0
   dropdown_search: ^5.0.5
   book_my_seat: ^1.0.1
+  flutter_svg: any
   lottie: ^2.2.0
   gap: ^2.0.0
   get:

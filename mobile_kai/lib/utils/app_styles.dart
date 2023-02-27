@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 Color primary = const Color(0xFF687DAF);
 
 class Styles {
-  static Color primaryColor = primary;
-  static Color primaryBold = const Color.fromARGB(255, 35, 108, 243);
+  static Color primaryColor = Color.fromARGB(255, 16, 194, 197);
+  static Color primaryBold = const Color(0xFF12c6c9);
   static Color textColor = const Color(0xFF3B3B3B);
   static Color bgColor = const Color(0xFFEEEDF2);
   static Color orangeColor = const Color(0xFFF37B67);

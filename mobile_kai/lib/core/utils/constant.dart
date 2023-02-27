@@ -6,7 +6,7 @@ Dio dio = Dio();
 String? token;
 
 String endpoint = "";
-String endpointIP = "http://192.168.100.119:8000/api";
+String endpointIP = "http://192.168.1.112:8000/api";
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 

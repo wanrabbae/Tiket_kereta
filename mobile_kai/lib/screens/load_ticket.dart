@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/bottom_bar.dart';
 import 'package:kai_mobile/screens/home_screen.dart';
 import 'package:kai_mobile/screens/ticket_screen.dart';
@@ -18,10 +19,7 @@ class LoadTicket extends StatefulWidget {
 class _LoadTicketState extends State<LoadTicket> {
   SwitchPage() async {
     await Future.delayed(Duration(seconds: 3));
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => BottomBar(1)),
-    );
+    goRemove(BottomBar(1), context);
   }
 
   @override
