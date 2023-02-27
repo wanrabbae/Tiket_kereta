@@ -29,7 +29,7 @@ class _TicketOrderState extends State<TicketOrder> {
   List<Widget> getInputPsg() {
     List<Widget> childs = [];
     for (var i = 1;
-        i < int.parse(widget.dataJourney?["passengerCount"]) + 1;
+        i < int.parse(widget.dataJourney?["data"]["passengerCount"]) + 1;
         i++) {
       childs.add(Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,9 +183,9 @@ class _TicketOrderState extends State<TicketOrder> {
                     Text("Penumpang x" +
                         widget.dataJourney!["passengerCount"].toString()),
                     Text("IDR. " +
-                        oCcy.format(
-                            (int.parse(widget.dataJourney?["passengerCount"]) *
-                                int.parse(widget.dataJourney?["price"]))))
+                        oCcy.format((int.parse(
+                                widget.dataJourney?["data"]["passengerCount"]) *
+                            int.parse(widget.dataJourney?["data"]["price"]))))
                   ],
                 ),
                 Divider(
@@ -202,9 +202,9 @@ class _TicketOrderState extends State<TicketOrder> {
                     ),
                     Text(
                       "IDR. " +
-                          oCcy.format((int.parse(
-                                  widget.dataJourney?["passengerCount"]) *
-                              int.parse(widget.dataJourney?["price"]))),
+                          oCcy.format((int.parse(widget.dataJourney?["data"]
+                                  ["passengerCount"]) *
+                              int.parse(widget.dataJourney?["data"]["price"]))),
                       style: Styles.headLineStyle1
                           .copyWith(color: Styles.primaryBold, fontSize: 18),
                     )
@@ -219,12 +219,12 @@ class _TicketOrderState extends State<TicketOrder> {
           GestureDetector(
             onTap: () {
               print(controllers);
-              widget.dataJourney?["totalPay"] =
-                  (int.parse(widget.dataJourney?["passengerCount"]) *
-                          int.parse(widget.dataJourney?["price"]))
+              widget.dataJourney?["data"]["totalPay"] =
+                  (int.parse(widget.dataJourney?["data"]["passengerCount"]) *
+                          int.parse(widget.dataJourney?["data"]["price"]))
                       .toString();
-              widget.dataJourney?["train_no"] = "TRAIN001";
-              widget.dataJourney?["fare_id"] = "1";
+              widget.dataJourney?["data"]["train_no"] = "TRAIN001";
+              widget.dataJourney?["data"]["fare_id"] = "1";
 
               goPush(BookSeat(widget.dataJourney), context);
             },

@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: 20,
                                       ),
                                       GestureDetector(
-                                        onTap: () {
+                                        onTap: () async {
                                           setState(() {
                                             from == null
                                                 ? _validate = true
@@ -188,12 +188,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                           if (_validate == false) {
                                             var data = {
-                                              "from": from,
-                                              "to": to,
+                                              "from":
+                                                  from.toString().split(" ")[0],
+                                              "to": to.toString().split(" ")[0],
                                               "passengerCount":
                                                   passengerCount.text,
                                             };
-                                            goPush(TicketList(data), context);
+                                            var res =
+                                                await homeProv.getTickets(data);
+
+                                            goPush(TicketList(res), context);
                                           }
                                         },
                                         child: Container(

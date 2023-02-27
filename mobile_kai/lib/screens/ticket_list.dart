@@ -14,11 +14,12 @@ class TicketList extends StatefulWidget {
 }
 
 class _TicketListState extends State<TicketList> {
-  List<Widget> getClass() {
+  List<Widget> getClass(data) {
     List<Widget> childs = [];
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < data.length; i++) {
+      var data2 = data[i];
       childs.add(new Text(
-        'ECONOMY / '.toUpperCase(),
+        "${data2['class']} / ".toUpperCase(),
         style: Styles.headLineStyle4
             .copyWith(color: Colors.grey.shade500, fontSize: 13),
       ));
@@ -33,7 +34,7 @@ class _TicketListState extends State<TicketList> {
           backgroundColor: Styles.primaryBold,
           title: RichText(
             text: TextSpan(
-              text: '${widget.dataJourney?['from']} ',
+              text: '${widget.dataJourney?["data"]['from']} ',
               style: Styles.headLineStyle2
                   .copyWith(color: Colors.white, fontSize: 15),
               children: [
@@ -44,7 +45,7 @@ class _TicketListState extends State<TicketList> {
                     size: 20,
                   ),
                 ),
-                TextSpan(text: ' ${widget.dataJourney?['to']}'),
+                TextSpan(text: ' ${widget.dataJourney?["data"]['to']}'),
               ],
             ),
           ),
@@ -59,9 +60,10 @@ class _TicketListState extends State<TicketList> {
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
             child: ListView.builder(
-              itemCount: 50,
+              itemCount: widget.dataJourney?["response"].length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
+                var ticket = widget.dataJourney?["response"][index];
                 return GestureDetector(
                   onTap: () {
                     print("TEST ${index}");
@@ -87,7 +89,7 @@ class _TicketListState extends State<TicketList> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Argo Parahyangan Tambahan 39",
+                              ticket["train"]["train_name"].toString(),
                               style: Styles.headLineStyle3,
                             ),
                             SizedBox(
@@ -107,7 +109,7 @@ class _TicketListState extends State<TicketList> {
                                     Text("12:00",
                                         style: TextStyle(fontSize: 16)),
                                     Text(
-                                      "${widget.dataJourney?['from']}",
+                                      "${widget.dataJourney?["data"]['from']}",
                                       style: TextStyle(
                                           color: Colors.grey.shade400,
                                           fontSize: 12),
@@ -124,7 +126,7 @@ class _TicketListState extends State<TicketList> {
                                     Text("14:00",
                                         style: TextStyle(fontSize: 16)),
                                     Text(
-                                      "${widget.dataJourney?['to']}",
+                                      "${widget.dataJourney?["data"]['to']}",
                                       style: TextStyle(
                                           color: Colors.grey.shade400,
                                           fontSize: 12),
@@ -143,7 +145,7 @@ class _TicketListState extends State<TicketList> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      children: getClass(),
+                                      children: getClass(ticket["train_fare"]),
                                     ),
                                     SizedBox(
                                       height: 10,
@@ -174,10 +176,14 @@ class _TicketListState extends State<TicketList> {
                                                   Styles.primaryBold),
                                         ),
                                         onPressed: () {
-                                          widget.dataJourney?["price"] =
+                                          widget.dataJourney?["data"]["price"] =
                                               "280000";
                                           goPush(
-                                              TicketOrder(widget.dataJourney),
+                                              TicketOrder({
+                                                "data":
+                                                    widget.dataJourney?["data"],
+                                                "detail": ticket
+                                              }),
                                               context);
                                         },
                                         child: Text(
