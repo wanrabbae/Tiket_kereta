@@ -127,7 +127,39 @@ class _TicketOrderState extends State<TicketOrder> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: getInputPsg(),
+              children: [
+                Column(
+                  children: getInputPsg(),
+                ),
+                DropdownSearch<String>(
+                  popupProps: PopupProps.menu(
+                    showSelectedItems: true,
+                    disabledItemFn: (String s) => s.startsWith('I'),
+                  ),
+                  items: [
+                    "ECONOMY",
+                    "BUSINESS",
+                    "EXECUTIVE",
+                  ],
+                  dropdownDecoratorProps: DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Styles.primaryBold, width: 1.5)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Styles.primaryBold, width: 1.5)),
+                        hintText: "Pilih Class",
+                        prefixIcon: Icon(
+                          FluentSystemIcons.ic_fluent_ticket_filled,
+                          color: Styles.primaryBold,
+                        )),
+                  ),
+                  onChanged: (value) {
+                    print(value);
+                  },
+                ),
+              ],
             ),
           ),
           SizedBox(
@@ -182,10 +214,12 @@ class _TicketOrderState extends State<TicketOrder> {
                   children: [
                     Text("Penumpang x" +
                         widget.dataJourney!["passengerCount"].toString()),
-                    Text("IDR. " +
-                        oCcy.format((int.parse(
+                    Text(NumberFormat.currency(
+                            locale: "id", symbol: "Rp. ", decimalDigits: 0)
+                        .format((int.parse(
                                 widget.dataJourney?["data"]["passengerCount"]) *
-                            int.parse(widget.dataJourney?["data"]["price"]))))
+                            int.parse(widget.dataJourney?["data"]["price"])))
+                        .toString())
                   ],
                 ),
                 Divider(
@@ -201,10 +235,12 @@ class _TicketOrderState extends State<TicketOrder> {
                           .copyWith(color: Colors.black, fontSize: 15),
                     ),
                     Text(
-                      "IDR. " +
-                          oCcy.format((int.parse(widget.dataJourney?["data"]
+                      NumberFormat.currency(
+                              locale: "id", symbol: "Rp. ", decimalDigits: 0)
+                          .format((int.parse(widget.dataJourney?["data"]
                                   ["passengerCount"]) *
-                              int.parse(widget.dataJourney?["data"]["price"]))),
+                              int.parse(widget.dataJourney?["data"]["price"])))
+                          .toString(),
                       style: Styles.headLineStyle1
                           .copyWith(color: Styles.primaryBold, fontSize: 18),
                     )
