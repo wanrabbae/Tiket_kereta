@@ -59,6 +59,7 @@ class HomeProvider extends ChangeNotifier {
     try {
       // _isLoading = true;
       var res = await TicketRepository.findTicket(data);
+      print(res);
       // _isLoading = false;
       return {"data": data, "response": res};
     } catch (e) {

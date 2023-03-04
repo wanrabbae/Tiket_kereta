@@ -3,6 +3,7 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:kai_mobile/core/utils/custom_component.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/book_seat_screen.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
@@ -24,6 +25,9 @@ class _TicketOrderState extends State<TicketOrder> {
     "Nyonya",
     "Nona",
   ];
+  var train_fare = "0";
+  bool _validate = false;
+  var selectedClassData;
   var _titelSelected = null;
   final oCcy = new NumberFormat("#.##", "id_IDR");
   List<Widget> getInputPsg() {
@@ -99,9 +103,18 @@ class _TicketOrderState extends State<TicketOrder> {
     return childs;
   }
 
+  getClass(fares) {
+    var data = fares.map((fr) => "${fr["class"]}");
+    return data.toList();
+  }
+
+  getPriceClass(className, fares) {
+    var data = fares.firstWhere((fr) => fr["class"] == className);
+    return data;
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.dataJourney);
     return Scaffold(
       backgroundColor: Styles.bgColor,
       appBar: AppBar(
@@ -131,16 +144,9 @@ class _TicketOrderState extends State<TicketOrder> {
                 Column(
                   children: getInputPsg(),
                 ),
-                DropdownSearch<String>(
-                  popupProps: PopupProps.menu(
-                    showSelectedItems: true,
-                    disabledItemFn: (String s) => s.startsWith('I'),
-                  ),
-                  items: [
-                    "ECONOMY",
-                    "BUSINESS",
-                    "EXECUTIVE",
-                  ],
+                DropdownSearch<dynamic>(
+                  popupProps: PopupProps.menu(),
+                  items: getClass(widget.dataJourney?["detail"]["train_fare"]),
                   dropdownDecoratorProps: DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
@@ -156,7 +162,12 @@ class _TicketOrderState extends State<TicketOrder> {
                         )),
                   ),
                   onChanged: (value) {
-                    print(value);
+                    setState(() {
+                      train_fare =
+                          "${getPriceClass(value, widget.dataJourney?["detail"]?["train_fare"])['fare']}";
+                      selectedClassData = getPriceClass(
+                          value, widget.dataJourney?["detail"]?["train_fare"]);
+                    });
                   },
                 ),
               ],
@@ -185,7 +196,8 @@ class _TicketOrderState extends State<TicketOrder> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("AWN - JNG   |   Rab, 30 Feb 2022   |   13:31"),
+                Text(
+                    "${widget.dataJourney?['detail']?['train_station_depart']?['station_code']} - ${widget.dataJourney?['detail']?['train_station_arrival']?['station_code']}   |   ${widget.dataJourney?['detail']?['depart_time'].split(' ')[0]}   |   ${widget.dataJourney?['detail']?['depart_time'].split(' ')[1].split(':')[0]}:${widget.dataJourney?['detail']?['depart_time'].split(' ')[1].split(':')[1]}"),
                 SizedBox(
                   height: 20,
                 ),
@@ -213,12 +225,13 @@ class _TicketOrderState extends State<TicketOrder> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Penumpang x" +
-                        widget.dataJourney!["passengerCount"].toString()),
+                        widget.dataJourney!["data"]["passengerCount"]
+                            .toString()),
                     Text(NumberFormat.currency(
                             locale: "id", symbol: "Rp. ", decimalDigits: 0)
                         .format((int.parse(
                                 widget.dataJourney?["data"]["passengerCount"]) *
-                            int.parse(widget.dataJourney?["data"]["price"])))
+                            int.parse(train_fare)))
                         .toString())
                   ],
                 ),
@@ -239,7 +252,7 @@ class _TicketOrderState extends State<TicketOrder> {
                               locale: "id", symbol: "Rp. ", decimalDigits: 0)
                           .format((int.parse(widget.dataJourney?["data"]
                                   ["passengerCount"]) *
-                              int.parse(widget.dataJourney?["data"]["price"])))
+                              int.parse(train_fare)))
                           .toString(),
                       style: Styles.headLineStyle1
                           .copyWith(color: Styles.primaryBold, fontSize: 18),
@@ -254,15 +267,25 @@ class _TicketOrderState extends State<TicketOrder> {
           ),
           GestureDetector(
             onTap: () {
-              print(controllers);
-              widget.dataJourney?["data"]["totalPay"] =
-                  (int.parse(widget.dataJourney?["data"]["passengerCount"]) *
-                          int.parse(widget.dataJourney?["data"]["price"]))
-                      .toString();
-              widget.dataJourney?["data"]["train_no"] = "TRAIN001";
-              widget.dataJourney?["data"]["fare_id"] = "1";
+              if (int.parse(widget.dataJourney?["data"]?["passengerCount"]) >
+                  selectedClassData?["wagon"]?["wagon_seat"].length) {
+                setState(() {
+                  _validate = true;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("Kursi tidak cukup!"),
+                  backgroundColor: Colors.red,
+                ));
+              }
 
-              goPush(BookSeat(widget.dataJourney), context);
+              if (_validate == false) {
+                widget.dataJourney?["data"]["totalPay"] =
+                    (int.parse(widget.dataJourney?["data"]["passengerCount"]) *
+                            int.parse(train_fare))
+                        .toString();
+
+                goPush(BookSeat(widget.dataJourney), context);
+              }
             },
             child: Container(
               width: double.infinity,

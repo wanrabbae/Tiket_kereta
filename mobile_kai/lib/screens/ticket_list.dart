@@ -23,24 +23,40 @@ class _TicketListState extends State<TicketList> {
     for (var i = 0; i < data.length; i++) {
       var data2 = data[i];
       childs.add(Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        width: double.infinity,
+        child: Column(
           children: [
-            Text(
-              "${data2['class']}".toUpperCase(),
-              style: Styles.headLineStyle4
-                  .copyWith(color: Colors.grey.shade500, fontSize: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "${data2['class']}".toUpperCase(),
+                  style: Styles.headLineStyle4
+                      .copyWith(color: Colors.grey.shade500, fontSize: 15),
+                ),
+                Text(
+                  "sisa " +
+                      (data2?["wagon"]?["wagon_seat"].length).toString() +
+                      " kursi",
+                  style: TextStyle(
+                      fontSize: 10,
+                      color: data2?["wagon"]?["wagon_seat"].length < 10
+                          ? Colors.red
+                          : Colors.green),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  NumberFormat.currency(
+                          locale: "id", symbol: "Rp. ", decimalDigits: 0)
+                      .format(data2["fare"])
+                      .toString(),
+                  style: TextStyle(fontSize: 15),
+                ),
+              ],
             ),
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              NumberFormat.currency(
-                      locale: "id", symbol: "Rp. ", decimalDigits: 0)
-                  .format(data2["fare"])
-                  .toString(),
-              style: TextStyle(fontSize: 18),
-            ),
+            Divider(height: 0, color: Colors.grey.shade600),
           ],
         ),
       ));
@@ -93,9 +109,12 @@ class _TicketListState extends State<TicketList> {
                         child: Container(
                           margin: EdgeInsets.only(
                             bottom: 10,
+                            left: 7,
+                            right: 7,
                           ),
                           decoration: BoxDecoration(
                             color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
@@ -107,7 +126,7 @@ class _TicketListState extends State<TicketList> {
                             ],
                           ),
                           child: Padding(
-                              padding: EdgeInsets.all(7.0),
+                              padding: EdgeInsets.all(10.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

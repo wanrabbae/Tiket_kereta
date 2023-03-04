@@ -19,6 +19,6 @@ class TrainFare extends Model
 
     public function wagon()
     {
-        return $this->hasMany(Wagon::class, 'fare_id');
+        return $this->hasOne(Wagon::class, 'fare_id');
     }
 }

@@ -26,7 +26,7 @@ class TrainApiCtrl extends Controller
 
             if ($data) {
                 foreach ($data as $key) {
-                    $fare = TrainFare::where('train_no', $key['train_no'])->get(["id", "class", "fare"]);
+                    $fare = TrainFare::with(['wagon', 'wagon.wagon_seat'])->where('train_no', $key['train_no'])->get(["id", "class", "fare"]);
                     if ($fare) {
                         $key["train_fare"] = $fare;
                     }
