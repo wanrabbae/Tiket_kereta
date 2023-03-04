@@ -46,6 +46,7 @@ class _BookSeatState extends State<BookSeat> {
 
     for (var i = 0; i < seats.length; i++) {
       var seat = seats[i];
+      print(seat);
       if (seat?["passenger_id"] != null) {
         _seats.add(Seat(id: "${seat['seat']}", state: SeatState.sold));
       } else {
@@ -60,20 +61,20 @@ class _BookSeatState extends State<BookSeat> {
     }
     setState(() {
       if (seat.state == SeatState.available) {
-        if (_selectedSeats.length + 1 >
-            int.parse(widget.dataJourney?["data"]?["passengerCount"])) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Anda sudah memilih lebih dari jumlah penumpang"),
-            backgroundColor: Colors.red,
-          ));
-          _selectedSeats.clear();
-        } else {
-          _seats[_seats.indexOf(seat)] = Seat(
-            id: seat.id,
-            state: SeatState.selectedByYou,
-          );
-          _selectedSeats.add(seat);
-        }
+        // if (_selectedSeats.length + 1 >
+        //     int.parse(widget.dataJourney?["data"]?["passengerCount"])) {
+        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //     content: Text("Anda sudah memilih lebih dari jumlah penumpang"),
+        //     backgroundColor: Colors.red,
+        //   ));
+        //   _selectedSeats.clear();
+        // } else {
+        _seats[_seats.indexOf(seat)] = Seat(
+          id: seat.id,
+          state: SeatState.selectedByYou,
+        );
+        _selectedSeats.add(seat);
+        // }
       } else if (seat.state == SeatState.selectedByYou) {
         _seats[_seats.indexOf(seat)] = Seat(
           id: seat.id,
@@ -153,15 +154,64 @@ class _BookSeatState extends State<BookSeat> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 16, left: 16),
-            child: Text("Selected Seats: ${_selectedSeats.length}"),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: 15,
+                  height: 15,
+                  color: Colors.grey,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "Tidak Tersedia",
+                  style: TextStyle(fontSize: 13),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Container(
+                  width: 15,
+                  height: 15,
+                  color: Colors.green,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "Tersedia",
+                  style: TextStyle(fontSize: 13),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Container(
+                  width: 15,
+                  height: 15,
+                  color: Colors.blue,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "Pilihan anda",
+                  style: TextStyle(fontSize: 13),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+              ],
+            ),
           ),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: GestureDetector(
                   onTap: () {
-                    print(widget.dataJourney);
-                    goRemove(LoadTicket(), context);
+                    print(_selectedSeats);
+                    // goRemove(LoadTicket(), context);
                   },
                   child: Container(
                     height: 50,
@@ -183,234 +233,6 @@ class _BookSeatState extends State<BookSeat> {
       ),
     );
   }
-  // Widget build(BuildContext context) {
-  //   var seats = getSeat(widget.dataJourney);
-  //   return Scaffold(
-  //     backgroundColor: Styles.bgColor,
-  //     appBar: AppBar(
-  //       title: Text("Pilih Kursi"),
-  //       backgroundColor: Styles.primaryBold,
-  //       leading: IconButton(
-  //         icon: Icon(
-  //           Icons.arrow_back_ios_new,
-  //           color: Colors.white,
-  //         ),
-  //         onPressed: () => Navigator.pop(context),
-  //       ),
-  //     ),
-  //     body: SafeArea(
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.center,
-  //         children: [
-  //           const SizedBox(
-  //             height: 16,
-  //           ),
-  //           const Text("The Door"),
-  //           const SizedBox(
-  //             height: 16,
-  //           ),
-  //           SizedBox(
-  //             width: double.infinity,
-  //             // height: 500,
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               children: [
-  //                 SeatLayoutWidget(
-  //                   onSeatStateChanged: (rowI, colI, seatState) {
-  //                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-  //                     ScaffoldMessenger.of(context).showSnackBar(
-  //                       SnackBar(
-  //                         content: seatState == SeatState.selected
-  //                             ? Text("Selected Seat[$rowI][$colI]")
-  //                             : Text("De-selected Seat[$rowI][$colI]"),
-  //                       ),
-  //                     );
-  //                     if (seatState == SeatState.selected) {
-  //                       selectedSeats.add(SeatNumber(rowI: rowI, colI: colI));
-  //                     } else {
-  //                       selectedSeats
-  //                           .remove(SeatNumber(rowI: rowI, colI: colI));
-  //                     }
-  //                   },
-  //                   stateModel: const SeatLayoutStateModel(
-  //                     pathDisabledSeat: 'assets/svg_disabled_bus_seat.svg',
-  //                     pathSelectedSeat: 'assets/svg_selected_bus_seats.svg',
-  //                     pathSoldSeat: 'assets/svg_sold_bus_seat.svg',
-  //                     pathUnSelectedSeat: 'assets/svg_unselected_bus_seat.svg',
-  //                     rows: 2,
-  //                     cols: 4,
-  //                     seatSvgSize: 40,
-  //                     currentSeatsState: [
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                       [
-  //                         SeatState.unselected,
-  //                         SeatState.unselected,
-  //                       ],
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           Padding(
-  //             padding: const EdgeInsets.all(16.0),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 Row(
-  //                   mainAxisSize: MainAxisSize.min,
-  //                   children: [
-  //                     SvgPicture.asset(
-  //                       'assets/svg_disabled_bus_seat.svg',
-  //                       width: 20,
-  //                       height: 20,
-  //                     ),
-  //                     const Text('Disabled')
-  //                   ],
-  //                 ),
-  //                 Row(
-  //                   mainAxisSize: MainAxisSize.min,
-  //                   children: [
-  //                     SvgPicture.asset(
-  //                       'assets/svg_sold_bus_seat.svg',
-  //                       width: 20,
-  //                       height: 20,
-  //                     ),
-  //                     const Text('Sold')
-  //                   ],
-  //                 ),
-  //                 Row(
-  //                   mainAxisSize: MainAxisSize.min,
-  //                   children: [
-  //                     SvgPicture.asset(
-  //                       'assets/svg_unselected_bus_seat.svg',
-  //                       width: 20,
-  //                       height: 20,
-  //                     ),
-  //                     const Text('Available')
-  //                   ],
-  //                 ),
-  //                 Row(
-  //                   mainAxisSize: MainAxisSize.min,
-  //                   children: [
-  //                     SvgPicture.asset(
-  //                       'assets/svg_selected_bus_seats.svg',
-  //                       width: 20,
-  //                       height: 20,
-  //                     ),
-  //                     const Text('Selected by you')
-  //                   ],
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           const SizedBox(
-  //             height: 12,
-  //           ),
-  //           Padding(
-  //             padding: const EdgeInsets.symmetric(horizontal: 10),
-  //             child: GestureDetector(
-  //               onTap: () {
-  //                 print(widget.dataJourney);
-  //                 goRemove(LoadTicket(), context);
-  //               },
-  //               child: Container(
-  //                 height: 50,
-  //                 decoration: BoxDecoration(
-  //                   color: Styles.primaryBold,
-  //                   borderRadius:
-  //                       BorderRadius.circular(AppLayout.getHeight(15)),
-  //                 ),
-  //                 width: double.infinity,
-  //                 child: Center(
-  //                   child: Text(
-  //                     "Pesan Tiket",
-  //                     style: Styles.headLineStyle3
-  //                         .copyWith(color: Colors.white, fontSize: 18),
-  //                   ),
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //           const SizedBox(height: 12),
-  //           Text(selectedSeats.join(" , "))
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
 }
 
 class SeatNumber {
