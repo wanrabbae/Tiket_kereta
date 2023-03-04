@@ -96,7 +96,8 @@ class _BookSeatState extends State<BookSeat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pilih Kursi"),
+        title: Text("Pilih Kursi ".toUpperCase() +
+            widget.dataJourney?["data"]?["class_selected"]),
         backgroundColor: Styles.primaryBold,
         leading: IconButton(
           icon: Icon(
@@ -210,8 +211,25 @@ class _BookSeatState extends State<BookSeat> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: GestureDetector(
                   onTap: () {
-                    print(_selectedSeats);
-                    // goRemove(LoadTicket(), context);
+                    if (_selectedSeats.length == 0) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("Pilih kursi terlebih dahulu"),
+                        backgroundColor: Colors.red,
+                      ));
+                    }
+                    // else if (_selectedSeats.length !=
+                    //     int.parse(
+                    //         widget.dataJourney?["data"]?["passengerCount"])) {
+                    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //     content: Text(
+                    //         "Sesuaikan dengan jumlah penumpang anda terlebih dahulu"),
+                    //     backgroundColor: Colors.red,
+                    //   ));
+                    // }
+                    else {
+                      print(_selectedSeats);
+                      goRemove(LoadTicket(), context);
+                    }
                   },
                   child: Container(
                     height: 50,
@@ -223,7 +241,7 @@ class _BookSeatState extends State<BookSeat> {
                     width: double.infinity,
                     child: Center(
                       child: Text(
-                        "Pesan Tiket",
+                        "Pesan Tiket".toUpperCase(),
                         style: Styles.headLineStyle3
                             .copyWith(color: Colors.white, fontSize: 18),
                       ),
