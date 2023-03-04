@@ -26,6 +26,7 @@ class _TicketOrderState extends State<TicketOrder> {
     "Nona",
   ];
   var train_fare = "0";
+  var class_selected;
   bool _validate = false;
   var selectedClassData;
   var _titelSelected = null;
@@ -47,12 +48,20 @@ class _TicketOrderState extends State<TicketOrder> {
             height: 20,
           ),
           TextFormField(
-            // controller: controllers[i],
+            onChanged: (value) {
+              print(value);
+            },
             decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                     borderSide:
                         BorderSide(color: Styles.primaryBold, width: 1.5)),
                 enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Styles.primaryBold, width: 1.5)),
+                errorBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Styles.primaryBold, width: 1.5)),
+                focusedErrorBorder: OutlineInputBorder(
                     borderSide:
                         BorderSide(color: Styles.primaryBold, width: 1.5)),
                 hintText: "Nama Lengkap",
@@ -81,6 +90,12 @@ class _TicketOrderState extends State<TicketOrder> {
                       borderSide:
                           BorderSide(color: Styles.primaryBold, width: 1.5)),
                   enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Styles.primaryBold, width: 1.5)),
+                  errorBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Styles.primaryBold, width: 1.5)),
+                  focusedErrorBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Styles.primaryBold, width: 1.5)),
                   hintText: "Title",
@@ -156,6 +171,13 @@ class _TicketOrderState extends State<TicketOrder> {
                             borderSide: BorderSide(
                                 color: Styles.primaryBold, width: 1.5)),
                         hintText: "Pilih Class",
+                        errorText: _validate ? 'Wajib diisi!' : null,
+                        errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Styles.primaryBold, width: 1.5)),
+                        focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Styles.primaryBold, width: 1.5)),
                         prefixIcon: Icon(
                           FluentSystemIcons.ic_fluent_ticket_filled,
                           color: Styles.primaryBold,
@@ -163,6 +185,8 @@ class _TicketOrderState extends State<TicketOrder> {
                   ),
                   onChanged: (value) {
                     setState(() {
+                      print(value);
+                      class_selected = value;
                       train_fare =
                           "${getPriceClass(value, widget.dataJourney?["detail"]?["train_fare"])['fare']}";
                       selectedClassData = getPriceClass(
@@ -267,6 +291,12 @@ class _TicketOrderState extends State<TicketOrder> {
           ),
           GestureDetector(
             onTap: () {
+              if (selectedClassData == null) {
+                setState(() {
+                  _validate = true;
+                });
+              }
+
               if (int.parse(widget.dataJourney?["data"]?["passengerCount"]) >
                   selectedClassData?["wagon"]?["wagon_seat"].length) {
                 setState(() {
@@ -278,11 +308,13 @@ class _TicketOrderState extends State<TicketOrder> {
                 ));
               }
 
-              if (_validate == false) {
+              if (_validate == false || selectedClassData.length > 0) {
                 widget.dataJourney?["data"]["totalPay"] =
                     (int.parse(widget.dataJourney?["data"]["passengerCount"]) *
                             int.parse(train_fare))
                         .toString();
+                widget.dataJourney?["data"]?["class_selected"] =
+                    selectedClassData?["class"];
 
                 goPush(BookSeat(widget.dataJourney), context);
               }
