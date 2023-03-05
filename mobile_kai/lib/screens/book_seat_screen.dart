@@ -26,9 +26,10 @@ enum SeatState {
 
 class Seat {
   final String id;
+  final String seat;
   final SeatState state;
 
-  Seat({required this.id, required this.state});
+  Seat({required this.id, required this.seat, required this.state});
 }
 
 class _BookSeatState extends State<BookSeat> {
@@ -46,11 +47,16 @@ class _BookSeatState extends State<BookSeat> {
 
     for (var i = 0; i < seats.length; i++) {
       var seat = seats[i];
-      print(seat);
       if (seat?["passenger_id"] != null) {
-        _seats.add(Seat(id: "${seat['seat']}", state: SeatState.sold));
+        _seats.add(Seat(
+            id: "${seat['id']}",
+            seat: "${seat['seat']}",
+            state: SeatState.sold));
       } else {
-        _seats.add(Seat(id: "${seat['seat']}", state: SeatState.available));
+        _seats.add(Seat(
+            id: "${seat['id']}",
+            seat: "${seat['seat']}",
+            state: SeatState.available));
       }
     }
   }
@@ -71,6 +77,7 @@ class _BookSeatState extends State<BookSeat> {
         // } else {
         _seats[_seats.indexOf(seat)] = Seat(
           id: seat.id,
+          seat: seat.seat,
           state: SeatState.selectedByYou,
         );
         _selectedSeats.add(seat);
@@ -78,6 +85,7 @@ class _BookSeatState extends State<BookSeat> {
       } else if (seat.state == SeatState.selectedByYou) {
         _seats[_seats.indexOf(seat)] = Seat(
           id: seat.id,
+          seat: seat.id,
           state: SeatState.available,
         );
         _selectedSeats.remove(seat);
@@ -140,7 +148,7 @@ class _BookSeatState extends State<BookSeat> {
                         ),
                         child: Center(
                           child: Text(
-                            seat.id,
+                            seat.seat,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

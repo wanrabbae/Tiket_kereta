@@ -221,15 +221,24 @@ class _TicketListState extends State<TicketList> {
                                                     Styles.primaryBold),
                                           ),
                                           onPressed: () {
-                                            widget.dataJourney?["data"]
-                                                ["price"] = "280000";
-                                            goPush(
-                                                TicketOrder({
-                                                  "data": widget
-                                                      .dataJourney?["data"],
-                                                  "detail": ticket
-                                                }),
-                                                context);
+                                            if (token != null) {
+                                              widget.dataJourney?["data"]
+                                                  ["price"] = "280000";
+                                              goPush(
+                                                  TicketOrder({
+                                                    "data": widget
+                                                        .dataJourney?["data"],
+                                                    "detail": ticket
+                                                  }),
+                                                  context);
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    "Anda harus login terlebih dahulu"),
+                                                backgroundColor: Colors.red,
+                                              ));
+                                            }
                                           },
                                           child: Text(
                                             'Pilih',

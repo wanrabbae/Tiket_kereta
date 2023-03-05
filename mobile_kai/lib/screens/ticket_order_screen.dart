@@ -26,6 +26,7 @@ class _TicketOrderState extends State<TicketOrder> {
     "Nona",
   ];
   var train_fare = "0";
+  var inputs = [];
   var class_selected;
   bool _validate = false;
   var selectedClassData;
@@ -36,6 +37,7 @@ class _TicketOrderState extends State<TicketOrder> {
     for (var i = 1;
         i < int.parse(widget.dataJourney?["data"]["passengerCount"]) + 1;
         i++) {
+      inputs.add({i: ""});
       childs.add(Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,7 +51,9 @@ class _TicketOrderState extends State<TicketOrder> {
           ),
           TextFormField(
             onChanged: (value) {
-              print(value);
+              setState(() {
+                // inputs.add({i = value.toString()});
+              });
             },
             decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
@@ -291,6 +295,7 @@ class _TicketOrderState extends State<TicketOrder> {
           ),
           GestureDetector(
             onTap: () {
+              print(inputs);
               if (selectedClassData == null) {
                 setState(() {
                   _validate = true;

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 Dio dio = Dio();
 
-String? token;
+String? token = "5|e36ttRpoIqcPTdi8iaJlRiL1hhwm2fI36O47XR3A";
+
+bool isLogged = true;
 
 String endpoint = "";
 String endpointIP = "http://192.168.100.119:8000/api";

@@ -87,7 +87,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isEdit = false;
-  bool isLogged = true;
   bool _isObscure2 = true;
 
   bool _isObscure = true;
