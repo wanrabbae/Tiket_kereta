@@ -71,7 +71,7 @@ class _TicketListState extends State<TicketList> {
           backgroundColor: Styles.primaryBold,
           title: RichText(
             text: TextSpan(
-              text: '${widget.dataJourney?["data"]['from']} ',
+              text: '${widget.dataJourney?["data"]['from'].toUpperCase()} ',
               style: Styles.headLineStyle2
                   .copyWith(color: Colors.white, fontSize: 15),
               children: [
@@ -82,7 +82,9 @@ class _TicketListState extends State<TicketList> {
                     size: 20,
                   ),
                 ),
-                TextSpan(text: ' ${widget.dataJourney?["data"]['to']}'),
+                TextSpan(
+                    text:
+                        ' ${widget.dataJourney?["data"]['to'].toUpperCase()}'),
               ],
             ),
           ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 Dio dio = Dio();
 
 String? token = "5|e36ttRpoIqcPTdi8iaJlRiL1hhwm2fI36O47XR3A";
+// String? token;
 
 bool isLogged = true;
 

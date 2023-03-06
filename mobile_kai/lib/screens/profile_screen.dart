@@ -1,5 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:kai_mobile/core/provider/AuthProvider.dart';
 import 'package:kai_mobile/core/utils/constant.dart';
+import 'package:kai_mobile/core/utils/session_manager.dart';
 import 'package:kai_mobile/utils/app_layout.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
 import 'package:kai_mobile/widgets/layout_builder_widget.dart';
@@ -95,7 +97,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    print(token);
     return Scaffold(
       backgroundColor: Styles.bgColor,
       body: token != null
@@ -770,19 +771,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                      Container(
-                        child: TextButton(
-                          onPressed: () {
-                            setState(() {
-                              isLogged = true;
-                            });
-                          },
-                          child: Text(
-                            "Login",
-                            style: TextStyle(color: Colors.black, fontSize: 12),
+                      Consumer<AuthProvider>(builder: (context, value, child) {
+                        return Container(
+                          child: TextButton(
+                            onPressed: () {
+                              value.login({
+                                "email": "alwanrabbae@gmail.com",
+                                "password": "123123"
+                              });
+                              setState(() {
+                                isLogged = true;
+                              });
+                            },
+                            child: Text(
+                              "Login",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 12),
+                            ),
                           ),
-                        ),
-                      )
+                        );
+                      }),
                     ],
                   ),
                 )),

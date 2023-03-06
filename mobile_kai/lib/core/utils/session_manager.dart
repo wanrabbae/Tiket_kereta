@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:js';
 
 import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/bottom_bar.dart';
-import 'package:kai_mobile/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SessionManager {
@@ -17,8 +15,9 @@ class SessionManager {
     if (_token != null) {
       token = _token;
       print("Token = $token");
-      goRemove(BottomBar(0), context);
+      return true;
     }
+    return false;
   }
 
   static Future setToken(String token) async {
@@ -34,6 +33,6 @@ class SessionManager {
   static Future clearSession() async {
     var session = await pref;
     session.clear();
-    goRemove(SplashScreen(), context);
+    goRemove2(BottomBar(0));
   }
 }

@@ -10,5 +10,10 @@ Future goRemove(Widget widget, context) async => Navigator.pushAndRemoveUntil(
     MaterialPageRoute(builder: ((context) => widget)),
     ((route) => false));
 
+Future goRemove2(Widget widget) async {
+  return await Navigator.pushAndRemoveUntil(navigatorKey.currentState!.context,
+      MaterialPageRoute(builder: (context) => widget), (route) => false);
+}
+
 Future goPush(Widget widget, context) async =>
     Navigator.push(context, MaterialPageRoute(builder: ((context) => widget)));
