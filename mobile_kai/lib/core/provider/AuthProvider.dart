@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kai_mobile/core/repository/auth_repository.dart';
 import 'package:kai_mobile/core/utils/custom_component.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/core/utils/session_manager.dart';
@@ -12,15 +13,27 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future register(Map<String, dynamic> requestBody) async {
+    isLoading = true;
+    var res = await AuthRepository.register(requestBody);
+    isLoading = false;
+    if (res["status"] == 201) {
+      CustomSnackBar(res["message"]);
+      goBack();
+    } else if (res["status"] == 400) {
+      CustomSnackBar(res["message"], false);
+    }
+  }
+
   Future login(Map<String, dynamic> requestBody) async {
-    // isLoading = true;
-    // // var res = await AuthRepository.login(requestBody);
-    // isLoading = false;
-    // print(res["status"]);
+    isLoading = true;
+    var res = await AuthRepository.login(requestBody);
+    isLoading = false;
+    print(res);
     // if (res["status"] == 200) {
-    SessionManager.setToken("5|e36ttRpoIqcPTdi8iaJlRiL1hhwm2fI36O47XR3A");
-    CustomSnackBar('Success login!');
-    goRemove2(BottomBar(0));
+    //   SessionManager.setToken(res["token"]);
+    //   goRemove2(BottomBar(0));
+    //   CustomSnackBar(res["message"]);
     // } else if (res["status"] == 400) {
     //   CustomSnackBar(res["message"], false);
     // }
