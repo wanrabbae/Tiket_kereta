@@ -1,7 +1,11 @@
+import 'dart:ffi';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:kai_mobile/core/provider/AuthProvider.dart';
 import 'package:kai_mobile/core/utils/constant.dart';
+import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/core/utils/session_manager.dart';
+import 'package:kai_mobile/screens/bottom_bar.dart';
 import 'package:kai_mobile/utils/app_layout.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
 import 'package:kai_mobile/widgets/layout_builder_widget.dart';
@@ -11,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // class ProfileScreen extends StatelessWidget {
 
@@ -92,9 +97,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _isObscure2 = true;
 
   bool _isObscure = true;
+  bool _tokened = false;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  Future<String?> checkToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("token") != null) {
+      setState(() {
+        _tokened = true;
+      });
+    } else {
+      setState(() {
+        _tokened = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkToken();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -103,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           builder: (context, authProv, child) {
             return Scaffold(
               backgroundColor: Styles.bgColor,
-              body: token != null
+              body: _tokened
                   ? ListView(
                       padding: EdgeInsets.symmetric(
                           horizontal: AppLayout.getWidth(20),
@@ -355,7 +382,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Gap(AppLayout.getHeight(25)),
                           InkWell(
                             onTap: () {
-                              print("tapped");
+                              SessionManager.clearSession();
+                              goRemove(BottomBar(0), context);
                             },
                             child: Center(
                               child: Text("Logout",

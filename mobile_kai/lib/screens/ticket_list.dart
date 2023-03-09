@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
+import 'package:kai_mobile/core/utils/session_manager.dart';
 import 'package:kai_mobile/screens/ticket_order_screen.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
 import 'package:lottie/lottie.dart';
@@ -222,8 +223,11 @@ class _TicketListState extends State<TicketList> {
                                                 MaterialStatePropertyAll(
                                                     Styles.primaryBold),
                                           ),
-                                          onPressed: () {
-                                            if (token != null) {
+                                          onPressed: () async {
+                                            var checkToken =
+                                                await SessionManager
+                                                    .checkSession();
+                                            if (checkToken) {
                                               widget.dataJourney?["data"]
                                                   ["price"] = "280000";
                                               goPush(

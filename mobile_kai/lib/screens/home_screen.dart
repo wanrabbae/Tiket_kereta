@@ -2,6 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:kai_mobile/core/provider/HomeProvider.dart';
 import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
+import 'package:kai_mobile/core/utils/session_manager.dart';
 import 'package:kai_mobile/screens/news_screen.dart';
 import 'package:kai_mobile/screens/ticket_list.dart';
 import 'package:kai_mobile/screens/ticket_view.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,6 +29,22 @@ class _HomeScreenState extends State<HomeScreen> {
   var to = null;
   final passengerCount = TextEditingController(text: null);
   bool _validate = false;
+  String _name = "Guest";
+
+  Future<String?> getName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _name = prefs.getString("name").toString();
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getName();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -68,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         const Gap(5),
                                         Text(
-                                          "Alwan",
+                                          _name == 'null' ? "Guest" : _name,
                                           style: Styles.headLineStyle1
                                               .copyWith(color: Colors.white),
                                         )

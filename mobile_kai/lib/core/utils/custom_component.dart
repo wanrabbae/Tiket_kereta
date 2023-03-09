@@ -52,9 +52,8 @@ CustomSnackBar(
   String? text, [
   isSuccess = true,
 ]) =>
-    ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
-      SnackBar(
-        backgroundColor: isSuccess ? Colors.lightGreen : Colors.red,
-        content: Text(text ?? ''),
-      ),
-    );
+    ScaffoldMessenger.of(navigatorKey.currentState!.context)
+        .showSnackBar(SnackBar(
+      content: Text("Anda harus login terlebih dahulu"),
+      backgroundColor: Colors.red,
+    ));
