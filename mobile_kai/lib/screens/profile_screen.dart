@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:intl/intl.dart';
 import 'package:kai_mobile/core/provider/AuthProvider.dart';
 import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
@@ -128,273 +129,302 @@ class _ProfileScreenState extends State<ProfileScreen> {
         create: (_) => AuthProvider(),
         child: Consumer<AuthProvider>(
           builder: (context, authProv, child) {
+            String joined = DateFormat.yMMMd()
+                .format(DateTime.parse(authProv.userData["created_at"] ??
+                    DateTime.now().toString()))
+                .toString();
             return Scaffold(
               backgroundColor: Styles.bgColor,
               body: _tokened
-                  ? ListView(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: AppLayout.getWidth(20),
-                          vertical: AppLayout.getHeight(20)),
-                      children: [
-                          Gap(AppLayout.getHeight(60)),
-                          Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                    width: AppLayout.getWidth(86),
-                                    height: AppLayout.getHeight(86),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            AppLayout.getHeight(10)),
-                                        image: const DecorationImage(
-                                            image: AssetImage(
-                                                "assets/images/img_1.png")))),
-                                Gap(AppLayout.getHeight(10)),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                  ? !authProv.isLoading
+                      ? ListView(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: AppLayout.getWidth(20),
+                              vertical: AppLayout.getHeight(20)),
+                          children: [
+                              Gap(AppLayout.getHeight(60)),
+                              Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      "Akhmad Alwan Rabbani".split(" ")[0],
-                                      style: Styles.headLineStyle1,
-                                    ),
-                                    Gap(AppLayout.getHeight(2)),
-                                    Text(
-                                      "Akhmad Alwan Rabbani",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.grey.shade500),
-                                    ),
-                                    Gap(AppLayout.getHeight(8)),
                                     Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: AppLayout.getWidth(3),
-                                          vertical: AppLayout.getHeight(3)),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              AppLayout.getWidth(100)),
-                                          color: const Color(0xFFFEF4F3)),
-                                      child: Row(
-                                        children: [],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const Spacer(),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    InkWell(
-                                      onTap: () => setState(() {
-                                        isEdit = !isEdit;
-                                      }),
-                                      child: Text("Edit",
-                                          style: Styles.textStyle.copyWith(
-                                              color: Styles.primaryColor,
-                                              fontWeight: FontWeight.w300)),
-                                    )
-                                  ],
-                                )
-                              ]),
-                          Divider(
-                            color: Colors.grey.shade300,
-                          ),
-                          isEdit
-                              ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          hintText: "Nama Lengkap",
-                                          prefixIcon: Icon(
-                                            FluentSystemIcons
-                                                .ic_fluent_person_accounts_regular,
-                                            color: Styles.primaryBold,
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          hintText: "E-mail",
-                                          prefixIcon: Icon(
-                                            Icons.email,
-                                            color: Styles.primaryBold,
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          hintText: "Negara",
-                                          prefixIcon: Icon(
-                                            FluentSystemIcons
-                                                .ic_fluent_flag_filled,
-                                            color: Styles.primaryBold,
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          hintText: "Kota / Kabupaten",
-                                          prefixIcon: Icon(
-                                            FluentSystemIcons
-                                                .ic_fluent_city_regular,
-                                            color: Styles.primaryBold,
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        print("EDIT");
-                                      },
-                                      child: Container(
+                                        width: AppLayout.getWidth(86),
+                                        height: AppLayout.getHeight(86),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                AppLayout.getHeight(10)),
+                                            image: const DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/img_1.png")))),
+                                    Gap(AppLayout.getHeight(10)),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          authProv.userData["name"]
+                                                  .split(" ")[0] ??
+                                              "Guest yeyee",
+                                          style: Styles.headLineStyle1,
+                                        ),
+                                        Gap(AppLayout.getHeight(2)),
+                                        Container(
+                                          width: 170,
+                                          child: Text(
+                                            authProv.userData["name"] ??
+                                                "Guest Yeyy",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.grey.shade500),
+                                          ),
+                                        ),
+                                        Gap(AppLayout.getHeight(8)),
+                                        Container(
                                           padding: EdgeInsets.symmetric(
-                                              vertical: AppLayout.getHeight(18),
-                                              horizontal:
-                                                  AppLayout.getWidth(15)),
+                                              horizontal: AppLayout.getWidth(3),
+                                              vertical: AppLayout.getHeight(3)),
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(
-                                                      AppLayout.getWidth(10)),
-                                              color: Styles.primaryBold),
-                                          child: Center(
-                                            child: Text(
-                                              "Simpan",
-                                              style: Styles.textStyle.copyWith(
-                                                  color: Colors.white),
-                                            ),
-                                          )),
-                                    ),
-                                  ],
-                                )
-                              : Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: AppLayout.getWidth(10)),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          AppLayout.getWidth(18)),
-                                      color: Styles.bgColor,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey.shade200,
-                                            blurRadius: 1,
-                                            spreadRadius: 2)
-                                      ]),
-                                  child: Column(children: [
-                                    Gap(AppLayout.getHeight(20)),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Joined",
-                                          style: Styles.headLineStyle4
-                                              .copyWith(fontSize: 16),
-                                        ),
-                                        Text(
-                                          "16 JAN 2023",
-                                          style: Styles.headLineStyle4
-                                              .copyWith(fontSize: 16),
+                                                      AppLayout.getWidth(100)),
+                                              color: const Color(0xFFFEF4F3)),
+                                          child: Row(
+                                            children: [],
+                                          ),
                                         )
                                       ],
                                     ),
-                                    Divider(
-                                      color: Colors.grey.shade300,
-                                    ),
-                                    Gap(AppLayout.getHeight(4)),
-                                    Row(
+                                    const Spacer(),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        PairedColumnWidget(
-                                          firstText: "Akhmad Alwan Rabbani",
-                                          secondText: "Nama Lengkap",
-                                          alignment: CrossAxisAlignment.start,
-                                          isColor: false,
-                                        ),
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        InkWell(
+                                          onTap: () => setState(() {
+                                            isEdit = !isEdit;
+                                          }),
+                                          child: Text("Edit",
+                                              style: Styles.textStyle.copyWith(
+                                                  color: Styles.primaryColor,
+                                                  fontWeight: FontWeight.w300)),
+                                        )
                                       ],
-                                    ),
-                                    Gap(AppLayout.getHeight(12)),
-                                    const LayoutBuilderWidget(
-                                      sections: 6,
-                                      isColor: false,
-                                    ),
-                                    Gap(AppLayout.getHeight(12)),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        PairedColumnWidget(
-                                          firstText: "alwanrabbae@gmail.com",
-                                          secondText: "E-mail",
-                                          alignment: CrossAxisAlignment.start,
-                                          isColor: false,
-                                        ),
-                                      ],
-                                    ),
-                                    Gap(AppLayout.getHeight(12)),
-                                    const LayoutBuilderWidget(
-                                      sections: 6,
-                                      isColor: false,
-                                    ),
-                                    Gap(AppLayout.getHeight(12)),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        PairedColumnWidget(
-                                          firstText: "Indonesia",
-                                          secondText: "Negara",
-                                          alignment: CrossAxisAlignment.start,
-                                          isColor: false,
-                                        ),
-                                      ],
-                                    ),
-                                    Gap(AppLayout.getHeight(12)),
-                                    const LayoutBuilderWidget(
-                                      sections: 6,
-                                      isColor: false,
-                                    ),
-                                    Gap(AppLayout.getHeight(12)),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        PairedColumnWidget(
-                                          firstText: "Cirebon",
-                                          secondText: "Kota / Kabupaten",
-                                          alignment: CrossAxisAlignment.start,
-                                          isColor: false,
-                                        ),
-                                      ],
-                                    ),
+                                    )
                                   ]),
+                              Divider(
+                                color: Colors.grey.shade300,
+                              ),
+                              isEdit
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormField(
+                                          decoration: InputDecoration(
+                                              hintText: "Nama Lengkap",
+                                              prefixIcon: Icon(
+                                                FluentSystemIcons
+                                                    .ic_fluent_person_accounts_regular,
+                                                color: Styles.primaryBold,
+                                              )),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        TextFormField(
+                                          decoration: InputDecoration(
+                                              hintText: "E-mail",
+                                              prefixIcon: Icon(
+                                                Icons.email,
+                                                color: Styles.primaryBold,
+                                              )),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        TextFormField(
+                                          decoration: InputDecoration(
+                                              hintText: "Negara",
+                                              prefixIcon: Icon(
+                                                FluentSystemIcons
+                                                    .ic_fluent_flag_filled,
+                                                color: Styles.primaryBold,
+                                              )),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        TextFormField(
+                                          decoration: InputDecoration(
+                                              hintText: "Kota / Kabupaten",
+                                              prefixIcon: Icon(
+                                                FluentSystemIcons
+                                                    .ic_fluent_city_regular,
+                                                color: Styles.primaryBold,
+                                              )),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            print("EDIT");
+                                          },
+                                          child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical:
+                                                      AppLayout.getHeight(18),
+                                                  horizontal:
+                                                      AppLayout.getWidth(15)),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          AppLayout.getWidth(
+                                                              10)),
+                                                  color: Styles.primaryBold),
+                                              child: Center(
+                                                child: Text(
+                                                  "Simpan",
+                                                  style: Styles.textStyle
+                                                      .copyWith(
+                                                          color: Colors.white),
+                                                ),
+                                              )),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: AppLayout.getWidth(10)),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              AppLayout.getWidth(18)),
+                                          color: Styles.bgColor,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey.shade200,
+                                                blurRadius: 1,
+                                                spreadRadius: 2)
+                                          ]),
+                                      child: Column(children: [
+                                        Gap(AppLayout.getHeight(20)),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Joined",
+                                              style: Styles.headLineStyle4
+                                                  .copyWith(fontSize: 16),
+                                            ),
+                                            Text(
+                                              joined.toString(),
+                                              style: Styles.headLineStyle4
+                                                  .copyWith(fontSize: 16),
+                                            )
+                                          ],
+                                        ),
+                                        Divider(
+                                          color: Colors.grey.shade300,
+                                        ),
+                                        Gap(AppLayout.getHeight(4)),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            PairedColumnWidget(
+                                              firstText: authProv
+                                                  .userData["name"]
+                                                  .toString(),
+                                              secondText: "Nama Lengkap",
+                                              alignment:
+                                                  CrossAxisAlignment.start,
+                                              isColor: false,
+                                            ),
+                                          ],
+                                        ),
+                                        Gap(AppLayout.getHeight(12)),
+                                        const LayoutBuilderWidget(
+                                          sections: 6,
+                                          isColor: false,
+                                        ),
+                                        Gap(AppLayout.getHeight(12)),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            PairedColumnWidget(
+                                              firstText:
+                                                  "alwanrabbae@gmail.com",
+                                              secondText: "E-mail",
+                                              alignment:
+                                                  CrossAxisAlignment.start,
+                                              isColor: false,
+                                            ),
+                                          ],
+                                        ),
+                                        Gap(AppLayout.getHeight(12)),
+                                        const LayoutBuilderWidget(
+                                          sections: 6,
+                                          isColor: false,
+                                        ),
+                                        Gap(AppLayout.getHeight(12)),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            PairedColumnWidget(
+                                              firstText: "Indonesia",
+                                              secondText: "Negara",
+                                              alignment:
+                                                  CrossAxisAlignment.start,
+                                              isColor: false,
+                                            ),
+                                          ],
+                                        ),
+                                        Gap(AppLayout.getHeight(12)),
+                                        const LayoutBuilderWidget(
+                                          sections: 6,
+                                          isColor: false,
+                                        ),
+                                        Gap(AppLayout.getHeight(12)),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            PairedColumnWidget(
+                                              firstText: "Cirebon",
+                                              secondText: "Kota / Kabupaten",
+                                              alignment:
+                                                  CrossAxisAlignment.start,
+                                              isColor: false,
+                                            ),
+                                          ],
+                                        ),
+                                      ]),
+                                    ),
+                              Gap(AppLayout.getHeight(25)),
+                              InkWell(
+                                onTap: () {
+                                  SessionManager.clearSession();
+                                  goRemove(BottomBar(0), context);
+                                },
+                                child: Center(
+                                  child: Text("Logout",
+                                      style: Styles.textStyle.copyWith(
+                                        color: Styles.primaryColor,
+                                        fontWeight: FontWeight.w500,
+                                      )),
                                 ),
-                          Gap(AppLayout.getHeight(25)),
-                          InkWell(
-                            onTap: () {
-                              SessionManager.clearSession();
-                              goRemove(BottomBar(0), context);
-                            },
-                            child: Center(
-                              child: Text("Logout",
-                                  style: Styles.textStyle.copyWith(
-                                    color: Styles.primaryColor,
-                                    fontWeight: FontWeight.w500,
-                                  )),
-                            ),
-                          )
-                        ])
-
+                              )
+                            ])
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        )
                   // ====== LOGIN PAGE =====
                   : isLogged
                       ? SingleChildScrollView(

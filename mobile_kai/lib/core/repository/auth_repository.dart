@@ -41,7 +41,7 @@ class AuthRepository {
   static Future getProfileData() async {
     try {
       var token = await SessionManager.getToken();
-      var res = await dio.post(
+      var res = await dio.get(
         "$endpointIP/customer",
         options: Options(
           headers: {

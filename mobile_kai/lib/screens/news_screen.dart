@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/news_detail_screen.dart';
@@ -12,6 +13,10 @@ class NewsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String publish = DateFormat.yMMMd()
+        .format(
+            DateTime.parse(hotel["published_at"] ?? DateTime.now().toString()))
+        .toString();
     final size = AppLayout.getSize(context);
 
     return GestureDetector(
@@ -81,7 +86,7 @@ class NewsList extends StatelessWidget {
                   ),
                   SizedBox(
                     child: Text(
-                      "Published At 2022-10-10:08.00",
+                      "Published At " + publish,
                       style: Styles.headLineStyle4
                           .copyWith(color: Colors.grey[400], fontSize: 12),
                     ),

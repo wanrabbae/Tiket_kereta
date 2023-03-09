@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kai_mobile/core/repository/auth_repository.dart';
 import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/core/utils/custom_component.dart';
@@ -10,6 +11,7 @@ class AuthProvider extends ChangeNotifier {
   AuthProvider() {
     init();
   }
+  final naviKey = GlobalKey<NavigatorState>();
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -44,19 +46,20 @@ class AuthProvider extends ChangeNotifier {
     isLoading = false;
     if (res["success"] == true) {
       SessionManager.setToken(res["token"], res["user"]["name"]);
-      goRemove2(BottomBar(0));
+      goRemove(BottomBar(0), naviKey.currentContext);
     } else if (res["status"] == 400 || res["status"] == 401) {
       errorSnackBar("Email atau Password salah!");
     }
   }
 
   Future? getProfile() async {
+    isLoading = true;
     var res = await AuthRepository.getProfileData();
-    print(res);
-    // if (res["status"] == 400) {
-    //   return errorSnackBar("Ups something went wrong!");
-    // } else {
-    //   return res.data;
-    // }
+    isLoading = false;
+    if (res["status"] == 400) {
+      errorSnackBar("Ups something went wrong!");
+    } else {
+      userData = res;
+    }
   }
 }

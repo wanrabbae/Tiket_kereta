@@ -86,7 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         const Gap(5),
                                         Text(
-                                          _name == 'null' ? "Guest" : _name,
+                                          _name == 'null'
+                                              ? "Guest"
+                                              : _name.split(" ")[0],
                                           style: Styles.headLineStyle1
                                               .copyWith(color: Colors.white),
                                         )

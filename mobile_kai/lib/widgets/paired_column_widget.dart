@@ -10,7 +10,7 @@ class PairedColumnWidget extends StatelessWidget {
   final String secondText;
   final CrossAxisAlignment alignment;
   final bool? isColor;
-  const PairedColumnWidget(
+  PairedColumnWidget(
       {super.key,
       required this.firstText,
       required this.secondText,
