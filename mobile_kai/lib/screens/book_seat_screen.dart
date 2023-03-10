@@ -236,7 +236,7 @@ class _BookSeatState extends State<BookSeat> {
                     // }
                     else {
                       print(_selectedSeats);
-                      goRemove(LoadTicket(), context);
+                      goRemove(LoadTicket());
                     }
                   },
                   child: Container(

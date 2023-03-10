@@ -1,3 +1,4 @@
+import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/screens/bottom_bar.dart';
 import 'package:kai_mobile/screens/splash_screen.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primary,
       ),
+      navigatorKey: navigatorKey,
       home: const SplashScreen(),
     );
   }

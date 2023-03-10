@@ -22,7 +22,7 @@ class NewsList extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         newsDetail = hotel;
-        goPush(NewsDetail(), context);
+        goPush(NewsDetail());
       },
       child: Container(
         width: size.width * 20,

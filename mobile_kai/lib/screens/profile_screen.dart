@@ -338,8 +338,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           children: [
                                             PairedColumnWidget(
                                               firstText: authProv
-                                                  .userData["name"]
-                                                  .toString(),
+                                                          .userData["name"]
+                                                          .toString() ==
+                                                      'null'
+                                                  ? 'Name'
+                                                  : authProv.userData["name"]
+                                                      .toString(),
                                               secondText: "Nama Lengkap",
                                               alignment:
                                                   CrossAxisAlignment.start,
@@ -358,8 +362,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             PairedColumnWidget(
-                                              firstText:
-                                                  "alwanrabbae@gmail.com",
+                                              firstText: authProv
+                                                          .userData["email"]
+                                                          .toString() ==
+                                                      'null'
+                                                  ? 'Email'
+                                                  : authProv.userData["email"]
+                                                      .toString(),
                                               secondText: "E-mail",
                                               alignment:
                                                   CrossAxisAlignment.start,
@@ -378,7 +387,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             PairedColumnWidget(
-                                              firstText: "Indonesia",
+                                              firstText: authProv
+                                                          .userData["country"]
+                                                          .toString() ==
+                                                      'null'
+                                                  ? 'Country'
+                                                  : authProv.userData["country"]
+                                                      .toString(),
                                               secondText: "Negara",
                                               alignment:
                                                   CrossAxisAlignment.start,
@@ -397,7 +412,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             PairedColumnWidget(
-                                              firstText: "Cirebon",
+                                              firstText: authProv
+                                                          .userData["City"]
+                                                          .toString() ==
+                                                      'null'
+                                                  ? 'City'
+                                                  : authProv.userData["City"]
+                                                      .toString(),
                                               secondText: "Kota / Kabupaten",
                                               alignment:
                                                   CrossAxisAlignment.start,
@@ -411,7 +432,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               InkWell(
                                 onTap: () {
                                   SessionManager.clearSession();
-                                  goRemove(BottomBar(0), context);
+                                  goRemove(BottomBar(0));
                                 },
                                 child: Center(
                                   child: Text("Logout",

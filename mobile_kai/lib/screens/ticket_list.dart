@@ -231,12 +231,12 @@ class _TicketListState extends State<TicketList> {
                                               widget.dataJourney?["data"]
                                                   ["price"] = "280000";
                                               goPush(
-                                                  TicketOrder({
-                                                    "data": widget
-                                                        .dataJourney?["data"],
-                                                    "detail": ticket
-                                                  }),
-                                                  context);
+                                                TicketOrder({
+                                                  "data": widget
+                                                      .dataJourney?["data"],
+                                                  "detail": ticket
+                                                }),
+                                              );
                                             } else {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(SnackBar(

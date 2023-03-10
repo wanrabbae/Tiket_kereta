@@ -19,7 +19,7 @@ class LoadTicket extends StatefulWidget {
 class _LoadTicketState extends State<LoadTicket> {
   SwitchPage() async {
     await Future.delayed(Duration(seconds: 3));
-    goRemove(BottomBar(1), context);
+    goRemove(BottomBar(1));
   }
 
   @override

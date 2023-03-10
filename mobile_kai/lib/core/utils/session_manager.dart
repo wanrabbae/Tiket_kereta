@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:kai_mobile/core/utils/constant.dart';
+import 'package:kai_mobile/core/utils/custom_component.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/bottom_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,6 +52,7 @@ class SessionManager {
     session.clear();
     token = null;
     nama = null;
-    goRemove2(BottomBar(0));
+    goRemove(BottomBar(0));
+    CustomSnackBar("Sukses logout!");
   }
 }

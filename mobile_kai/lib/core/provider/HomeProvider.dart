@@ -64,7 +64,7 @@ class HomeProvider extends ChangeNotifier {
       return {"data": data, "response": res};
     } catch (e) {
       print(e);
-      CustomSnackBar("Error fetching news!", false);
+      CustomSnackBar("Error fetching tickets!", false);
     }
   }
 }

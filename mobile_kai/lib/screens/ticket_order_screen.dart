@@ -321,7 +321,7 @@ class _TicketOrderState extends State<TicketOrder> {
                 widget.dataJourney?["data"]?["class_selected"] =
                     selectedClassData?["class"];
 
-                goPush(BookSeat(widget.dataJourney), context);
+                goPush(BookSeat(widget.dataJourney));
               }
             },
             child: Container(

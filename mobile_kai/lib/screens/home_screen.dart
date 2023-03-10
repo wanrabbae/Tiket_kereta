@@ -217,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             var res =
                                                 await homeProv.getTickets(data);
 
-                                            goPush(TicketList(res), context);
+                                            goPush(TicketList(res));
                                           }
                                         },
                                         child: Container(

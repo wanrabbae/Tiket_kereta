@@ -18,7 +18,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   SwitchPage() async {
     await Future.delayed(Duration(seconds: 5));
-    goRemove(BottomBar(0), context);
+    goRemove(BottomBar(0));
   }
 
   @override

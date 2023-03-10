@@ -33,7 +33,7 @@ class AuthRepository {
           e.response?.statusCode == 500) {
         return {"status": 400, "message": "Incorrect email or password"};
       } else {
-        print(e.message.toString());
+        return {"status": 400, "message": "Incorrect email or password"};
       }
     }
   }

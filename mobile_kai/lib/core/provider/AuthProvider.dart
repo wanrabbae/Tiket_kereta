@@ -44,11 +44,13 @@ class AuthProvider extends ChangeNotifier {
     isLoading = true;
     var res = await AuthRepository.login(requestBody);
     isLoading = false;
-    if (res["success"] == true) {
+
+    if (res["success"] != null && res["success"] == true) {
       SessionManager.setToken(res["token"], res["user"]["name"]);
-      goRemove(BottomBar(0), naviKey.currentContext);
-    } else if (res["status"] == 400 || res["status"] == 401) {
-      errorSnackBar("Email atau Password salah!");
+      goRemove(BottomBar(0));
+      CustomSnackBar("Sukses login!");
+    } else {
+      CustomSnackBar("Email atau Password salah!", false);
     }
   }
 
