@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:kai_mobile/utils/app_layout.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
 import 'package:kai_mobile/widgets/layout_builder_widget.dart';
@@ -17,7 +18,7 @@ class TicketView extends StatelessWidget {
     final size = AppLayout.getSize(context);
     return SizedBox(
       width: size.width * 0.85,
-      height: AppLayout.getHeight(GetPlatform.isAndroid == true ? 152 : 169),
+      // height: AppLayout.getHeight(GetPlatform.isAndroid == true ? 152 : 169),
       child: Container(
         margin: EdgeInsets.only(right: AppLayout.getHeight(16)),
         child: Column(
@@ -37,7 +38,9 @@ class TicketView extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        ticket['from']['code'],
+                        ticket['train_journey']['train_station_depart']
+                                ["station_code"] ??
+                            "NYC",
                         style: isColor == null
                             ? Styles.headLineStyle3
                                 .copyWith(color: Colors.white)
@@ -67,7 +70,9 @@ class TicketView extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        ticket['to']['code'],
+                        ticket['train_journey']['train_station_arrival']
+                                ["station_code"] ??
+                            "NYC",
                         style: isColor == null
                             ? Styles.headLineStyle3
                                 .copyWith(color: Colors.white)
@@ -82,7 +87,9 @@ class TicketView extends StatelessWidget {
                       SizedBox(
                           width: AppLayout.getWidth(100),
                           child: Text(
-                            ticket['from']['name'],
+                            ticket['train_journey']['train_station_depart']
+                                    ["station_name"] ??
+                                "New-York",
                             style: isColor == null
                                 ? Styles.headLineStyle4
                                     .copyWith(color: Colors.white)
@@ -91,7 +98,9 @@ class TicketView extends StatelessWidget {
                       SizedBox(
                           width: AppLayout.getWidth(100),
                           child: Text(
-                            ticket['to']['name'],
+                            ticket['train_journey']['train_station_arrival']
+                                    ["station_name"] ??
+                                "London",
                             textAlign: TextAlign.end,
                             style: isColor == null
                                 ? Styles.headLineStyle4
@@ -152,20 +161,30 @@ class TicketView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       PairedColumnWidget(
-                        firstText: ticket['date'],
-                        secondText: "DATE",
+                        firstText: DateFormat.MMMd()
+                            .format(DateTime.parse(ticket["booking_date"]))
+                            .toString(),
+                        secondText: "Tanggal",
                         alignment: CrossAxisAlignment.start,
                         isColor: isColor,
                       ),
                       PairedColumnWidget(
-                        firstText: ticket['departure_time'],
-                        secondText: "Departure Time",
+                        firstText: ticket["train_journey"]["depart_time"]
+                                .split(" ")[1]
+                                .split(":")[0] +
+                            ":" +
+                            ticket["train_journey"]["depart_time"]
+                                .split(" ")[1]
+                                .split(":")[1],
+                        secondText: "Waktu Kedatangan",
                         alignment: CrossAxisAlignment.center,
                         isColor: isColor,
                       ),
                       PairedColumnWidget(
-                        firstText: ticket['number'].toString(),
-                        secondText: "Number",
+                        firstText: DateFormat.y()
+                            .format(DateTime.parse(ticket["booking_date"]))
+                            .toString(),
+                        secondText: "Tahun",
                         alignment: CrossAxisAlignment.end,
                         isColor: isColor,
                       ),

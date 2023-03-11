@@ -37,7 +37,6 @@ class _TicketOrderState extends State<TicketOrder> {
     for (var i = 1;
         i < int.parse(widget.dataJourney?["data"]["passengerCount"]) + 1;
         i++) {
-      inputs.add({i: ""});
       childs.add(Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -52,7 +51,7 @@ class _TicketOrderState extends State<TicketOrder> {
           TextFormField(
             onChanged: (value) {
               setState(() {
-                // inputs.add({i = value.toString()});
+                inputs[i] = {"name": value};
               });
             },
             decoration: InputDecoration(
@@ -109,7 +108,9 @@ class _TicketOrderState extends State<TicketOrder> {
                   )),
             ),
             onChanged: (value) {
-              print(value);
+              setState(() {
+                inputs[i] = {"title": value};
+              });
             },
           ),
           Divider(
