@@ -133,6 +133,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 .format(DateTime.parse(authProv.userData["created_at"] ??
                     DateTime.now().toString()))
                 .toString();
+
+            TextEditingController namaCtrl = TextEditingController(
+                text: authProv.userData["name"].toString() == 'null'
+                    ? 'Name'
+                    : authProv.userData["name"].toString());
+            TextEditingController emailCtrl = TextEditingController(
+                text: authProv.userData["email"].toString() == 'null'
+                    ? 'Email'
+                    : authProv.userData["email"].toString());
+            TextEditingController countryCtrl = TextEditingController(
+                text: authProv.userData["country"].toString() == 'null'
+                    ? 'Country'
+                    : authProv.userData["country"].toString());
+            TextEditingController cityCtrl = TextEditingController(
+                text: authProv.userData["city"].toString() == 'null'
+                    ? 'City'
+                    : authProv.userData["city"].toString());
+
             return Scaffold(
               backgroundColor: Styles.bgColor,
               body: _tokened
@@ -224,6 +242,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         TextFormField(
+                                          controller: namaCtrl,
                                           decoration: InputDecoration(
                                               hintText: "Nama Lengkap",
                                               prefixIcon: Icon(
@@ -236,6 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           height: 20,
                                         ),
                                         TextFormField(
+                                          controller: emailCtrl,
                                           decoration: InputDecoration(
                                               hintText: "E-mail",
                                               prefixIcon: Icon(
@@ -247,6 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           height: 20,
                                         ),
                                         TextFormField(
+                                          controller: countryCtrl,
                                           decoration: InputDecoration(
                                               hintText: "Negara",
                                               prefixIcon: Icon(
@@ -259,6 +280,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           height: 20,
                                         ),
                                         TextFormField(
+                                          controller: cityCtrl,
                                           decoration: InputDecoration(
                                               hintText: "Kota / Kabupaten",
                                               prefixIcon: Icon(
