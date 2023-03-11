@@ -29,25 +29,15 @@
             <!-- Sales chart -->
             <!-- ============================================================== -->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-4">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-md-flex align-items-center">
-                                <div>
-                                    <h4 class="card-title">Sales Summary</h4>
-                                    <h6 class="card-subtitle">Ample admin Vs Pixel admin</h6>
+                            <div class=" d-flex align-items-center">
+                                <i class="mdi mdi-cart-outline display-3 text-primary"></i>
+                                <div class="ms-3">
+                                    <h5 class="mb-0 fw-bold fs-3">Income</h5>
+                                    <span class="badge bg-light fs-6 text-success text-sm">Rp. {{ number_format($income, 2, ',', '.') }}</span>
                                 </div>
-                                <div class="ms-auto d-flex no-block align-items-center">
-                                    <ul class="list-inline dl d-flex align-items-center m-r-15 m-b-0">
-                                        <li class="list-inline-item d-flex align-items-center text-warning"><i class="fa fa-circle font-10 me-1"></i> Pending
-                                        </li>
-                                        <li class="list-inline-item d-flex align-items-center text-success"><i class="fa fa-circle font-10 me-1"></i> Pixel
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="amp-pxl mt-4" style="height: 350px;">
-                                <div class="chartist-tooltip"></div>
                             </div>
                         </div>
                     </div>
@@ -55,50 +45,50 @@
                 <div class="col-lg-4">
                     <div class="card">
                         <div class="card-body">
-                            <div class="pb-3 d-flex align-items-center">
-                                <span class="btn btn-primary btn-circle d-flex align-items-center">
-                                    <i class="mdi mdi-cart-outline fs-4"></i>
-                                </span>
+                            <div class="d-flex align-items-center">
+                                <i class="mdi mdi-account-multiple display-3 text-warning"></i>
                                 <div class="ms-3">
-                                    <h5 class="mb-0 fw-bold">Income</h5>
-                                    <span class="badge bg-light text-success text-sm">Rp. {{ number_format($income, 2, ',', '.') }}</span>
+                                    <h5 class="mb-0 fw-bold fs-3">Customers</h5>
+                                    <span class="badge bg-light fs-6 text-success text-sm">{{ $customer }}</span>
                                 </div>
                             </div>
-                            <div class="py-3 d-flex align-items-center">
-                                <span class="btn btn-warning btn-circle d-flex align-items-center">
-                                    <i class="mdi mdi-account-multiple fs-4"></i>
-                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <i class="mdi mdi-subway display-3 text-success"></i>
                                 <div class="ms-3">
-                                    <h5 class="mb-0 fw-bold">Customers</h5>
-                                    <span class="badge bg-light text-success text-sm">{{ $customer }}</span>
+                                    <h5 class="mb-0 fw-bold fs-3">Train Stations</h5>
+                                    <span class="badge bg-light fs-6 text-success text-sm">{{ $station }}</span>
                                 </div>
                             </div>
-                            <div class="py-3 d-flex align-items-center">
-                                <span class="btn btn-success btn-circle d-flex align-items-center">
-                                    <i class="mdi mdi-subway text-white fs-4"></i>
-                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class=" d-flex align-items-center">
+                                <i class="mdi mdi-train display-3 text-info"></i>
                                 <div class="ms-3">
-                                    <h5 class="mb-0 fw-bold">Train Stations</h5>
-                                    <span class="badge bg-light text-success text-sm">{{ $station }}</span>
+                                    <h5 class="mb-0 fw-bold fs-3">Trains</h5>
+                                    <span class="badge bg-light fs-6 text-success text-sm">{{ $train }}</span>
                                 </div>
                             </div>
-                            <div class="py-3 d-flex align-items-center">
-                                <span class="btn btn-info btn-circle d-flex align-items-center">
-                                    <i class="mdi mdi-train fs-4 text-white"></i>
-                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class=" d-flex align-items-center">
+                                <i class="mdi mdi-account text-danger display-3"></i>
                                 <div class="ms-3">
-                                    <h5 class="mb-0 fw-bold">Trains</h5>
-                                    <span class="badge bg-light text-success text-sm">{{ $train }}</span>
-                                </div>
-                            </div>
-
-                            <div class="pt-3 d-flex align-items-center">
-                                <span class="btn btn-danger btn-circle d-flex align-items-center">
-                                    <i class="mdi mdi-account fs-4 text-white"></i>
-                                </span>
-                                <div class="ms-3">
-                                    <h5 class="mb-0 fw-bold">Users</h5>
-                                    <span class="badge bg-light text-success text-sm">{{ $user }}</span>
+                                    <h5 class="mb-0 fw-bold fs-3">Users</h5>
+                                    <span class="badge bg-light fs-6 text-success text-sm">{{ $user }}</span>
                                 </div>
                             </div>
                         </div>
