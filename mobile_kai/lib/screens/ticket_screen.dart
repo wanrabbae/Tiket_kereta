@@ -14,8 +14,50 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-class TicketScreen extends StatelessWidget {
+class TicketScreen extends StatefulWidget {
   const TicketScreen({super.key});
+
+  @override
+  State<TicketScreen> createState() => _TicketScreenState();
+}
+
+class _TicketScreenState extends State<TicketScreen> {
+  List<Widget> getPassengers(passengers) {
+    List<Widget> childs = [];
+    for (var i = 0; i < passengers.length; i++) {
+      var psg = passengers[i];
+      childs.add(Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              PairedColumnWidget(
+                firstText: psg["name"] ?? "Alwan",
+                secondText: "Passenger",
+                alignment: CrossAxisAlignment.start,
+                isColor: false,
+              ),
+              PairedColumnWidget(
+                firstText: psg["status"].toString().toUpperCase() ?? "Tuan",
+                secondText: "Status",
+                alignment: CrossAxisAlignment.end,
+                isColor: false,
+              )
+            ],
+          ),
+          SizedBox(
+            height: 20,
+            child: LayoutBuilderWidget(
+              sections: 15,
+              isColor: false,
+              width: 8,
+            ),
+          )
+        ],
+      ));
+    }
+    return childs;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,29 +107,9 @@ class TicketScreen extends StatelessWidget {
                               color: Colors.white,
                               child: Column(
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: const [
-                                      PairedColumnWidget(
-                                        firstText: "Flutter DB",
-                                        secondText: "Passenger",
-                                        alignment: CrossAxisAlignment.start,
-                                        isColor: false,
-                                      ),
-                                      PairedColumnWidget(
-                                        firstText: "5221 345678",
-                                        secondText: "Passport",
-                                        alignment: CrossAxisAlignment.end,
-                                        isColor: false,
-                                      )
-                                    ],
-                                  ),
-                                  Gap(AppLayout.getHeight(15)),
-                                  const LayoutBuilderWidget(
-                                    sections: 15,
-                                    isColor: false,
-                                    width: 8,
+                                  Column(
+                                    children: getPassengers(
+                                        ticket["passengers"] ?? []),
                                   ),
                                   Gap(AppLayout.getHeight(15)),
                                   Row(
