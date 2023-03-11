@@ -19,48 +19,57 @@ class TicketList extends StatefulWidget {
 
 class _TicketListState extends State<TicketList> {
   final oCcy = new NumberFormat("#.##", "id_IDR");
+  bool isAbis = false;
   List<Widget> getClass(data) {
     List<Widget> childs = [];
-    for (var i = 0; i < data.length; i++) {
-      var data2 = data[i];
-      childs.add(Container(
-        width: double.infinity,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "${data2['class']}".toUpperCase(),
-                  style: Styles.headLineStyle4
-                      .copyWith(color: Colors.grey.shade500, fontSize: 15),
-                ),
-                Text(
-                  "sisa " +
-                      (data2?["wagon"]?["wagon_seat"].length).toString() +
-                      " kursi",
-                  style: TextStyle(
-                      fontSize: 10,
-                      color: data2?["wagon"]?["wagon_seat"].length < 10
-                          ? Colors.red
-                          : Colors.green),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  NumberFormat.currency(
-                          locale: "id", symbol: "Rp. ", decimalDigits: 0)
-                      .format(data2["fare"])
-                      .toString(),
-                  style: TextStyle(fontSize: 15),
-                ),
-              ],
-            ),
-            Divider(height: 0, color: Colors.grey.shade600),
-          ],
-        ),
-      ));
+    if (data?.length > 0) {
+      for (var i = 0; i < data.length; i++) {
+        var data2 = data[i];
+        childs.add(Container(
+          width: double.infinity,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${data2['class']}".toUpperCase(),
+                    style: Styles.headLineStyle4
+                        .copyWith(color: Colors.grey.shade500, fontSize: 15),
+                  ),
+                  Text(
+                    "sisa " +
+                        (data2?["wagon"]?["wagon_seat"].length ?? 0)
+                            .toString() +
+                        " kursi",
+                    style: TextStyle(
+                        fontSize: 10,
+                        color: data2?["wagon"] != null
+                            ? Colors.green
+                            : data2?["wagon"] != null &&
+                                        data2?["wagon"]?["wagon_seat"]?.length <
+                                            10 ||
+                                    data2?["wagon"] == null
+                                ? Colors.red
+                                : Colors.green),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    NumberFormat.currency(
+                            locale: "id", symbol: "Rp. ", decimalDigits: 0)
+                        .format(data2["fare"])
+                        .toString(),
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
+              ),
+              Divider(height: 0, color: Colors.grey.shade600),
+            ],
+          ),
+        ));
+      }
     }
     return childs;
   }

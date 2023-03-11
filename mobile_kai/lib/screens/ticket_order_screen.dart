@@ -302,6 +302,14 @@ class _TicketOrderState extends State<TicketOrder> {
                 });
               }
 
+              if (selectedClassData?["wagon"] == null &&
+                  selectedClassData?["wagon"]?["wagon_seat"] == null) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("Kursi sudah tidak tersedia!"),
+                  backgroundColor: Colors.red,
+                ));
+              }
+
               if (int.parse(widget.dataJourney?["data"]?["passengerCount"]) >
                   selectedClassData?["wagon"]?["wagon_seat"].length) {
                 setState(() {

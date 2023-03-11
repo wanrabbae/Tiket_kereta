@@ -209,11 +209,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           if (_validate == false) {
                                             var data = {
                                               "from":
-                                                  from.toString().split(" ")[0],
-                                              "to": to.toString().split(" ")[0],
+                                                  from.toString().split("(")[0],
+                                              "to": to.toString().split("(")[0],
                                               "passengerCount":
                                                   passengerCount.text,
                                             };
+                                            print(data);
                                             var res =
                                                 await homeProv.getTickets(data);
 
