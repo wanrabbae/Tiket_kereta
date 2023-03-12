@@ -28,15 +28,18 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+// successSnackBar("Success register!");
+//     goRemove(BottomBar(0));
   Future register(Map<String, dynamic> requestBody) async {
     isLoading = true;
     var res = await AuthRepository.register(requestBody);
     isLoading = false;
-    if (res["status"] == 201) {
-      CustomSnackBar(res["message"]);
-      goBack();
-    } else if (res["status"] == 400) {
-      CustomSnackBar(res["message"], false);
+    if (res["success"] != null && res["success"] == true) {
+      SessionManager.setToken(res["token"], res["user"]["name"]);
+      successSnackBar("Success register!");
+      goRemove(BottomBar(0));
+    } else {
+      errorSnackBar("Daftar gagal!");
     }
   }
 

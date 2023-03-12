@@ -95,7 +95,7 @@ class CustomerCtrl extends Controller
                 "success" => true,
                 "user" => $request->only(['id', 'name', 'email', 'city', 'country']),
                 "token" => $token
-            ]);
+            ], 201);
         }
     }
 }

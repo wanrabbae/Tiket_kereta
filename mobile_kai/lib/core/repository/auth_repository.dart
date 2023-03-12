@@ -8,17 +8,19 @@ import 'package:kai_mobile/core/utils/session_manager.dart';
 
 class AuthRepository {
   static Future register(Map<String, dynamic> requestBody) async {
-    var res = await dio.post(
-      "$endpointIP/register-customer",
-      data: jsonEncode(requestBody),
-    );
-
-    log(res.realUri.toString());
-
-    if (res.statusCode == 201) {
+    try {
+      var res =
+          await dio.post("$endpointIP/register-customer", data: requestBody);
+      log(res.realUri.toString());
       return res.data;
-    } else if (res.statusCode == 400) {
-      return res.data;
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 400 ||
+          e.response?.statusCode == 401 ||
+          e.response?.statusCode == 500) {
+        return e.response;
+      } else {
+        return e.response;
+      }
     }
   }
 

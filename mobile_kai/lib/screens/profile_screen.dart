@@ -18,74 +18,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// class ProfileScreen extends StatelessWidget {
-
-//   final String? fullName;
-//   final String? email;
-//   final String? identity;
-
-//   ProfileScreen({this.fullName, this.email, this.identity});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         padding: EdgeInsets.all(20),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Container(
-//               width: 140,
-//               height: 140,
-//               decoration: BoxDecoration(
-//                 shape: BoxShape.circle,
-//                 image: DecorationImage(
-//                   image: NetworkImage("https://picsum.photos/200"),
-//                   fit: BoxFit.cover,
-//                 ),
-//               ),
-//             ),
-//             SizedBox(height: 20),
-//             Text(
-//               fullName!,
-//               style: TextStyle(
-//                 fontWeight: FontWeight.bold,
-//                 fontSize: 20,
-//               ),
-//             ),
-//             SizedBox(height: 10),
-//             Text(
-//               email!,
-//               style: TextStyle(
-//                 fontSize: 16,
-//               ),
-//             ),
-//             SizedBox(height: 10),
-//             Text(
-//               identity!,
-//               style: TextStyle(
-//                 fontSize: 16,
-//               ),
-//             ),
-//             SizedBox(height: 20),
-//             TextButton(
-//               onPressed: () {},
-//               child: Text(
-//                 "Edit Profile",
-//                 style: TextStyle(
-//                   color: Colors.blue,
-//                   fontSize: 16,
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -99,9 +31,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   bool _isObscure = true;
   bool _tokened = false;
+  bool _validate = false;
+
+  Map errorObject = {
+    "id": ["Wajib diisi!"],
+    "email": ["Wajib diisi!"],
+    "password": ["Wajib diisi!"],
+    "country": ["Wajib diisi!"],
+    "city": ["Wajib diisi!"],
+    "name": ["Wajib diisi!"],
+  };
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController ktpCtrl2 = TextEditingController();
+  TextEditingController namaCtrl2 = TextEditingController();
+  TextEditingController countryCtrl2 = TextEditingController();
+  TextEditingController cityCtrl2 = TextEditingController();
 
   Future<String?> checkToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -589,10 +536,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         };
                                         await authProv.login(requestBody);
                                       },
-                                      child: Text(
-                                        "Masuk",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
+                                      child: authProv.isLoading == true
+                                          ? CircularProgressIndicator()
+                                          : Text(
+                                              "Masuk",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
                                       style: TextButton.styleFrom(
                                         padding: EdgeInsets.all(10),
                                         backgroundColor: Styles.primaryBold,
@@ -643,11 +593,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       padding:
                                           EdgeInsets.symmetric(horizontal: 20),
                                       child: TextFormField(
+                                        controller: ktpCtrl2,
                                         style: TextStyle(fontSize: 12),
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.symmetric(
                                               vertical: 10),
                                           hintText: "No. KTP",
+                                          errorText: _validate
+                                              ? errorObject["id"][0]
+                                              : null,
                                           prefixIcon: Icon(
                                             PhosphorIcons.userCircleBold,
                                             size: 30,
@@ -665,6 +619,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               borderSide: BorderSide(
                                                   color: Colors.grey.shade400,
                                                   width: 2.0)),
+                                          errorBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(7.0),
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey.shade400,
+                                                  width: 2.0)),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          7.0),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.grey.shade400,
+                                                      width: 2.0)),
                                           fillColor: Colors.white,
                                         ),
                                       ),
@@ -674,11 +643,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       padding:
                                           EdgeInsets.symmetric(horizontal: 20),
                                       child: TextFormField(
+                                        controller: namaCtrl2,
                                         style: TextStyle(fontSize: 12),
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.symmetric(
                                               vertical: 10),
                                           hintText: "Nama Lengkap",
+                                          errorText: _validate
+                                              ? errorObject["name"][0]
+                                              : null,
                                           prefixIcon: Icon(
                                             PhosphorIcons.userCircleBold,
                                             size: 30,
@@ -696,6 +669,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               borderSide: BorderSide(
                                                   color: Colors.grey.shade400,
                                                   width: 2.0)),
+                                          errorBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(7.0),
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey.shade400,
+                                                  width: 2.0)),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          7.0),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.grey.shade400,
+                                                      width: 2.0)),
                                           fillColor: Colors.white,
                                         ),
                                       ),
@@ -712,6 +700,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           dropdownSearchDecoration:
                                               InputDecoration(
                                             hintStyle: TextStyle(fontSize: 12),
+                                            errorText: _validate
+                                                ? errorObject["country"][0]
+                                                : null,
                                             contentPadding:
                                                 EdgeInsets.symmetric(
                                                     vertical: 10),
@@ -731,10 +722,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 borderSide: BorderSide(
                                                     color: Colors.grey.shade400,
                                                     width: 2.0)),
+                                            errorBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(7.0),
+                                                borderSide: BorderSide(
+                                                    color: Colors.grey.shade400,
+                                                    width: 2.0)),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7.0),
+                                                    borderSide: BorderSide(
+                                                        color: Colors
+                                                            .grey.shade400,
+                                                        width: 2.0)),
                                             fillColor: Colors.white,
                                           ),
                                         ),
-                                        onChanged: (value) {},
+                                        onChanged: (value) {
+                                          setState(() {
+                                            countryCtrl2.text =
+                                                value.toString();
+                                          });
+                                        },
                                       ),
                                     ),
                                     Container(
@@ -749,6 +760,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           dropdownSearchDecoration:
                                               InputDecoration(
                                             hintStyle: TextStyle(fontSize: 12),
+                                            errorText: _validate
+                                                ? errorObject["city"][0]
+                                                : null,
                                             contentPadding:
                                                 EdgeInsets.symmetric(
                                                     vertical: 10),
@@ -768,10 +782,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 borderSide: BorderSide(
                                                     color: Colors.grey.shade400,
                                                     width: 2.0)),
+                                            errorBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(7.0),
+                                                borderSide: BorderSide(
+                                                    color: Colors.grey.shade400,
+                                                    width: 2.0)),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7.0),
+                                                    borderSide: BorderSide(
+                                                        color: Colors
+                                                            .grey.shade400,
+                                                        width: 2.0)),
                                             fillColor: Colors.white,
                                           ),
                                         ),
-                                        onChanged: (value) {},
+                                        onChanged: (value) {
+                                          setState(() {
+                                            cityCtrl2.text = value.toString();
+                                          });
+                                        },
                                       ),
                                     ),
                                     Container(
@@ -785,6 +818,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           contentPadding: EdgeInsets.symmetric(
                                               vertical: 10),
                                           hintText: "Masukkan Email",
+                                          errorText: _validate
+                                              ? errorObject["email"][0]
+                                              : null,
                                           prefixIcon: Icon(
                                             PhosphorIcons.envelope,
                                             size: 30,
@@ -802,6 +838,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               borderSide: BorderSide(
                                                   color: Colors.grey.shade400,
                                                   width: 2.0)),
+                                          errorBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(7.0),
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey.shade400,
+                                                  width: 2.0)),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          7.0),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.grey.shade400,
+                                                      width: 2.0)),
                                           fillColor: Colors.white,
                                         ),
                                       ),
@@ -820,6 +871,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           contentPadding: EdgeInsets.symmetric(
                                               vertical: 10),
                                           hintText: "Masukkan Password",
+                                          errorText: _validate
+                                              ? errorObject["password"][0]
+                                              : null,
                                           prefixIcon: Icon(
                                             PhosphorIcons.lockBold,
                                             size: 30,
@@ -849,6 +903,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               borderSide: BorderSide(
                                                   color: Colors.grey.shade400,
                                                   width: 2.0)),
+                                          errorBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(7.0),
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey.shade400,
+                                                  width: 2.0)),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          7.0),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.grey.shade400,
+                                                      width: 2.0)),
                                           fillColor: Colors.white,
                                         ),
                                       ),
@@ -857,6 +926,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       padding:
                                           EdgeInsets.symmetric(horizontal: 20),
                                       child: TextFormField(
+                                        controller: confirmPasswordController,
                                         style: TextStyle(fontSize: 12),
                                         obscureText: _isObscure2,
                                         enableSuggestions: false,
@@ -865,6 +935,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           contentPadding: EdgeInsets.symmetric(
                                               vertical: 10),
                                           hintText: "Konfirmasi Password",
+                                          errorText: _validate
+                                              ? errorObject["password"][0]
+                                              : null,
                                           prefixIcon: Icon(
                                             PhosphorIcons.lockBold,
                                             size: 30,
@@ -894,6 +967,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               borderSide: BorderSide(
                                                   color: Colors.grey.shade400,
                                                   width: 2.0)),
+                                          errorBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(7.0),
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey.shade400,
+                                                  width: 2.0)),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          7.0),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.grey.shade400,
+                                                      width: 2.0)),
                                           fillColor: Colors.white,
                                         ),
                                       ),
@@ -909,7 +997,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: EdgeInsets.symmetric(horizontal: 60)
                                       .horizontal,
                                   child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      setState(() {
+                                        ktpCtrl2.text.isEmpty
+                                            ? _validate = true
+                                            : _validate = false;
+                                        namaCtrl2.text.isEmpty
+                                            ? _validate = true
+                                            : _validate = false;
+                                        emailController.text.isEmpty
+                                            ? _validate = true
+                                            : _validate = false;
+                                        cityCtrl2.text.isEmpty
+                                            ? _validate = true
+                                            : _validate = false;
+                                        countryCtrl2.text.isEmpty
+                                            ? _validate = true
+                                            : _validate = false;
+                                        passwordController.text.isEmpty
+                                            ? _validate = true
+                                            : _validate = false;
+                                        confirmPasswordController.text.isEmpty
+                                            ? _validate = true
+                                            : _validate = false;
+                                      });
+
+                                      var data = {
+                                        "id": ktpCtrl2.text,
+                                        "name": namaCtrl2.text,
+                                        "email": emailController.text,
+                                        "city": cityCtrl2.text,
+                                        "country": countryCtrl2.text,
+                                        "password": passwordController.text,
+                                        "password_confirmation":
+                                            confirmPasswordController.text
+                                      };
+                                      if (_validate == false) {
+                                        await authProv.register(data);
+                                      }
+                                    },
                                     child: Text(
                                       "Daftar",
                                       style: TextStyle(color: Colors.white),
@@ -926,10 +1052,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 return Container(
                                   child: TextButton(
                                     onPressed: () {
-                                      value.login({
-                                        "email": "alwanrabbae@gmail.com",
-                                        "password": "123123"
-                                      });
                                       setState(() {
                                         isLogged = true;
                                       });
