@@ -7,12 +7,19 @@ import 'package:kai_mobile/core/utils/session_manager.dart';
 class TicketRepository {
   static Future findTicket(data) async {
     var res = await dio.get(
-        "$endpointIP/findTicket?depart=${data['from']}&arrival=${data['to']}");
+        "$endpointIP/findTicket?depart=${data['from']}&arrival=${data['to']}&date=${data['departTime']}");
     // print(res);
     log(res.realUri.toString());
     if (res.statusCode == 200) {
       return res.data;
     }
+  }
+
+  static Future bookTicket(data) async {
+    var res = await dio.post("$endpointIP/booking");
+    print(res);
+    log(res.realUri.toString());
+    return res;
   }
 
   static Future ticketHistories() async {

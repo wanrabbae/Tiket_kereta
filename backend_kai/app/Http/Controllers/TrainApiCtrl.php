@@ -21,8 +21,8 @@ class TrainApiCtrl extends Controller
     public function findTicket(Request $request)
     {
         $data = [];
-        if ($request->has('depart') && $request->has('arrival')) {
-            $data = TrainJourney::with(['train', 'train_station_depart', 'train_station_arrival'])->whereRelation('train_station_depart', 'station_name', '=', $request->query('depart'))->whereRelation('train_station_arrival', 'station_name', '=', $request->query('arrival'))->get();
+        if ($request->has('depart') && $request->has('arrival') && $request->query('date')) {
+            $data = TrainJourney::with(['train', 'train_station_depart', 'train_station_arrival'])->whereDate("depart_time", $request->query('date'))->whereRelation('train_station_depart', 'station_name', '=', $request->query('depart'))->whereRelation('train_station_arrival', 'station_name', '=', $request->query('arrival'))->get();
 
             if ($data) {
                 foreach ($data as $key) {

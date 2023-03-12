@@ -1,4 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:kai_mobile/core/provider/HomeProvider.dart';
 import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
@@ -28,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var from = null;
   var to = null;
   final passengerCount = TextEditingController(text: null);
+  final departDate = TextEditingController(text: null);
   bool _validate = false;
   String _name = "Guest";
 
@@ -192,6 +194,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                       SizedBox(
                                         height: 20,
                                       ),
+                                      TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        controller: departDate,
+                                        onTap: () {
+                                          DatePicker.showDatePicker(context,
+                                              showTitleActions: true,
+                                              onChanged: (date) {
+                                            print('change $date');
+                                          }, onConfirm: (date) {
+                                            setState(() {
+                                              departDate.text =
+                                                  date.toString().split(" ")[0];
+                                            });
+                                          },
+                                              currentTime: DateTime.now(),
+                                              locale: LocaleType.id);
+                                        },
+                                        decoration: InputDecoration(
+                                            hintText: "Tanggal Berangkat",
+                                            errorText: _validate
+                                                ? 'Wajib diisi!'
+                                                : null,
+                                            prefixIcon: Icon(
+                                              Icons.date_range,
+                                              color: Styles.primaryBold,
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
                                       GestureDetector(
                                         onTap: () async {
                                           setState(() {
@@ -204,6 +236,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             passengerCount.text.isEmpty
                                                 ? _validate = true
                                                 : _validate = false;
+                                            departDate.text.isEmpty
+                                                ? _validate = true
+                                                : _validate = false;
                                           });
 
                                           if (_validate == false) {
@@ -213,8 +248,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               "to": to.toString().split("(")[0],
                                               "passengerCount":
                                                   passengerCount.text,
+                                              "departTime": departDate.text,
                                             };
-                                            print(data);
+
                                             var res =
                                                 await homeProv.getTickets(data);
 

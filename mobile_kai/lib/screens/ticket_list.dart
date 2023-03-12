@@ -26,6 +26,10 @@ class _TicketListState extends State<TicketList> {
     if (data?.length > 0) {
       for (var i = 0; i < data.length; i++) {
         var data2 = data[i];
+        var totalSeat = data2?["wagon"]?["wagon_seat"]
+            .where((s) => s["passenger_id"] == null)
+            .toList()
+            .length;
         childs.add(Container(
           width: double.infinity,
           child: Column(
@@ -39,17 +43,12 @@ class _TicketListState extends State<TicketList> {
                         .copyWith(color: Colors.grey.shade500, fontSize: 15),
                   ),
                   Text(
-                    "sisa " +
-                        (data2?["wagon"]?["wagon_seat"].length ?? 0)
-                            .toString() +
-                        " kursi",
+                    "sisa " + (totalSeat ?? 0).toString() + " kursi",
                     style: TextStyle(
                         fontSize: 10,
                         color: data2?["wagon"] != null
                             ? Colors.green
-                            : data2?["wagon"] != null &&
-                                        data2?["wagon"]?["wagon_seat"]?.length <
-                                            10 ||
+                            : data2?["wagon"] != null && totalSeat < 10 ||
                                     data2?["wagon"] == null
                                 ? Colors.red
                                 : Colors.green),

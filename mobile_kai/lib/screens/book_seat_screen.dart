@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:kai_mobile/core/provider/ListTicketProvider.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/bottom_bar.dart';
 import 'package:kai_mobile/screens/load_ticket.dart';
 import 'package:kai_mobile/screens/ticket_screen.dart';
 import 'package:kai_mobile/utils/app_layout.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
+import 'package:provider/provider.dart';
 
 class BookSeat extends StatefulWidget {
   final Map? dataJourney;
@@ -102,160 +104,173 @@ class _BookSeatState extends State<BookSeat> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Pilih Kursi ".toUpperCase() +
-            widget.dataJourney?["data"]?["class_selected"]),
-        backgroundColor: Styles.primaryBold,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            color: Colors.white,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            padding: EdgeInsets.all(5),
-            color: Colors.blue,
-            margin: EdgeInsets.all(16),
-            child: Text(
-              "Pintu Gerbong",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white),
+    return ChangeNotifierProvider(
+      create: (_) => TicketProvider(),
+      child: Consumer<TicketProvider>(
+        builder: (context, ticketProv, _) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Pilih Kursi ".toUpperCase() +
+                  widget.dataJourney?["data"]?["class_selected"]),
+              backgroundColor: Styles.primaryBold,
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.white,
+                ),
+                onPressed: () => Navigator.pop(context),
+              ),
             ),
-          ),
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 4,
-              mainAxisSpacing: 2,
-              children: _seats
-                  .map(
-                    (seat) => GestureDetector(
-                      onTap: () => _onSeatTap(seat),
-                      child: Container(
-                        margin: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: seat.state == SeatState.sold
-                              ? Colors.grey
-                              : seat.state == SeatState.available
-                                  ? Colors.green
-                                  : Colors.blue,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: Text(
-                            seat.seat,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  width: 15,
-                  height: 15,
-                  color: Colors.grey,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  "Tidak Tersedia",
-                  style: TextStyle(fontSize: 13),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Container(
-                  width: 15,
-                  height: 15,
-                  color: Colors.green,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  "Tersedia",
-                  style: TextStyle(fontSize: 13),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Container(
-                  width: 15,
-                  height: 15,
+                  padding: EdgeInsets.all(5),
                   color: Colors.blue,
+                  margin: EdgeInsets.all(16),
+                  child: Text(
+                    "Pintu Gerbong",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-                SizedBox(
-                  width: 5,
+                Expanded(
+                  child: GridView.count(
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 2,
+                    children: _seats
+                        .map(
+                          (seat) => GestureDetector(
+                            onTap: () => _onSeatTap(seat),
+                            child: Container(
+                              margin: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: seat.state == SeatState.sold
+                                    ? Colors.grey
+                                    : seat.state == SeatState.available
+                                        ? Colors.green
+                                        : Colors.blue,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  seat.seat,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
-                Text(
-                  "Pilihan anda",
-                  style: TextStyle(fontSize: 13),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 15,
+                        height: 15,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "Tidak Tersedia",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: 15,
+                        height: 15,
+                        color: Colors.green,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "Tersedia",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: 15,
+                        height: 15,
+                        color: Colors.blue,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "Pilihan anda",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  width: 20,
-                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    child: GestureDetector(
+                        onTap: () {
+                          if (_selectedSeats.length == 0) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Pilih kursi terlebih dahulu"),
+                              backgroundColor: Colors.red,
+                            ));
+                          }
+                          // else if (_selectedSeats.length !=
+                          //     int.parse(
+                          //         widget.dataJourney?["data"]?["passengerCount"])) {
+                          //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          //     content: Text(
+                          //         "Sesuaikan dengan jumlah penumpang anda terlebih dahulu"),
+                          //     backgroundColor: Colors.red,
+                          //   ));
+                          // }
+                          else {
+                            var data = _selectedSeats.map((e) => {
+                                  "name": "John Doe",
+                                  "status": "tuan",
+                                  "wagon_seat_id": e.id,
+                                });
+                            print(data.toList());
+                            // goRemove(LoadTicket());
+                          }
+                        },
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Styles.primaryBold,
+                            borderRadius:
+                                BorderRadius.circular(AppLayout.getHeight(15)),
+                          ),
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              "Pesan Tiket".toUpperCase(),
+                              style: Styles.headLineStyle3
+                                  .copyWith(color: Colors.white, fontSize: 18),
+                            ),
+                          ),
+                        )))
               ],
             ),
-          ),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: GestureDetector(
-                  onTap: () {
-                    if (_selectedSeats.length == 0) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("Pilih kursi terlebih dahulu"),
-                        backgroundColor: Colors.red,
-                      ));
-                    }
-                    // else if (_selectedSeats.length !=
-                    //     int.parse(
-                    //         widget.dataJourney?["data"]?["passengerCount"])) {
-                    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    //     content: Text(
-                    //         "Sesuaikan dengan jumlah penumpang anda terlebih dahulu"),
-                    //     backgroundColor: Colors.red,
-                    //   ));
-                    // }
-                    else {
-                      print(_selectedSeats);
-                      goRemove(LoadTicket());
-                    }
-                  },
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Styles.primaryBold,
-                      borderRadius:
-                          BorderRadius.circular(AppLayout.getHeight(15)),
-                    ),
-                    width: double.infinity,
-                    child: Center(
-                      child: Text(
-                        "Pesan Tiket".toUpperCase(),
-                        style: Styles.headLineStyle3
-                            .copyWith(color: Colors.white, fontSize: 18),
-                      ),
-                    ),
-                  )))
-        ],
+          );
+        },
       ),
     );
   }
