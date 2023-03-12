@@ -53,6 +53,6 @@ class SessionManager {
     token = null;
     nama = null;
     goRemove(BottomBar(0));
-    CustomSnackBar("Sukses logout!");
+    successSnackBar("Sukses logout!");
   }
 }
