@@ -94,7 +94,7 @@
                                                                     <div class="mb-3">
                                                                         <label for="train_no">Train No</label>
                                                                         <input required class="form-control" list="datalistOptions" value="{{ $item->train_no }}" id="exampleDataList" name="train_no"
-                                                                            placeholder="Type to search...">
+                                                                            placeholder="Enter train no...">
                                                                         <datalist id="datalistOptions">
                                                                             @foreach ($train_fares as $fare)
                                                                                 <option value="{{ $fare->train_no }}">
@@ -152,7 +152,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="train_no">Train No</label>
-                                <input required class="form-control" list="datalistOptions2" value="{{ old('train_no') }}" id="exampleDataList" name="train_no" placeholder="Type to search...">
+                                <input required class="form-control" list="datalistOptions2" value="{{ old('train_no') }}" id="exampleDataList" name="train_no" placeholder="Enter train no...">
                                 <datalist id="datalistOptions2">
                                     @foreach ($train_fares as $fare)
                                         <option value="{{ $fare->train_no }}">
