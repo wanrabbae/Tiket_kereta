@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:math';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:intl/intl.dart';
@@ -63,6 +64,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  randomNumber() {
+    var rng = Random();
+    return rng.nextInt(100000);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -117,9 +123,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
                                                 AppLayout.getHeight(10)),
-                                            image: const DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/img_1.png")))),
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                    "https://api.multiavatar.com/Binx Bond${randomNumber()}.png")))),
                                     Gap(AppLayout.getHeight(10)),
                                     Column(
                                       crossAxisAlignment:
@@ -240,8 +246,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           height: 20,
                                         ),
                                         GestureDetector(
-                                          onTap: () {
-                                            print("EDIT");
+                                          onTap: () async {
+                                            await authProv.updateProfile({
+                                              "name": namaCtrl.text,
+                                              "email": emailCtrl.text,
+                                              "city": cityCtrl.text,
+                                              "country": countryCtrl.text
+                                            });
                                           },
                                           child: Container(
                                               padding: EdgeInsets.symmetric(

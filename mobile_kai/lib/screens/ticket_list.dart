@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:kai_mobile/core/utils/constant.dart';
+import 'package:kai_mobile/core/utils/custom_component.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/core/utils/session_manager.dart';
 import 'package:kai_mobile/screens/ticket_order_screen.dart';
@@ -247,12 +248,8 @@ class _TicketListState extends State<TicketList> {
                                                 }),
                                               );
                                             } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: Text(
-                                                    "Anda harus login terlebih dahulu"),
-                                                backgroundColor: Colors.red,
-                                              ));
+                                              errorSnackBar(
+                                                  "Anda harus login terlebih dahulu");
                                             }
                                           },
                                           child: Text(

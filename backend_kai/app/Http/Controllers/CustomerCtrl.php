@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -96,6 +97,16 @@ class CustomerCtrl extends Controller
                 "user" => $request->only(['id', 'name', 'email', 'city', 'country']),
                 "token" => $token
             ], 201);
+        }
+    }
+
+    public function updateProfile(Request $request)
+    {
+        if (Customer::find(Auth::user()->id)->update($request->only(['name', 'email', 'city', 'country']))) {
+            return response()->json([
+                "success" => true,
+                "user" => $request->only(['name', 'email', 'city', 'country']),
+            ], 200);
         }
     }
 }

@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/customer', function (Request $request) {
     return $request->user();
 });
+Route::put('/customer/update', [CustomerCtrl::class, 'updateProfile'])->middleware('auth:sanctum');
 // CUSTOMER
 Route::post('/login-customer', [CustomerCtrl::class, 'loginApi']);
 Route::post('/register-customer', [CustomerCtrl::class, 'registerApi']);

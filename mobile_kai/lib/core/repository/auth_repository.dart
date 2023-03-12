@@ -63,4 +63,34 @@ class AuthRepository {
       }
     }
   }
+
+  static Future updateProfile(Map<String, dynamic> requestBody) async {
+    try {
+      var res = await dio.put(
+        "$endpointIP/customer/update",
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $token",
+          },
+        ),
+        data: requestBody,
+      );
+      print(res);
+      log(res.realUri.toString());
+      return res.data;
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 400 ||
+          e.response?.statusCode == 401 ||
+          e.response?.statusCode == 500) {
+        return e.response;
+      } else {
+        return e.response;
+      }
+    }
+  }
+
+  static Future getRandomAvtr() async {
+    var res = await dio.get("https://i.pravatar.cc/300");
+    return res.data;
+  }
 }

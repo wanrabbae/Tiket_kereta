@@ -16,6 +16,7 @@ class AuthProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   Map userData = {};
+  var pict = "";
   set isLoading(bool val) {
     _isLoading = val;
     notifyListeners();
@@ -28,8 +29,6 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-// successSnackBar("Success register!");
-//     goRemove(BottomBar(0));
   Future register(Map<String, dynamic> requestBody) async {
     isLoading = true;
     var res = await AuthRepository.register(requestBody);
@@ -66,5 +65,23 @@ class AuthProvider extends ChangeNotifier {
     } else {
       userData = res;
     }
+  }
+
+  Future updateProfile(Map<String, dynamic> requestBody) async {
+    isLoading = true;
+    var res = await AuthRepository.updateProfile(requestBody);
+    isLoading = false;
+    if (res != null && res["success"] != null && res["success"] == true) {
+      successSnackBar("Success edit profile!");
+      goRemove(BottomBar(2));
+    } else {
+      errorSnackBar("Gagal edit profile!");
+    }
+  }
+
+  Future getRandomAvatar() async {
+    var res = await AuthRepository.getRandomAvtr();
+    print(res);
+    pict = res;
   }
 }
