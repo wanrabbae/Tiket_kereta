@@ -393,11 +393,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           children: [
                                             PairedColumnWidget(
                                               firstText: authProv
-                                                          .userData["City"]
+                                                          .userData["city"]
                                                           .toString() ==
                                                       'null'
                                                   ? 'City'
-                                                  : authProv.userData["City"]
+                                                  : authProv.userData["city"]
                                                       .toString(),
                                               secondText: "Kota / Kabupaten",
                                               alignment:

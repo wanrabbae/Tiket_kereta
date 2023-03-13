@@ -243,6 +243,9 @@ class _TicketListState extends State<TicketList> {
                                                 TicketOrder({
                                                   "data": widget
                                                       .dataJourney?["data"],
+                                                  "controllerInputs":
+                                                      widget.dataJourney?[
+                                                          "controllerInputs"],
                                                   "detail": ticket
                                                 }),
                                               );

@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kai_mobile/core/provider/ListTicketProvider.dart';
+import 'package:kai_mobile/core/utils/custom_component.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/bottom_bar.dart';
 import 'package:kai_mobile/screens/load_ticket.dart';
@@ -67,6 +68,7 @@ class _BookSeatState extends State<BookSeat> {
     if (seat.state == SeatState.sold) {
       return;
     }
+    print(seat.state);
     setState(() {
       if (seat.state == SeatState.available) {
         // if (_selectedSeats.length + 1 >
@@ -87,10 +89,10 @@ class _BookSeatState extends State<BookSeat> {
       } else if (seat.state == SeatState.selectedByYou) {
         _seats[_seats.indexOf(seat)] = Seat(
           id: seat.id,
-          seat: seat.id,
+          seat: seat.seat,
           state: SeatState.available,
         );
-        _selectedSeats.remove(seat);
+        _selectedSeats.removeWhere((seat2) => seat2.id == seat.id);
       }
     });
   }
@@ -104,6 +106,7 @@ class _BookSeatState extends State<BookSeat> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.dataJourney?["passengers"]);
     return ChangeNotifierProvider(
       create: (_) => TicketProvider(),
       child: Consumer<TicketProvider>(
@@ -227,10 +230,7 @@ class _BookSeatState extends State<BookSeat> {
                     child: GestureDetector(
                         onTap: () {
                           if (_selectedSeats.length == 0) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Pilih kursi terlebih dahulu"),
-                              backgroundColor: Colors.red,
-                            ));
+                            errorSnackBar("Pilih kursi terlebih dahulu");
                           }
                           // else if (_selectedSeats.length !=
                           //     int.parse(
@@ -242,6 +242,15 @@ class _BookSeatState extends State<BookSeat> {
                           //   ));
                           // }
                           else {
+                            print(widget.dataJourney);
+                            if (_selectedSeats.length <
+                                int.parse(widget.dataJourney?["data"]
+                                    ["passengerCount"])) {
+                              errorSnackBar("Anda harus memilih " +
+                                  widget.dataJourney?["data"]
+                                      ["passengerCount"] +
+                                  " kursi");
+                            }
                             var data = _selectedSeats.map((e) => {
                                   "name": "John Doe",
                                   "status": "tuan",
@@ -249,7 +258,7 @@ class _BookSeatState extends State<BookSeat> {
                                 });
                             var response = [];
                             print(data.toList());
-                            goRemove(LoadTicket(response));
+                            // goRemove(LoadTicket(response));
                           }
                         },
                         child: Container(

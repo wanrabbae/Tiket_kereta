@@ -18,77 +18,62 @@ class TicketOrder extends StatefulWidget {
 }
 
 class _TicketOrderState extends State<TicketOrder> {
-  List<TextEditingController> controllers = [];
   var _currencies = [
     "Tuan",
     "Tuan Muda",
     "Nyonya",
     "Nona",
   ];
+
+  // List<List> controllers = [];
   var train_fare = "0";
   var inputs = [];
   var class_selected;
-  bool _validate = false;
   var selectedClassData;
+  bool _validate = false;
   var _titelSelected = null;
   final oCcy = new NumberFormat("#.##", "id_IDR");
-  List<Widget> getInputPsg() {
-    List<Widget> childs = [];
-    for (var i = 1;
-        i < int.parse(widget.dataJourney?["data"]["passengerCount"]) + 1;
-        i++) {
-      childs.add(Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Detail Penumpang " + i.toString(),
-            style: Styles.headLineStyle2
-                .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          TextFormField(
-            onChanged: (value) {
-              setState(() {
-                inputs[i] = {"name": value};
-              });
-            },
-            decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Styles.primaryBold, width: 1.5)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Styles.primaryBold, width: 1.5)),
-                errorBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Styles.primaryBold, width: 1.5)),
-                focusedErrorBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Styles.primaryBold, width: 1.5)),
-                hintText: "Nama Lengkap",
-                prefixIcon: Icon(
-                  FluentSystemIcons.ic_fluent_person_accounts_regular,
-                  color: Styles.primaryBold,
-                )),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          DropdownSearch<String>(
-            popupProps: PopupProps.menu(
-              showSelectedItems: true,
-              disabledItemFn: (String s) => s.startsWith('I'),
+
+  getClass(fares) {
+    var data = fares.map((fr) => "${fr["class"]}");
+    return data.toList();
+  }
+
+  getPriceClass(className, fares) {
+    var data = fares.firstWhere((fr) => fr["class"] == className);
+    return data;
+  }
+
+  // handleController() {
+  //   for (var i = 0;
+  //       i < int.parse(widget.dataJourney?["data"]["passengerCount"]);
+  //       i++) {
+  //     controllers.add([TextEditingController(), null]);
+  //   }
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> getInputPsg() {
+      // handleController();
+      List<Widget> childs = [];
+      for (var i in widget.dataJourney?["controllerInputs"]) {
+        childs.add(Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Detail Penumpang " +
+                  (widget.dataJourney?["controllerInputs"].indexOf(i) + 1)
+                      .toString(),
+              style: Styles.headLineStyle2
+                  .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
             ),
-            items: [
-              "Tuan",
-              "Tuan Muda",
-              "Nyonya",
-              "Nona",
-            ],
-            dropdownDecoratorProps: DropDownDecoratorProps(
-              dropdownSearchDecoration: InputDecoration(
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              controller: i[0],
+              decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Styles.primaryBold, width: 1.5)),
@@ -101,40 +86,60 @@ class _TicketOrderState extends State<TicketOrder> {
                   focusedErrorBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Styles.primaryBold, width: 1.5)),
-                  hintText: "Title",
+                  hintText: "Nama Lengkap",
                   prefixIcon: Icon(
-                    FluentSystemIcons.ic_fluent_app_title_filled,
+                    FluentSystemIcons.ic_fluent_person_accounts_regular,
                     color: Styles.primaryBold,
                   )),
             ),
-            onChanged: (value) {
-              setState(() {
-                inputs[i] = {"title": value};
-              });
-            },
-          ),
-          Divider(
-            color: Colors.grey.shade600,
-            height: 50,
-          )
-        ],
-      ));
+            SizedBox(
+              height: 20,
+            ),
+            DropdownSearch<String>(
+              popupProps: PopupProps.menu(
+                showSelectedItems: true,
+                disabledItemFn: (String s) => s.startsWith('I'),
+              ),
+              items: [
+                "Tuan",
+                "Tuan Muda",
+                "Nyonya",
+                "Nona",
+              ],
+              dropdownDecoratorProps: DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Styles.primaryBold, width: 1.5)),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Styles.primaryBold, width: 1.5)),
+                    errorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Styles.primaryBold, width: 1.5)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Styles.primaryBold, width: 1.5)),
+                    hintText: "Status",
+                    prefixIcon: Icon(
+                      FluentSystemIcons.ic_fluent_app_title_filled,
+                      color: Styles.primaryBold,
+                    )),
+              ),
+              onChanged: (value) {
+                i[1] = value.toString();
+              },
+            ),
+            Divider(
+              color: Colors.grey.shade600,
+              height: 50,
+            )
+          ],
+        ));
+      }
+      return childs;
     }
-    return childs;
-  }
 
-  getClass(fares) {
-    var data = fares.map((fr) => "${fr["class"]}");
-    return data.toList();
-  }
-
-  getPriceClass(className, fares) {
-    var data = fares.firstWhere((fr) => fr["class"] == className);
-    return data;
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Styles.bgColor,
       appBar: AppBar(
@@ -189,14 +194,11 @@ class _TicketOrderState extends State<TicketOrder> {
                         )),
                   ),
                   onChanged: (value) {
-                    setState(() {
-                      print(value);
-                      class_selected = value;
-                      train_fare =
-                          "${getPriceClass(value, widget.dataJourney?["detail"]?["train_fare"])['fare']}";
-                      selectedClassData = getPriceClass(
-                          value, widget.dataJourney?["detail"]?["train_fare"]);
-                    });
+                    setState(() => class_selected = value);
+                    setState(() => train_fare =
+                        "${getPriceClass(value, widget.dataJourney?["detail"]?["train_fare"])['fare']}");
+                    setState(() => selectedClassData = getPriceClass(
+                        value, widget.dataJourney?["detail"]?["train_fare"]));
                   },
                 ),
               ],
@@ -296,7 +298,15 @@ class _TicketOrderState extends State<TicketOrder> {
           ),
           GestureDetector(
             onTap: () {
-              print(inputs);
+              var passengers = [];
+              widget.dataJourney?["controllerInputs"].forEach((element) {
+                passengers.add({
+                  "name": element[0].text,
+                  "status":
+                      element[1] != null ? element[1].toLowerCase() : "tuan"
+                });
+              });
+
               if (selectedClassData == null) {
                 setState(() {
                   _validate = true;
@@ -329,7 +339,7 @@ class _TicketOrderState extends State<TicketOrder> {
                         .toString();
                 widget.dataJourney?["data"]?["class_selected"] =
                     selectedClassData?["class"];
-
+                widget.dataJourney?["passengers"] = passengers;
                 goPush(BookSeat(widget.dataJourney));
               }
             },

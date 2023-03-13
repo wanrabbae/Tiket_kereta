@@ -226,6 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       GestureDetector(
                                         onTap: () async {
+                                          List<List> controllers = [];
                                           setState(() {
                                             from == null
                                                 ? _validate = true
@@ -253,6 +254,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                             var res =
                                                 await homeProv.getTickets(data);
+                                            for (var i = 0;
+                                                i <
+                                                    int.parse(
+                                                        passengerCount.text);
+                                                i++) {
+                                              controllers.add([
+                                                TextEditingController(),
+                                                null
+                                              ]);
+                                            }
+                                            res["controllerInputs"] =
+                                                controllers;
+                                            // print(res["data"]);
 
                                             goPush(TicketList(res));
                                           }
