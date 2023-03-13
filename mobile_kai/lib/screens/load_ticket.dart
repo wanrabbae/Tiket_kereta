@@ -5,12 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/bottom_bar.dart';
 import 'package:kai_mobile/screens/home_screen.dart';
+import 'package:kai_mobile/screens/new_ticket_screen.dart';
 import 'package:kai_mobile/screens/ticket_screen.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
 import 'package:lottie/lottie.dart';
 
 class LoadTicket extends StatefulWidget {
-  const LoadTicket({super.key});
+  final List dataTicket;
+  const LoadTicket(@required this.dataTicket);
 
   @override
   State<LoadTicket> createState() => _LoadTicketState();
@@ -19,7 +21,8 @@ class LoadTicket extends StatefulWidget {
 class _LoadTicketState extends State<LoadTicket> {
   SwitchPage() async {
     await Future.delayed(Duration(seconds: 3));
-    goRemove(BottomBar(1));
+    var data = widget.dataTicket;
+    goRemove(NewTicket(data));
   }
 
   @override

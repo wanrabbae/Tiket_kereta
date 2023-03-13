@@ -247,8 +247,9 @@ class _BookSeatState extends State<BookSeat> {
                                   "status": "tuan",
                                   "wagon_seat_id": e.id,
                                 });
+                            var response = [];
                             print(data.toList());
-                            // goRemove(LoadTicket());
+                            goRemove(LoadTicket(response));
                           }
                         },
                         child: Container(
