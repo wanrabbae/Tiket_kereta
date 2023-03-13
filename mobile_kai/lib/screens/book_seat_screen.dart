@@ -251,13 +251,10 @@ class _BookSeatState extends State<BookSeat> {
                                       ["passengerCount"] +
                                   " kursi");
                             }
-                            var data = _selectedSeats.map((e) => {
-                                  "name": "John Doe",
-                                  "status": "tuan",
-                                  "wagon_seat_id": e.id,
-                                });
+                            var data = [];
+
                             var response = [];
-                            print(data.toList());
+                            print(data);
                             // goRemove(LoadTicket(response));
                           }
                         },
