@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:gap/gap.dart';
@@ -8,6 +11,8 @@ import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/bottom_bar.dart';
 import 'package:kai_mobile/screens/ticket_view.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:kai_mobile/utils/app_info_list.dart';
@@ -29,16 +34,25 @@ class NewTicket extends StatefulWidget {
 }
 
 class _NewTicketState extends State<NewTicket> {
-  void cetak(data) {
+  void cetak(data) async {
     final pdf = pw.Document();
 
     pdf.addPage(
       pw.Page(
           pageFormat: PdfPageFormat.a6,
           build: (pw.Context context) {
-            return pw.Center(child: pw.Text("TEST"));
+            return pw.Center(
+                child: pw.Text("TEST", style: pw.TextStyle(fontSize: 100)));
           }),
     );
+
+    Uint8List bytes = await pdf.save();
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/${data["booking_code"]}.pdf');
+
+    await file.writeAsBytes(bytes);
+
+    await OpenFile.open(file.path);
   }
 
   List<Widget> getPassengers(passengers) {
@@ -56,6 +70,14 @@ class _NewTicketState extends State<NewTicket> {
                 alignment: CrossAxisAlignment.start,
                 isColor: false,
               ),
+              psg["seat"] != null
+                  ? PairedColumnWidget(
+                      firstText: psg["seat"]["seat"].toString() ?? "0",
+                      secondText: "Kursi",
+                      alignment: CrossAxisAlignment.center,
+                      isColor: false,
+                    )
+                  : Text(""),
               PairedColumnWidget(
                 firstText: psg["status"].toString().toUpperCase() ?? "Tuan",
                 secondText: "Status",
@@ -299,7 +321,7 @@ class _NewTicketState extends State<NewTicket> {
               ),
               GestureDetector(
                 onTap: () {
-                  cetak(widget.dataTicket);
+                  cetak(widget.dataTicket[0]);
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),

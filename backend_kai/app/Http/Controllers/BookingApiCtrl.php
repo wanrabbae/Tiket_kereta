@@ -89,9 +89,7 @@ class BookingApiCtrl extends Controller
                         "status" => $status
                     ]);
 
-                    if ($psg) {
-                        WagonSeat::find($wagon_seat_id)->update(["passenger_id" => $psg->id]);
-                    }
+                    WagonSeat::where('id', $passenger["wagon_seat_id"])->update(["passenger_id" => $psg->id]);
                 }
 
                 $data = Booking::where('id', $booking->id)->first();

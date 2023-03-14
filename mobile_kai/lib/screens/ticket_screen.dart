@@ -37,12 +37,14 @@ class _TicketScreenState extends State<TicketScreen> {
                 alignment: CrossAxisAlignment.start,
                 isColor: false,
               ),
-              PairedColumnWidget(
-                firstText: psg["seat"]["seat"].toString() ?? "0",
-                secondText: "Kursi",
-                alignment: CrossAxisAlignment.center,
-                isColor: false,
-              ),
+              psg["seat"] != null
+                  ? PairedColumnWidget(
+                      firstText: psg["seat"]["seat"].toString() ?? "0",
+                      secondText: "Kursi",
+                      alignment: CrossAxisAlignment.center,
+                      isColor: false,
+                    )
+                  : Text(""),
               PairedColumnWidget(
                 firstText: psg["status"].toString().toUpperCase() ?? "Tuan",
                 secondText: "Status",
