@@ -91,7 +91,6 @@ class _TicketScreenState extends State<TicketScreen> {
                         vertical: AppLayout.getHeight(20)),
                     itemBuilder: (context, index) {
                       var ticket = historyProv.tickets[index];
-                      print(ticket);
                       return Column(
                         children: [
                           Container(

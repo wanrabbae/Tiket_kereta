@@ -272,6 +272,7 @@ class _BookSeatState extends State<BookSeat> {
                             };
                             print("TEST BOOK");
                             var response = await ticketProv.booked(reqBody);
+                            widget.dataJourney?["controllerInputs"] = [];
                             // print("RESPONSE " + response);
                             goRemove(LoadTicket(response));
                           }

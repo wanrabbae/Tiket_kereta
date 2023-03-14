@@ -8,6 +8,8 @@ import 'package:kai_mobile/core/utils/constant.dart';
 import 'package:kai_mobile/core/utils/navigator_helper.dart';
 import 'package:kai_mobile/screens/bottom_bar.dart';
 import 'package:kai_mobile/screens/ticket_view.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:kai_mobile/utils/app_info_list.dart';
 import 'package:kai_mobile/utils/app_layout.dart';
 import 'package:kai_mobile/utils/app_styles.dart';
@@ -27,6 +29,18 @@ class NewTicket extends StatefulWidget {
 }
 
 class _NewTicketState extends State<NewTicket> {
+  void cetak(data) {
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.Page(
+          pageFormat: PdfPageFormat.a6,
+          build: (pw.Context context) {
+            return pw.Center(child: pw.Text("TEST"));
+          }),
+    );
+  }
+
   List<Widget> getPassengers(passengers) {
     List<Widget> childs = [];
     for (var i = 0; i < passengers.length; i++) {
@@ -66,6 +80,7 @@ class _NewTicketState extends State<NewTicket> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.dataTicket);
     return Scaffold(
       backgroundColor: Styles.bgColor,
       body: SingleChildScrollView(
@@ -280,8 +295,32 @@ class _NewTicketState extends State<NewTicket> {
                 ),
               ),
               SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                  cetak(widget.dataTicket);
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Styles.primaryBold, width: 1),
+                      borderRadius:
+                          BorderRadius.circular(AppLayout.getWidth(10)),
+                      color: Styles.bgColor),
+                  child: Center(
+                      child: Text(
+                    "Cetak Tiket",
+                    style: Styles.textStyle
+                        .copyWith(color: Styles.primaryBold, fontSize: 16),
+                  )),
+                ),
+              ),
+              SizedBox(
                 height: 30,
-              )
+              ),
             ],
           ),
         ),
