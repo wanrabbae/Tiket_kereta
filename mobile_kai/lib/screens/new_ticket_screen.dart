@@ -35,27 +35,6 @@ class NewTicket extends StatefulWidget {
 }
 
 class _NewTicketState extends State<NewTicket> {
-  void cetak(data) async {
-    final pdf = pw.Document();
-
-    pdf.addPage(
-      pw.Page(
-          pageFormat: PdfPageFormat.a6,
-          build: (pw.Context context) {
-            return pw.Center(
-                child: pw.Text("TEST", style: pw.TextStyle(fontSize: 100)));
-          }),
-    );
-
-    Uint8List bytes = await pdf.save();
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/${data["booking_code"]}.pdf');
-
-    await file.writeAsBytes(bytes);
-
-    await OpenFile.open(file.path);
-  }
-
   List<Widget> getPassengers(passengers) {
     List<Widget> childs = [];
     for (var i = 0; i < passengers.length; i++) {
@@ -99,6 +78,75 @@ class _NewTicketState extends State<NewTicket> {
       ));
     }
     return childs;
+  }
+
+  void cetak(data) async {
+    final pdf = pw.Document();
+    var totalPay =
+        NumberFormat.currency(locale: "id", symbol: "Rp. ", decimalDigits: 0)
+            .format(data["payment_total"])
+            .toString();
+    pdf.addPage(
+      pw.Page(
+          pageFormat: PdfPageFormat.a6,
+          build: (pw.Context context) {
+            return pw.Container(
+                child: pw.Column(
+              children: [
+                pw.Text("Pemesanan Tiket " + data?["booking_code"],
+                    textAlign: pw.TextAlign.center,
+                    style: pw.TextStyle(fontSize: 20)),
+                pw.SizedBox(
+                  height: 20,
+                ),
+                pw.Text("Tanggal Pemesanan: " + data?["booking_date"]),
+                pw.SizedBox(
+                  height: 10,
+                ),
+                pw.Text('Total Bayar: $totalPay'),
+                pw.SizedBox(
+                  height: 10,
+                ),
+                pw.Text("Nomor Kereta: " + data?["train_no"]),
+                pw.SizedBox(height: 30),
+                pw.Container(
+                    padding: pw.EdgeInsets.only(
+                        top: AppLayout.getHeight(20),
+                        bottom: AppLayout.getHeight(20)),
+                    margin: pw.EdgeInsets.only(
+                        left: AppLayout.getHeight(15),
+                        right: AppLayout.getHeight(15)),
+                    decoration: pw.BoxDecoration(
+                        borderRadius: pw.BorderRadius.only(
+                            bottomRight:
+                                pw.Radius.circular(AppLayout.getHeight(21)),
+                            bottomLeft:
+                                pw.Radius.circular(AppLayout.getHeight(21)))),
+                    child: pw.Container(
+                      padding: pw.EdgeInsets.symmetric(
+                          horizontal: AppLayout.getWidth(15)),
+                      child: pw.ClipRRect(
+                        child: pw.BarcodeWidget(
+                          barcode: Barcode.code128(),
+                          data: 'https://github.com/wanrabbaeee',
+                          drawText: false,
+                          width: double.infinity,
+                          height: 70,
+                        ),
+                      ),
+                    ))
+              ],
+            ));
+          }),
+    );
+
+    Uint8List bytes = await pdf.save();
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/${data["booking_code"]}.pdf');
+
+    await file.writeAsBytes(bytes);
+
+    await OpenFile.open(file.path);
   }
 
   @override
@@ -252,7 +300,7 @@ class _NewTicketState extends State<NewTicket> {
                                 BorderRadius.circular(AppLayout.getHeight(15)),
                             child: BarcodeWidget(
                               barcode: Barcode.code128(),
-                              data: 'https://github.com/wanrabbae',
+                              data: 'https://github.com/wanrabbaeee',
                               drawText: false,
                               color: Styles.textColor,
                               width: double.infinity,
@@ -360,7 +408,7 @@ class _NewTicketState extends State<NewTicket> {
                       children: [
                         WidgetSpan(
                           child: Icon(
-                            Icons.home_filled,
+                            Icons.document_scanner,
                             size: 20,
                             color: Styles.primaryBold,
                           ),

@@ -45,12 +45,12 @@ class _TicketScreenState extends State<TicketScreen> {
                       isColor: false,
                     )
                   : Text(""),
-              PairedColumnWidget(
-                firstText: psg["status"].toString().toUpperCase() ?? "Tuan",
-                secondText: "Status",
-                alignment: CrossAxisAlignment.end,
-                isColor: false,
-              )
+              // PairedColumnWidget(
+              //   firstText: psg["status"].toString().toUpperCase() ?? "Tuan",
+              //   secondText: "Status",
+              //   alignment: CrossAxisAlignment.end,
+              //   isColor: false,
+              // )
             ],
           ),
           SizedBox(
