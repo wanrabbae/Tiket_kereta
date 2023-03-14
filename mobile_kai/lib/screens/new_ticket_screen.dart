@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_html/style.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:kai_mobile/core/provider/HistoryTicket.dart';
@@ -102,7 +103,6 @@ class _NewTicketState extends State<NewTicket> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.dataTicket);
     return Scaffold(
       backgroundColor: Styles.bgColor,
       body: SingleChildScrollView(
@@ -285,10 +285,20 @@ class _NewTicketState extends State<NewTicket> {
                           BorderRadius.circular(AppLayout.getWidth(10)),
                       color: Styles.primaryBold),
                   child: Center(
-                      child: Text(
-                    "Beranda",
-                    style: Styles.textStyle
-                        .copyWith(color: Colors.white, fontSize: 16),
+                      child: RichText(
+                    text: TextSpan(
+                      children: [
+                        WidgetSpan(
+                          child: Icon(
+                            Icons.home_filled,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                        TextSpan(
+                            text: "Beranda", style: TextStyle(fontSize: 16)),
+                      ],
+                    ),
                   )),
                 ),
               ),
@@ -309,10 +319,22 @@ class _NewTicketState extends State<NewTicket> {
                           BorderRadius.circular(AppLayout.getWidth(10)),
                       color: Styles.bgColor),
                   child: Center(
-                      child: Text(
-                    "Riwayat Tiket",
-                    style: Styles.textStyle
-                        .copyWith(color: Styles.primaryBold, fontSize: 16),
+                      child: RichText(
+                    text: TextSpan(
+                      children: [
+                        WidgetSpan(
+                          child: Icon(
+                            Icons.history,
+                            size: 20,
+                            color: Styles.primaryBold,
+                          ),
+                        ),
+                        TextSpan(
+                            text: "Riwayat Tiket",
+                            style: TextStyle(
+                                fontSize: 16, color: Styles.primaryBold)),
+                      ],
+                    ),
                   )),
                 ),
               ),
@@ -333,10 +355,22 @@ class _NewTicketState extends State<NewTicket> {
                           BorderRadius.circular(AppLayout.getWidth(10)),
                       color: Styles.bgColor),
                   child: Center(
-                      child: Text(
-                    "Cetak Tiket",
-                    style: Styles.textStyle
-                        .copyWith(color: Styles.primaryBold, fontSize: 16),
+                      child: RichText(
+                    text: TextSpan(
+                      children: [
+                        WidgetSpan(
+                          child: Icon(
+                            Icons.home_filled,
+                            size: 20,
+                            color: Styles.primaryBold,
+                          ),
+                        ),
+                        TextSpan(
+                            text: "Cetak Tiket",
+                            style: TextStyle(
+                                fontSize: 16, color: Styles.primaryBold)),
+                      ],
+                    ),
                   )),
                 ),
               ),
