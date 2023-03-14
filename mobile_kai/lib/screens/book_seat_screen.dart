@@ -250,12 +250,10 @@ class _BookSeatState extends State<BookSeat> {
                                       ["passengerCount"] +
                                   " kursi");
                             }
-
-                            for (var element2
-                                in widget.dataJourney?["passengers"]) {
-                              for (var element in _selectedSeats) {
-                                element2["wagon_seat_id"] = element.id;
-                              }
+                            for (var i = 0; i < _selectedSeats.length; i++) {
+                              var dt = _selectedSeats[i];
+                              widget.dataJourney?["passengers"][i]
+                                  ["wagon_seat_id"] = dt.id;
                             }
 
                             var reqBody = {
@@ -270,7 +268,6 @@ class _BookSeatState extends State<BookSeat> {
                                   ["fare_selected"],
                               "passengers": widget.dataJourney?["passengers"]
                             };
-                            print("TEST BOOK");
                             var response = await ticketProv.booked(reqBody);
                             widget.dataJourney?["controllerInputs"] = [];
                             // print("RESPONSE " + response);
