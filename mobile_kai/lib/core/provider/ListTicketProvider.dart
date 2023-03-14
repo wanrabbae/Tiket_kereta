@@ -34,11 +34,10 @@ class TicketProvider extends ChangeNotifier {
   Future booked(Map<String, dynamic> requestBody) async {
     isLoading = true;
     var res = await TicketRepository.bookTicket(requestBody);
-    print("PROVIDER " + res);
     isLoading = false;
     if (res.statusCode == 201) {
       successSnackBar("Berhasil memesan tiket");
-      // goRemove(BottomBar(1));
+      return res.data;
     } else {
       errorSnackBar("Gagal memesan tiket!");
     }

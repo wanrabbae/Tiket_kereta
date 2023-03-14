@@ -339,6 +339,8 @@ class _TicketOrderState extends State<TicketOrder> {
                         .toString();
                 widget.dataJourney?["data"]?["class_selected"] =
                     selectedClassData?["class"];
+                widget.dataJourney?["data"]?["fare_selected"] =
+                    selectedClassData?["id"].toString();
                 widget.dataJourney?["passengers"] = passengers;
                 goPush(BookSeat(widget.dataJourney));
               }

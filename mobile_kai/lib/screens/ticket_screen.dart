@@ -38,6 +38,12 @@ class _TicketScreenState extends State<TicketScreen> {
                 isColor: false,
               ),
               PairedColumnWidget(
+                firstText: psg["seat"]["seat"].toString() ?? "0",
+                secondText: "Kursi",
+                alignment: CrossAxisAlignment.center,
+                isColor: false,
+              ),
+              PairedColumnWidget(
                 firstText: psg["status"].toString().toUpperCase() ?? "Tuan",
                 secondText: "Status",
                 alignment: CrossAxisAlignment.end,
@@ -85,6 +91,7 @@ class _TicketScreenState extends State<TicketScreen> {
                         vertical: AppLayout.getHeight(20)),
                     itemBuilder: (context, index) {
                       var ticket = historyProv.tickets[index];
+                      print(ticket);
                       return Column(
                         children: [
                           Container(

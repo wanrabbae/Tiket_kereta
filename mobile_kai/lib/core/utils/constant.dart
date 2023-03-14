@@ -10,10 +10,10 @@ String? nama;
 bool isLogged = true;
 
 String endpoint = "";
-String endpointIP = "http://192.168.100.119:8000/api"; // rumah
-// String endpointIP = "http://192.168.100.131:8001/api"; // ONE
-// String endpointIP = "http://192.168.142.31:8000/api"; // alwan
-// String endpointIP = "http://40.40.43.225:8001/api"; // lab mm
+// String endpointIP = "http://192.168.100.119:8000/api"; // rumah
+// String endpointIP = "http://192.168.100.131:8000/api"; // ONE
+String endpointIP = "http://192.168.150.31:8000/api"; // alwan
+// String endpointIP = "http://40.40.43.225:8000/api"; // lab mm
 // String endpointIP = "http://192.168.211.31:8000/api"; // ibnu
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

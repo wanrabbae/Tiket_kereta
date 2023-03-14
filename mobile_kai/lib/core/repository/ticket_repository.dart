@@ -16,7 +16,19 @@ class TicketRepository {
   }
 
   static Future bookTicket(data) async {
-    var res = await dio.post("$endpointIP/booking");
+    var token = await SessionManager.getToken();
+    var res = await dio.post("$endpointIP/booking",
+        options: Options(
+          followRedirects: false,
+          // validateStatus: (status) {
+          //   return status < 500;
+          // },
+          headers: {
+            "Authorization": "Bearer $token",
+            "Accept": "application/json",
+          },
+        ),
+        data: data);
     print(res);
     log(res.realUri.toString());
     return res;

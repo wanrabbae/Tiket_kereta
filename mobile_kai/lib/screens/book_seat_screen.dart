@@ -228,7 +228,7 @@ class _BookSeatState extends State<BookSeat> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
                     child: GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           if (_selectedSeats.length == 0) {
                             errorSnackBar("Pilih kursi terlebih dahulu");
                           }
@@ -242,7 +242,6 @@ class _BookSeatState extends State<BookSeat> {
                           //   ));
                           // }
                           else {
-                            print(widget.dataJourney);
                             if (_selectedSeats.length <
                                 int.parse(widget.dataJourney?["data"]
                                     ["passengerCount"])) {
@@ -251,11 +250,30 @@ class _BookSeatState extends State<BookSeat> {
                                       ["passengerCount"] +
                                   " kursi");
                             }
-                            var data = [];
 
-                            var response = [];
-                            print(data);
-                            // goRemove(LoadTicket(response));
+                            for (var element2
+                                in widget.dataJourney?["passengers"]) {
+                              for (var element in _selectedSeats) {
+                                element2["wagon_seat_id"] = element.id;
+                              }
+                            }
+
+                            var reqBody = {
+                              "count": widget.dataJourney?["data"]
+                                  ["passengerCount"],
+                              "payment_total": widget.dataJourney?["data"]
+                                  ["totalPay"],
+                              "train_no": widget.dataJourney?["detail"]
+                                  ["train_no"],
+                              "travel_no": 1,
+                              "fare_id": widget.dataJourney?["data"]
+                                  ["fare_selected"],
+                              "passengers": widget.dataJourney?["passengers"]
+                            };
+                            print("TEST BOOK");
+                            var response = await ticketProv.booked(reqBody);
+                            // print("RESPONSE " + response);
+                            goRemove(LoadTicket(response));
                           }
                         },
                         child: Container(
@@ -267,11 +285,13 @@ class _BookSeatState extends State<BookSeat> {
                           ),
                           width: double.infinity,
                           child: Center(
-                            child: Text(
-                              "Pesan Tiket".toUpperCase(),
-                              style: Styles.headLineStyle3
-                                  .copyWith(color: Colors.white, fontSize: 18),
-                            ),
+                            child: ticketProv.isLoading == true
+                                ? CircularProgressIndicator()
+                                : Text(
+                                    "Pesan Tiket".toUpperCase(),
+                                    style: Styles.headLineStyle3.copyWith(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
                           ),
                         )))
               ],
