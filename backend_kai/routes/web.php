@@ -178,3 +178,4 @@ Route::prefix("/customers")->middleware('auth')->group(function () {
 
 // BOOKING DATA
 Route::get('/booking', [BookingCtrl::class, 'getData'])->name("booking")->middleware('auth');;
+Route::put('/booking', [BookingCtrl::class, 'updateStatus'])->name("updateStatusBooking")->middleware('auth');;

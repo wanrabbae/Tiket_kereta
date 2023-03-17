@@ -37,4 +37,12 @@ class BookingCtrl extends Controller
             ]);
         }
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        Booking::find($id)->update(["payment_status" => $request->status]);
+        return response()->json([
+            "success" => true,
+        ], 200);
+    }
 }

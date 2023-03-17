@@ -54,7 +54,7 @@ class BookingApiCtrl extends Controller
         $book_date = Carbon::now()->toDateTimeString();
         $book_count = $request->count;
         $payment_total = $request->payment_total;
-        $payment_status = 'paid';
+        $payment_status = 'pending';
         $train_no = $request->train_no;
 
         if ($booking = Booking::create([
